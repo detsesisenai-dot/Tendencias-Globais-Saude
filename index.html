@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard Executivo: Instituições Liderantes, Eixos Analíticos e Radar TRL das Inovações em Saúde.">
+    <meta name="author" content="Inteligência em Tendências">
+    <title>Matriz Executiva de Saúde 2025-2026</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Ícones Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Configuração do Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            400: '#2dd4bf',
+                            500: '#14b8a6', // Teal médico
+                            600: '#0d9488',
+                            900: '#134e4a',
+                            dark: '#020617'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 32px 32px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #cbd5e1;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .modal-enter {
+            animation: modalFadeIn 0.25s ease-out forwards;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.97) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #0d9488 0%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-number {
+            font-size: 5rem;
+            line-height: 1;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 2px #cbd5e1;
+            opacity: 0.5;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="selection:bg-brand-500 selection:text-white">
+
+    <!-- Navegação / Sticky Header -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all duration-300 hidden md:block">
+        <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+            <span class="font-bold text-gray-900 text-sm flex items-center"><i data-lucide="activity" class="h-4 w-4 mr-2 text-brand-500"></i> Tendências em Saúde</span>
+            <div class="flex gap-6 text-xs font-semibold text-gray-600">
+                <a href="#bloco1" class="hover:text-brand-600 transition-colors">01. Instituições Liderantes</a>
+                <a href="#bloco2" class="hover:text-brand-600 transition-colors">02. Matriz de Eixos</a>
+                <a href="#bloco3" class="hover:text-brand-600 transition-colors">03. Radar de Inovações</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative overflow-hidden pb-12 pt-28 md:pt-32 bg-white/70 backdrop-blur-2xl border-b border-gray-200">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl overflow-hidden -z-10 opacity-40">
+            <div class="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-brand-200 mix-blend-multiply filter blur-[80px]"></div>
+            <div class="absolute top-10 -right-32 w-[400px] h-[400px] rounded-full bg-blue-200 mix-blend-multiply filter blur-[80px]"></div>
+        </div>
+
+        <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+            <div class="mx-auto max-w-4xl text-center">
+                <div class="mb-6 flex justify-center items-center gap-3">
+                    <span class="rounded-full bg-gray-900 px-3 py-1 text-xs font-bold tracking-widest text-white uppercase border border-gray-700 shadow-sm flex items-center">
+                        <i data-lucide="book-open" class="h-3 w-3 mr-1.5"></i> Relatório Analítico 2025-2026
+                    </span>
+                </div>
+                <h1 class="text-4xl font-black tracking-tight text-gray-900 sm:text-6xl mb-6 leading-tight">
+                    Matriz de Inovação em Saúde <br/><span class="text-gradient">Tendências & Ruptura</span>
+                </h1>
+                <p class="mt-4 text-lg leading-8 text-gray-600 font-medium max-w-3xl mx-auto">
+                    A inovação médica deixou de ser um esforço isolado do cientista na bancada. A nova arquitetura da medicina nasce do cruzamento entre agilidade regulatória, manufatura em hiperescala e biologia orquestrada por inteligência artificial.
+                </p>
+                <div class="mt-8 flex justify-center gap-4">
+                    <a href="#bloco1" class="bg-gray-900 text-white px-6 py-2.5 rounded-lg text-sm font-bold hover:bg-gray-800 transition shadow-md">Iniciar Leitura</a>
+                </div>
+            </div>
+            
+            <!-- Global Dashboard Stats com Legendas Técnicas e Didáticas -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 text-center">
+                
+                <!-- Card 1 -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col h-full border border-gray-200 shadow-sm">
+                    <dt class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2 flex items-center justify-center"><i data-lucide="microscope" class="h-3 w-3 mr-1"></i> Escopo Mapeado</dt>
+                    <dd class="text-5xl font-black text-gray-900 mb-2 tracking-tighter">50</dd>
+                    <p class="text-xs text-gray-500 font-medium mb-4">Projetos & Soluções</p>
+                    
+                    <div class="mt-auto text-[10px] text-left text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                        <strong class="text-gray-800 block mb-1">Filtro Metodológico:</strong> 
+                        O mapeamento isola o "ruído" das inovações puramente incrementais. Estes 50 projetos selecionados possuem viabilidade técnica comprovada para alterar as diretrizes clínicas globais, fundindo biologia profunda e escalabilidade industrial.
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col h-full border-b-4 border-b-brand-500 shadow-sm">
+                    <dt class="text-[10px] font-bold uppercase tracking-widest text-brand-600 mb-2 flex items-center justify-center"><i data-lucide="target" class="h-3 w-3 mr-1"></i> Maturidade Base</dt>
+                    <dd class="text-5xl font-black text-gray-900 mb-2 tracking-tighter">7.3</dd>
+                    <p class="text-xs text-gray-500 font-medium mb-4">Índice TRL (Escala 1-9)</p>
+                    
+                    <div class="mt-auto text-[10px] text-left text-brand-800 bg-brand-50 p-3 rounded-lg border border-brand-100">
+                        <strong class="text-brand-900 block mb-1">Métrica TRL (Technology Readiness Level):</strong> 
+                        Uma média >7.0 confirma que o portfólio já transpôs o "Vale da Morte" laboratorial, estando ancorado em ensaios clínicos robustos (Fase III), aprovações regulatórias e uso prático no mundo real (Real-World Data).
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col h-full border-b-4 border-b-blue-500 shadow-sm">
+                    <dt class="text-[10px] font-bold uppercase tracking-widest text-blue-600 mb-2 flex items-center justify-center"><i data-lucide="zap" class="h-3 w-3 mr-1"></i> Nível de Ruptura</dt>
+                    <dd class="text-5xl font-black text-gray-900 mb-2 tracking-tighter">4.38</dd>
+                    <p class="text-xs text-gray-500 font-medium mb-4">Média de Disrupção (1-5)</p>
+                    
+                    <div class="mt-auto text-[10px] text-left text-blue-800 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                        <strong class="text-blue-900 block mb-1">Índice de Deslocamento Sistêmico:</strong> 
+                        Um score >4.0 sinaliza soluções que tornam a conduta anterior obsoleta. É a transição do antigo modelo paliativo e crônico para intervenções curativas definitivas (ex: Edição Gênica) e arquiteturas altamente preditivas (IA).
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col h-full border border-gray-200 shadow-sm">
+                    <dt class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2 flex items-center justify-center"><i data-lucide="building-2" class="h-3 w-3 mr-1"></i> Atores Centrais</dt>
+                    <dd class="text-5xl font-black text-gray-900 mb-2 tracking-tighter">20</dd>
+                    <p class="text-xs text-gray-500 font-medium mb-4">Instituições Orquestradoras</p>
+                    
+                    <div class="mt-auto text-[10px] text-left text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                        <strong class="text-gray-800 block mb-1">Ecossistema de Translação:</strong> 
+                        A inovação contemporânea exige consórcios. Estes atores englobam a "quádrupla hélice" da nova medicina: biotechs (patentes), Big Techs (supercomputação), megahospitais (validação clínica) e agências (regulação ágil).
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-6 py-20 lg:px-8 space-y-32">
+
+        <!-- ========================================== -->
+        <!-- BLOCO 01: INSTITUIÇÕES LIDERANTES          -->
+        <!-- ========================================== -->
+        <section id="bloco1" class="relative scroll-mt-24">
+            <div class="section-number">01</div>
+            <div class="relative z-10 mb-10 border-l-4 border-gray-900 pl-5">
+                <span class="text-xs font-bold text-brand-600 uppercase tracking-widest mb-1 block">O Eixo de Orquestração</span>
+                <h2 class="text-3xl md:text-4xl font-black text-gray-900 leading-tight">As Instituições que estão<br>a moldar o Futuro</h2>
+                <p class="mt-4 text-base text-gray-600 max-w-3xl leading-relaxed">
+                    A inovação médica não opera no vácuo; ela é <strong>sistemicamente orquestrada</strong>. O ecossistema é liderado por megaestruturas: hospitais convertidos em empresas de dados nativos, agências que redesenham os funis regulamentares e biotecnológicas aliadas à manufatura de hiperescala. Abaixo estão os atores que irão ditar as regras de intervenção na próxima década. <em>(Clique nos cards para expandir o storytelling e acessar projetos interativos).</em>
+                </p>
+            </div>
+
+            <!-- Controles de Filtro das Instituições -->
+            <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between bg-white p-5 rounded-2xl border border-gray-200 shadow-sm mb-8 relative z-10 gap-4">
+                <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+                    <div class="w-full sm:w-auto">
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Eixo de Atuação</label>
+                        <select id="filter-inst-axis" class="bg-gray-50 border border-gray-200 text-gray-700 font-bold text-xs rounded-lg focus:ring-brand-500 focus:border-brand-500 block w-full p-2.5 shadow-inner outline-none cursor-pointer">
+                            <option value="all">Todos os Eixos</option>
+                            <option value="IA & Saúde Digital">IA & Saúde Digital</option>
+                            <option value="Terapia Gênica & Biotecnologia">Terapia Gênica & Biotecnologia</option>
+                            <option value="Dispositivos & Bioengenharia">Dispositivos & Bioengenharia</option>
+                            <option value="Ecossistema & Acesso">Ecossistema & Acesso</option>
+                        </select>
+                    </div>
+                    <div class="w-full sm:w-auto">
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">País de Origem</label>
+                        <select id="filter-inst-country" class="bg-gray-50 border border-gray-200 text-gray-700 font-bold text-xs rounded-lg focus:ring-brand-500 focus:border-brand-500 block w-full p-2.5 shadow-inner outline-none cursor-pointer">
+                            <option value="all">Todos os Países</option>
+                            <!-- Povoado via JS -->
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col items-end border-t lg:border-t-0 lg:border-l border-gray-200 pt-4 lg:pt-0 lg:pl-6 w-full lg:w-auto mt-2 lg:mt-0">
+                    <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest mb-1">Instituições Mapeadas</p>
+                    <div class="flex items-baseline">
+                        <p class="text-3xl font-black text-brand-600 leading-none" id="inst-filtered-count">20</p>
+                        <span class="text-xs font-bold text-gray-400 ml-1">/ 20</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grid Dinâmico das Instituições -->
+            <div id="institutions-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- JS preenche -->
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- BLOCO 02: MATRIZ DE EIXOS (BENTO GRID)     -->
+        <!-- ========================================== -->
+        <section id="bloco2" class="relative scroll-mt-24 pt-10 border-t border-gray-200">
+            <div class="section-number">02</div>
+            <div class="relative z-10 mb-10 border-l-4 border-brand-500 pl-5">
+                <span class="text-xs font-bold text-brand-600 uppercase tracking-widest mb-1 block">A Lógica da Transformação</span>
+                <h2 class="text-3xl md:text-4xl font-black text-gray-900 leading-tight">Matriz Analítica de<br>Eixos e Segmentos</h2>
+                <p class="mt-4 text-base text-gray-600 max-w-3xl leading-relaxed">
+                    Para compreender o fluxo de capital e de tendências de adoção tecnológica, agrupamos as inovações em <strong>seis eixos sistêmicos</strong> que demonstram como a medicina está a resolver os problemas. Clique nos blocos abaixo para aceder à tese estratégica e auditar as justificativas de maturidade (TRL) e Ruptura para cada projeto de referência inserido.
+                </p>
+            </div>
+
+            <!-- Bento Grid -->
+            <div id="topics-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+                <!-- JS preenche -->
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- BLOCO 03: RADAR CARTOGRAFIA TRL            -->
+        <!-- ========================================== -->
+        <section id="bloco3" class="relative scroll-mt-24 pt-10 border-t border-gray-200">
+            <div class="section-number">03</div>
+            <div class="relative z-10 mb-10 border-l-4 border-blue-500 pl-5">
+                <span class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-1 block">Filtro de Realidade</span>
+                <h2 class="text-3xl md:text-4xl font-black text-gray-900 leading-tight">Radar Cartografia TRL:<br>50 Projetos e Soluções Clínicas</h2>
+                <p class="mt-4 text-base text-gray-600 max-w-3xl leading-relaxed">
+                    O funil da realidade. A cartografia <strong>TRL (Technology Readiness Level)</strong> separa o entusiasmo do mercado da aplicação clínica concreta. Quanto mais ao centro do radar, mais madura a inovação. As margens representam o horizonte translacional profundo. Clique nos pontos para auditar as justificativas.
+                </p>
+            </div>
+
+            <div class="glass-card rounded-3xl p-6 lg:p-10 shadow-sm relative overflow-hidden border border-gray-200">
+                <!-- Controles de Filtro -->
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between bg-white p-5 rounded-2xl border border-gray-200 shadow-sm mb-6 relative z-10 gap-4">
+                    <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+                        <div class="w-full sm:w-auto">
+                            <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Eixo Tecnológico</label>
+                            <select id="filter-axis" class="bg-gray-50 border border-gray-200 text-gray-700 font-bold text-xs rounded-lg focus:ring-brand-500 focus:border-brand-500 block w-full p-2.5 shadow-inner outline-none cursor-pointer">
+                                <option value="all">Todos os Eixos</option>
+                                <option value="0">IA & Saúde Digital</option>
+                                <option value="1">Terapia Gênica & Biotecnologia</option>
+                                <option value="2">Dispositivos & Bioengenharia</option>
+                                <option value="3">Ecossistema & Acesso</option>
+                            </select>
+                        </div>
+                        <div class="w-full sm:w-auto">
+                            <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Maturidade TRL</label>
+                            <select id="filter-maturity" class="bg-gray-50 border border-gray-200 text-gray-700 font-bold text-xs rounded-lg focus:ring-brand-500 focus:border-brand-500 block w-full p-2.5 shadow-inner outline-none cursor-pointer">
+                                <option value="all">Todas (TRL 1-9)</option>
+                                <option value="8-9">TRL 8-9 (Mercado / Escalado)</option>
+                                <option value="5-7">TRL 5-7 (Validação Clínica)</option>
+                                <option value="1-4">TRL 1-4 (Pesquisa Base)</option>
+                            </select>
+                        </div>
+                        <div class="w-full sm:w-auto">
+                            <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">País / Origem</label>
+                            <select id="filter-country" class="bg-gray-50 border border-gray-200 text-gray-700 font-bold text-xs rounded-lg focus:ring-brand-500 focus:border-brand-500 block w-full p-2.5 shadow-inner outline-none cursor-pointer">
+                                <option value="all">Todos os Países</option>
+                                <!-- JS fills -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col items-end border-t lg:border-t-0 lg:border-l border-gray-200 pt-4 lg:pt-0 lg:pl-6 w-full lg:w-auto mt-2 lg:mt-0">
+                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest mb-1">Tecnologias Visíveis</p>
+                        <div class="flex items-baseline">
+                            <p class="text-3xl font-black text-brand-600 leading-none" id="total-filtered-count">50</p>
+                            <span class="text-xs font-bold text-gray-400 ml-1">/ 50</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAINEL DINÂMICO DE INSIGHTS (Analytics de Tendências) -->
+                <div class="mb-10 bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-800 text-left transition-all duration-300 relative overflow-hidden" id="filter-insight-container">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i data-lucide="brain-circuit" class="h-5 w-5 text-brand-400"></i>
+                            <h4 class="text-[11px] font-bold text-gray-300 uppercase tracking-widest">Analytics de Tendências: Leitura do Cenário Atual</h4>
+                        </div>
+                        <p id="filter-insight-text" class="text-sm text-gray-100 leading-relaxed font-medium">
+                            A Matriz Geral demonstra que a arquitetura médica está a ser forçada a mudar por três grandes vetores estruturais: supercomputação (IA), biologia de precisão (Edição Gênica) e a crise universal de acesso. A combinação destas 50 inovações empurra o antigo modelo de "cuidado agudo no hospital" para um modelo de "engenharia preditiva contínua". Utilize os filtros acima para interagir.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
+                    <!-- Canvas -->
+                    <div class="lg:col-span-7 flex justify-center sticky top-24">
+                        <div class="relative w-full aspect-square max-w-[650px] bg-white rounded-full shadow-lg overflow-hidden border border-gray-200">
+                            <canvas id="techRadar" class="w-full h-full"></canvas>
+                            <div id="radarTooltip" class="absolute hidden bg-gray-900/95 backdrop-blur-md text-white text-sm py-3 px-4 rounded-xl shadow-2xl pointer-events-none z-20 transition-opacity duration-200 border border-gray-700 max-w-[260px] text-left leading-tight"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Legend list -->
+                    <div class="lg:col-span-5 h-[650px] overflow-y-auto pr-2 custom-scrollbar bg-white/50 rounded-2xl border border-gray-100 p-2" id="radarLegend">
+                        <!-- JS fills -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modais e Footer -->
+
+    <!-- Modal do Radar (Detalhamento do Item da Planilha) -->
+    <div id="radar-modal" class="relative z-[60] hidden" aria-labelledby="radar-modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" id="radar-modal-backdrop"></div>
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl modal-enter border border-gray-200">
+                    <div class="absolute top-0 left-0 w-full h-1.5" id="modal-top-bar"></div>
+                    <button id="close-radar-modal" class="absolute right-4 top-5 text-gray-400 hover:text-gray-900 bg-gray-100 rounded-full p-1.5 transition-colors z-10"><i data-lucide="x" class="h-5 w-5"></i></button>
+                    
+                    <div class="px-6 pb-8 pt-8">
+                        <div class="flex items-start mb-6 border-b border-gray-100 pb-5">
+                            <div id="radar-modal-badge" class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl mr-5 text-white font-black text-2xl shadow-inner font-mono border-b-4 border-black/20"></div>
+                            <div>
+                                <h3 class="text-3xl font-black text-gray-900 leading-tight mb-2" id="radar-modal-title">Título</h3>
+                                <p id="radar-modal-quadrant" class="text-xs font-bold uppercase tracking-wider flex items-center bg-gray-50 inline-flex px-2 py-1 rounded-md border border-gray-200"></p>
+                            </div>
+                        </div>
+
+                        <!-- Top Row: Inst and Country -->
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="bg-white border border-gray-200 p-3 rounded-xl shadow-sm flex items-center gap-3">
+                                <div class="bg-gray-50 p-2 rounded-lg text-gray-400"><i data-lucide="building" class="h-4 w-4"></i></div>
+                                <div>
+                                    <span class="block text-[9px] font-bold text-gray-400 uppercase tracking-widest">Instituição Líder</span>
+                                    <span id="radar-modal-institution" class="block text-sm font-bold text-gray-900 truncate"></span>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-gray-200 p-3 rounded-xl shadow-sm flex items-center gap-3">
+                                <div class="bg-gray-50 p-2 rounded-lg text-gray-400"><i data-lucide="globe" class="h-4 w-4"></i></div>
+                                <div>
+                                    <span class="block text-[9px] font-bold text-gray-400 uppercase tracking-widest">Origem / País</span>
+                                    <span id="radar-modal-country" class="block text-sm font-bold text-gray-900 truncate"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Blocos Interativos de TRL e Ruptura -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-inner flex flex-col">
+                                <div class="flex justify-between items-center mb-2 pb-2 border-b border-gray-200">
+                                    <span class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center"><i data-lucide="activity" class="inline h-3 w-3 mr-1 text-brand-500"></i> Grau TRL</span>
+                                    <span class="inline-flex items-center bg-white border border-gray-200 px-2 py-0.5 rounded text-xs font-mono font-bold text-brand-600 shadow-sm">Nível <span id="radar-modal-trl-num" class="ml-1"></span></span>
+                                </div>
+                                <p id="radar-modal-trl-desc" class="text-[11px] text-gray-600 leading-relaxed font-medium mt-1"></p>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-inner flex flex-col">
+                                <div class="flex justify-between items-center mb-2 pb-2 border-b border-gray-200">
+                                    <span class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center"><i data-lucide="zap" class="inline h-3 w-3 mr-1 text-blue-500"></i> Índice Ruptura</span>
+                                    <div class="flex items-center bg-white px-2 py-1 rounded border border-gray-200 shadow-sm" id="radar-modal-rupture-stars"></div>
+                                </div>
+                                <p id="radar-modal-rupture-desc" class="text-[11px] text-gray-600 leading-relaxed font-medium mt-1"></p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="text-xs font-bold text-brand-600 uppercase tracking-widest mb-2 flex items-center"><i data-lucide="target" class="h-4 w-4 mr-1.5"></i> Resumo Funcional (A Solução)</h4>
+                                <p id="radar-modal-solution" class="text-gray-800 font-medium text-sm leading-relaxed bg-white border border-gray-200 p-4 rounded-xl shadow-sm"></p>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                <h4 class="text-xs font-bold text-blue-800 uppercase tracking-widest mb-2 flex items-center"><i data-lucide="lightbulb" class="h-4 w-4 mr-1.5"></i> Justificativa Estratégica (Impacto)</h4>
+                                <p id="radar-modal-desc" class="text-blue-900 text-sm leading-relaxed italic font-medium"></p>
+                            </div>
+
+                            <div class="pt-4 flex justify-end">
+                                <a id="radar-modal-source" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-bold text-white hover:bg-gray-800 transition-colors bg-gray-900 px-5 py-2.5 rounded-lg shadow-md">
+                                    Aceder a Fonte Documental Oficial <i data-lucide="external-link" class="h-4 w-4 ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Bento Grid / Deep Dive (Eixos) -->
+    <div id="info-modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900/80 backdrop-blur-sm transition-opacity" id="modal-backdrop"></div>
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 w-full max-w-4xl modal-enter border border-gray-200">
+                <button id="close-modal" class="absolute right-4 top-4 text-white hover:text-gray-200 bg-black/40 hover:bg-black/60 rounded-full p-2 transition-colors z-20 backdrop-blur-md"><i data-lucide="x" class="h-5 w-5"></i></button>
+                
+                <!-- Imagem Representativa Header -->
+                <div class="relative h-64 w-full bg-gray-900 overflow-hidden">
+                    <img id="modal-cover-image" src="" alt="Representação Visual" class="w-full h-full object-cover opacity-60">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
+                    <div class="absolute bottom-6 left-8 flex items-center gap-4">
+                        <div id="modal-icon-container" class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-gray-800 text-white shadow-lg border-2 border-white/20"></div>
+                        <div>
+                            <p id="modal-caption" class="text-xs font-bold text-brand-400 uppercase tracking-widest drop-shadow-sm mb-1"></p>
+                            <h3 class="text-3xl font-black text-white drop-shadow-sm" id="modal-title">Título do Eixo</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white px-8 pb-8 pt-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                        <div class="lg:col-span-3 space-y-6">
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3 flex items-center"><i data-lucide="book-open" class="h-4 w-4 mr-2 text-brand-500"></i> O Mecanismo Técnico</h4>
+                                <p id="modal-tech-expl" class="text-sm text-gray-600 leading-relaxed bg-gray-50 p-4 rounded-xl border border-gray-100"></p>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                <h4 class="text-xs font-bold text-blue-800 uppercase tracking-widest mb-2 flex items-center"><i data-lucide="trending-up" class="h-4 w-4 mr-1.5"></i> Insight Estratégico & Disrupção</h4>
+                                <p id="modal-insight" class="text-sm font-medium text-blue-900 leading-relaxed"></p>
+                            </div>
+
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3 flex items-center"><i data-lucide="list-checks" class="h-4 w-4 mr-2 text-brand-500"></i> Soluções Mapeadas & Auditoria de Impacto</h4>
+                                <p class="text-xs text-gray-500 mb-4 font-medium">Clique nos projetos abaixo para expandir e auditar o resumo técnico e as justificativas estratégicas que determinam o seu grau de Maturidade (TRL) e Índice de Ruptura.</p>
+                                <div id="modal-solutions-list" class="space-y-3">
+                                    <!-- JS preenche acordioes -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-2 space-y-6">
+                            <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                                <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center"><i data-lucide="building" class="h-3 w-3 mr-1.5"></i> Ecossistema e Origem</h4>
+                                <div class="mb-4">
+                                    <span class="block text-xs font-semibold text-gray-800 mb-2">Instituições Líderes:</span>
+                                    <div id="modal-institutions-tags" class="flex flex-wrap gap-1.5"></div>
+                                </div>
+                                <div>
+                                    <span class="block text-xs font-semibold text-gray-800 mb-2">Países de Origem:</span>
+                                    <div id="modal-countries-tags" class="flex flex-wrap gap-1.5"></div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-900 rounded-xl p-4 shadow-md text-white">
+                                <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center"><i data-lucide="database" class="h-3 w-3 mr-1.5"></i> Fonte Documental / Defesa</h4>
+                                <p id="modal-source-defense" class="text-xs font-medium text-gray-300 leading-relaxed italic"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-10 mt-10">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center gap-2 text-gray-500">
+                <i data-lucide="bar-chart" class="h-4 w-4"></i>
+                <p class="text-xs font-medium">Matriz Executiva Top 50 Inovações em Saúde (2025-2026)</p>
+            </div>
+            <p class="text-[10px] font-mono text-gray-400 mt-4 md:mt-0 uppercase tracking-widest font-bold">Inteligência em Tendências</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        // Funções de ajuda para gerar descrições genéricas se não existirem
+        function getGenericTRLDesc(trl) {
+            if (trl >= 8) return `Maturidade máxima (${trl}). O produto/plataforma transpôs o vale da morte e já possui tração comercial, aprovação em agências reguladoras (ex: FDA/EMA) ou uso sistêmico comprovado em larga escala.`;
+            if (trl >= 5) return `Validação Clínica ou Translacional (${trl}). O projeto atesta a sua eficácia e segurança no ambiente real (pacientes/hospitais), deixando de ser apenas uma teoria de bancada laboratorial.`;
+            return `Pesquisa e Prova de Conceito (${trl}). Focado na experimentação e pesquisa de base para gerar a tecnologia disruptiva primária do futuro.`;
+        }
+
+        function getGenericRuptureDesc(rup) {
+            if (rup === 5) return `Nível de Ruptura Máxima (5). Capacidade de reescrever por completo o padrão-ouro de tratamento, eliminando paradigmas anteriores (ex: substituindo tratamentos crônicos por curas definitivas).`;
+            if (rup === 4) return `Alto Nível de Ruptura (4). Altera de forma drástica a logística, os custos e a capacidade instalada de atendimento global na saúde, mitigando o gargalo hospitalar crônico.`;
+            return `Nível Significativo de Ruptura (${rup}). Quebra o uso de métodos obsoletos, oferecendo uma intervenção clínica com vantagens superiores incontestáveis perante o mercado atual.`;
+        }
+
+        // ========================================================
+        // 1. DADOS GLOBAIS DA MATRIZ (50 INOVAÇÕES DETALHADAS)
+        // ========================================================
+        const radarItems = [
+            // Eixo 0: IA & Digital
+            { 
+                id: 1, label: "AlphaFold (DeepMind)", quad: 0, trl: 7, rupture: 5, institution: "DeepMind / Isomorphic Labs", country: "Reino Unido", 
+                solution: "Sistema de IA capaz de prever estruturas 3D de proteínas com exatidão quase atômica.", 
+                desc: "Substitui meses de cristalografia física em laboratório por segundos de processamento computacional.", 
+                trlDesc: "TRL 7: Ampla validação e uso sistémico no mercado farmacêutico em fase pré-clínica, necessitando ainda do funil humano para validação terapêutica final.",
+                ruptureDesc: "Grau 5: Redesenha inteiramente as bases da biologia de alvos. P&D farmacêutico tornou-se, oficialmente, um problema de software.",
+                source: "deepmind.google" 
+            },
+            { 
+                id: 2, label: "Plataforma IA Global", quad: 0, trl: 6, rupture: 4, institution: "Cleveland Clinic", country: "EUA", 
+                solution: "Hospital orquestrado inteiramente por dados clínicos e modelos preditivos via nuvem.", 
+                desc: "Expande a IA, que antes apenas lia exames, para auditar prescrições e gerir altas em tempo real.", 
+                trlDesc: "TRL 6: Protótipos escaláveis implementados numa das maiores redes hospitalares (via Oracle/G42), validando algoritmos preditivos locais.",
+                ruptureDesc: "Grau 4: Altera o modelo de negócio base. O hospital deixa de vender 'aluguer de leitos' para atuar como uma plataforma de vigilância preventiva contínua.",
+                source: "oracle.com" 
+            },
+            { 
+                id: 3, label: "Mayo Clinic Platform", quad: 0, trl: 7, rupture: 4, institution: "Mayo Clinic", country: "EUA", 
+                solution: "Ecossistema curado de Real-World Data para consórcios globais.", 
+                desc: "Monetização ética de dados não identificados para treinar as melhores IAs do mundo.", 
+                trlDesc: "TRL 7: Plataforma lançada comercialmente e alimentando pipelines de desenvolvimento de dezenas de terceiros com alto nível de fiabilidade.",
+                ruptureDesc: "Grau 4: Remove o gargalo global de treino de IA, providenciando o 'combustível' estruturado seguro para a próxima geração algorítmica.",
+                source: "mayoclinicplatform.org" 
+            },
+            { 
+                id: 4, label: "CITS (Sistemas Inteligentes)", quad: 0, trl: 6, rupture: 4, institution: "Albert Einstein", country: "Brasil", 
+                solution: "Incubação local de modelos próprios de IA integrados à jornada diária do hospital.", 
+                desc: "Melhor caso latino-americano de geração de Propriedade Intelectual (IP) interna.", 
+                trlDesc: "TRL 6: Ferramentas em uso na radiologia e fluxos internos, superando a fase laboratorial académica local sul-americana.",
+                ruptureDesc: "Grau 4: Autonomia tecnológica. Um player sul-americano a atuar não como consumidor de tech estrangeira, mas como criador e vendedor de algoritmos.",
+                source: "cits.einstein.br" 
+            },
+            { 
+                id: 5, label: "IA Multimodal Imagem", quad: 0, trl: 8, rupture: 4, institution: "Siemens Healthineers", country: "Alemanha", 
+                solution: "Redes neurais nativas integradas fisicamente aos aparelhos de MRI/CT.", 
+                desc: "Corta os tempos de aquisição radiológica pela metade e eleva a exatidão diagnóstica on-the-fly.", 
+                trlDesc: "TRL 8: Produtos com aprovações robustas (CE, FDA) e em catálogo comercial ativo instalados mundialmente.",
+                ruptureDesc: "Grau 4: Elimina a triagem visual exaustiva basal e altera a própria estrutura da radiologia clínica para uma especialidade 'data-first'.",
+                source: "Ranking CSV" 
+            },
+            { 
+                id: 6, label: "Gêmeos Digitais", quad: 0, trl: 5, rupture: 5, institution: "Fraunhofer", country: "Alemanha", 
+                solution: "Modelagem fisiológica 4D in silico (simulação completa do paciente no computador).", 
+                desc: "Permite testar efeitos de dispositivos e moléculas sem risco humano.", 
+                trlDesc: "TRL 5: Validação robusta em ensaios controlados e projetos translacionais; avança ativamente para certificações de órgão-padrão virtual.",
+                ruptureDesc: "Grau 5: Potencial massivo de eliminar as fases mais perigosas dos ensaios clínicos físicos, mudando totalmente a arquitetura e velocidade dos testes humanos.",
+                source: "fraunhofer.de" 
+            },
+            { 
+                id: 7, label: "EHR Cloud-Native", quad: 0, trl: 9, rupture: 3, institution: "Epic Systems", country: "EUA", 
+                solution: "Sistemas de Prontuário Eletrônico rodando nativamente sobre infraestrutura cloud pública.", 
+                desc: "Viabiliza a interoperabilidade extrema de dados em tempo real inter-hospitais.", 
+                trlDesc: "TRL 9: Produto standard de mercado que já sustenta operacionalmente os maiores blocos hospitalares norte-americanos.",
+                ruptureDesc: "Grau 3: Ruptura infraestrutural sistêmica que permite que outras IAs (LLMs) se liguem à API do hospital num clique, unificando a saúde.",
+                source: "Ranking CSV" 
+            },
+            { 
+                id: 8, label: "Voice-to-Text Ambiental", quad: 0, trl: 8, rupture: 4, institution: "Microsoft/Nuance", country: "EUA", 
+                solution: "Modelos baseados em linguagem natural que transcrevem e preenchem automaticamente o prontuário ouvindo a consulta.", 
+                desc: "Mitigação definitiva do burnout médico e da extrema carga de tarefas administrativas.", 
+                trlDesc: "TRL 8: Implementação em larga escala comercial em redes privadas de APS e consultas clínicas especializadas.",
+                ruptureDesc: "Grau 4: Liberta mais de 30% do tempo do médico, reorientando o foco do ecrã para os olhos do paciente e mudando a dinâmica de faturação.",
+                source: "Ranking CSV" 
+            },
+            { 
+                id: 9, label: "Triagem Algorítmica", quad: 0, trl: 7, rupture: 3, institution: "NHS APS", country: "Reino Unido", 
+                solution: "Symptom checkers (Chatbots) baseados em árvores de decisão validadas clinicamente.", 
+                desc: "Gestão inteligente de fluxo de entrada, encaminhando a gravidade de forma autónoma antes da receção.", 
+                trlDesc: "TRL 7: Em uso profundo nos sistemas de saúde públicos britânicos, processando milhões de utilizadores mensais na linha primária.",
+                ruptureDesc: "Grau 3: Ferramenta essencial de 'portaria virtual', desafogando urgências crónicas e evitando custos drásticos no primeiro contato.",
+                source: "Ranking CSV" 
+            },
+            { 
+                id: 10, label: "MedLM", quad: 0, trl: 6, rupture: 5, institution: "Google Health", country: "EUA", 
+                solution: "Modelo LLM de base treinado puramente em corpus e literatura médica avançada estruturada.", 
+                desc: "Atingiu precisão superior aos próprios médicos em testes formais de licenciamento americano (USMLE).", 
+                trlDesc: "TRL 6: Fase de implementação-piloto em parceiros âncora; em intensa auditoria paralela para limar alucinações (AI safety clinical).",
+                ruptureDesc: "Grau 5: Institui o primeiro 'assistente universal de raciocínio' tangível que atuará como co-piloto obrigatório para toda a conduta médica global.",
+                source: "Ranking CSV" 
+            },
+            { 
+                id: 11, label: "Plataforma RWD Oncologia", quad: 0, trl: 8, rupture: 4, institution: "Flatiron Health", country: "EUA", 
+                solution: "Rede curada de dados reais de tratamento oncológico extraídos do uso corrente (Real-World Data).", 
+                desc: "Dados tão precisos e bem estruturados que substituem a necessidade formal de grupos de controlo físico (placebo).", 
+                trlDesc: "TRL 8: Plataforma massivamente aceita e frequentemente utilizada pelo FDA para fundamentar novas extensões de bulas oncológicas sem trials novos.",
+                ruptureDesc: "Grau 4: Muda o conceito fechado de 'ensaio clínico padrão-ouro', permitindo que doentes normais em hospitais provem a eficácia estatística de novos tratamentos.",
+                source: "Ranking CSV" 
+            },
+
+            // Eixo 1: Biotecnologia
+            { 
+                id: 12, label: "Casgevy", quad: 1, trl: 9, rupture: 5, institution: "Vertex/CRISPR Tx", country: "EUA", 
+                solution: "Primeira Terapia Genética com o método CRISPR-Cas9 aprovada comercialmente.", 
+                desc: "Reprogramação celular ex vivo orientada à cura funcional completa das células da Anemia Falciforme.", 
+                trlDesc: "TRL 9: Histórica e pioneira aprovação comercial já concluída perante as maiores agências reguladoras do globo (FDA, EMA).",
+                ruptureDesc: "Grau 5: Quebra absolutamente com o historial paliativo da medicina moderna; transita de terapias de contenção de dor para uma modificação física do DNA de cura definitiva.",
+                source: "fda.gov" 
+            },
+            { 
+                id: 13, label: "Lyfgenia", quad: 1, trl: 9, rupture: 4, institution: "bluebird bio", country: "EUA", 
+                solution: "Edição por vetores lentivirais (células-tronco editadas reinfundidas).", 
+                desc: "Consolidou de vez a virada regulatória e mercadológica para terapias modificadoras focadas em doenças graves do sangue.", 
+                trlDesc: "TRL 9: Autorização de mercado garantida pelo FDA lançada em conjunto e concorrência direta com a plataforma Casgevy.",
+                ruptureDesc: "Grau 4: Expande e garante a adoção mercadológica da edição genética por competição, pressionando a adoção forçada de modelos de valor em planos de saúde atuarialmente.",
+                source: "fda.gov" 
+            },
+            { 
+                id: 14, label: "Lenacapavir PrEP", quad: 1, trl: 9, rupture: 5, institution: "Gilead", country: "EUA", 
+                solution: "Tratamento de injeção profilática semestral (2x ao ano) contra os vírus da imunodeficiência (HIV).", 
+                desc: "Elevou a eficácia profilática a 100% em testes focais, ao anular os falhanços diários de adesão ao comprimido.", 
+                trlDesc: "TRL 9: Produto comercial disponível sustentado por trials de larga escala demonstrando proteção blindada de longo prazo e segurança extrema.",
+                ruptureDesc: "Grau 5: Potencial logístico e prático real para estagnar e zerar a curva global endémica de novas transmissões do HIV devido à facilidade de adesão massiva populacional.",
+                source: "fda.gov" 
+            },
+            { 
+                id: 15, label: "Incretinas (GLP-1)", quad: 1, trl: 9, rupture: 5, institution: "Novo Nordisk", country: "Dinamarca", 
+                solution: "Moléculas biológicas (como Semaglutido) que mimetizam as respostas hormonais digestivas de saciedade e regulação vascular.", 
+                desc: "Demonstraram em escala redução drástica de mortes cardiovasculares, desinflamação sistémica e combate ao fígado gordo.", 
+                trlDesc: "TRL 9: O produto farmacêutico de maior impacto financeiro e de consumo de massa do mundo atual, suportando um mercado de dezenas de bilhões de dólares.",
+                ruptureDesc: "Grau 5: Força todo o ecossistema médico (antes dedicado a faturar com comorbidades e bariátricas) a migrar o seu eixo de intervenção para soluções endócrinas preventivas.",
+                source: "Ranking CSV" 
+            },
+            { 
+                id: 16, label: "Terapia CRISPR N=1", quad: 1, trl: 6, rupture: 5, institution: "CHOP", country: "EUA", 
+                solution: "Fármaco genético sintetizado especificamente do zero para corrigir o DNA exato de uma única criança.", 
+                desc: "Medicina hiper-personalizada aplicada para resolver e curar a mutação mortal e super rara CPS1.", 
+                trlDesc: "TRL 6: Prova de conceito vital e viável em ambiente humano vivo, aprovada por protocolos compassivos estritos nos laboratórios dos EUA.",
+                ruptureDesc: "Grau 5: Quebra o limite da massificação da indústria. Abre caminho à capacidade da humanidade de manufaturar curas sob medida (on-demand) para doenças não comerciais.",
+                source: "chop.edu" 
+            },
+            { 
+                id: 17, label: "YOLT-101", quad: 1, trl: 5, rupture: 5, institution: "P&D China", country: "China", 
+                solution: "Edição de bases (Base Editing) de precisão aplicada diretamente na corrente sanguínea do indivíduo (terapia in vivo).", 
+                desc: "Ferramenta injetável que viaja até ao fígado e silencia permanentemente o gene PCSK9 associado a colesteróis mortais.", 
+                trlDesc: "TRL 5: Sucessos altamente documentados e publicados nas fases translacionais e pré-clínicas com primatas não humanos.",
+                ruptureDesc: "Grau 5: Em vez de estatinas crónicas diárias, representa a fundação de uma 'vacina de cura vascular' que desativa silenciosamente os traços defeituosos inerentes da espécie.",
+                source: "nature.com" 
+            },
+            { 
+                id: 18, label: "Vacina Butantan-DV", quad: 1, trl: 8, rupture: 4, institution: "Instituto Butantan", country: "Brasil", 
+                solution: "Formula viva atenuada inovadora com proteção integrada contínua para os 4 sorotipos cruzados da dengue.", 
+                desc: "Design profilático revolucionário criado propositadamente para ter imunidade completa numa única dose biológica.", 
+                trlDesc: "TRL 8: Ensaios clínicos de longa duração (Fase III) completados com índices de proteção comprovados; fase burocrática final da Anvisa.",
+                ruptureDesc: "Grau 4: Altera dramaticamente a logística e a velocidade do Estado na capacidade de imunizar territórios quentes rapidamente, neutralizando a endemia.",
+                source: "Ranking CSV" 
+            },
+            { 
+                id: 19, label: "R21/Matrix-M", quad: 1, trl: 9, rupture: 5, institution: "Oxford", country: "Reino Unido", 
+                solution: "Plataforma vacinal sintética de topo estruturada com adjuvante massivo para prolongar a eficácia e baratear a produção.", 
+                desc: "Atinge a dura e histórica meta médica da OMS, demonstrando eficácia profilática robusta superior a 75% em áreas endémicas severas.", 
+                trlDesc: "TRL 9: Licenciada formalmente por conselhos globais de saúde, sendo já produzida à escala das dezenas de milhões de unidades para as regiões críticas de África.",
+                ruptureDesc: "Grau 5: Capaz de suprimir efetivamente uma doença biológica responsável por milhões de fatalidades infantis por década. O apogeu da imunologia universal.",
+                source: "ox.ac.uk" 
+            },
+            { 
+                id: 20, label: "Amtagvi (TILs)", quad: 1, trl: 9, rupture: 4, institution: "Iovance", country: "EUA", 
+                solution: "Terapia celular viva baseada nos próprios Linfócitos Infiltrantes de Tumor do paciente biológico (TILs).", 
+                desc: "Resgata, multiplica e ativa as células de defesa que o corpo criou mas que estavam a falhar, reinfundindo um 'exército' otimizado.", 
+                trlDesc: "TRL 9: Recebeu aprovação cabal do FDA para administração clínica como standard em cenários de melanoma metastático resistente e letal.",
+                ruptureDesc: "Grau 4: Expande os portões da cura celular — antes estritamente aprisionada a cancros do sangue (leucemias) — para aniquilar as barreiras dos complexos tumores sólidos.",
+                source: "fda.gov" 
+            },
+            { id: 21, label: "Vacina mRNA Onco", quad: 1, trl: 6, rupture: 5, institution: "Moderna/BioNTech", country: "EUA/ALE", solution: "Injeção biológica construída na hora com RNA mensageiro programado sobre o código genético mutado extraído cirurgicamente da biópsia de cada doente.", desc: "Ensina o sistema imune a reconhecer e caçar as peças (antígenos) neo-específicas remanescentes que o cirurgião não conseguiu extrair, evitando recidivas.", trlDesc: "TRL 6: Os relatórios confirmados dos ensaios de fase 2 em melanomas apresentaram reduções do risco de morte assombrosas. Encontra-se em Fase 3.", ruptureDesc: "Grau 5: Se amadurecido, finaliza e enterra a lógica tóxica da 'quimioterapia cega' no pós-operatório (adjuvante), tornando a oncologia finalmente hiper-focada e cirúrgica.", source: "Ranking CSV" },
+            { id: 22, label: "Tirzepatida", quad: 1, trl: 9, rupture: 5, institution: "Eli Lilly", country: "EUA", solution: "Combinação peptídica de alto nível e duplo-agonismo que se liga simultaneamente aos recetores químicos GIP e GLP-1 corporais.", desc: "Quebra os limites químicos das gerações prévias, resultando em quedas abissais do peso corporal e do controle agudo insulinémico sem cortes.", trlDesc: "TRL 9: Molécula integralmente aprovada nos compêndios reguladores e já em guerra franca competitiva na escala livre do faturamento mundial.", ruptureDesc: "Grau 5: Prova definitiva mercadológica que as reduções pesadas e as prevenções obesas não requerem restrições anatómicas (bisturi). Eleva violentamente o patamar concorrencial.", source: "Ranking CSV" },
+            { id: 23, label: "Edição Prime", quad: 1, trl: 4, rupture: 5, institution: "Prime Medicine", country: "EUA", solution: "Ferramenta celular sofisticada que atua puramente num método tipo 'processador de texto' (procura/substitui) diretamente nas cadeias nucleotídicas da vida.", desc: "Atinge graus inéditos de precisão química sobre a CRISPR-Cas9 primária, pelo simples facto fundamental de não causar dupla rotura na fita da cadeia do DNA do indivíduo.", trlDesc: "TRL 4: Investigação profunda; encontra-se na fase rigorosa da verificação laboratorial sistêmica e tradução animal antes dos testes complexos no fluxo humano vivo inicial.", ruptureDesc: "Grau 5: Esta tecnologia, madura, promete tratar de uma assentada e sem desvios fora-do-alvo mais de 89% da globalidade total das patologias hereditárias genéticas descritas na história.", source: "Ranking CSV" },
+            { id: 24, label: "CAR-T Autoimunes", quad: 1, trl: 6, rupture: 4, institution: "Acadêmico", country: "Alemanha", solution: "Reprogramação tática baseada em laboratório direcionada às defesas primárias das células imunitárias T dirigidas neste caso às patologias do colagénio autoimune Lúpus.", desc: "Emprega os batalhões brancos para atacar as próprias células B produtoras dos anticorpos letais que destroem os órgãos nativos no paciente autoimune.", trlDesc: "TRL 6: Excede a translação ao registar evidência humana clínica sólida. Doentes condenados a vidas ligadas a bombas imuno-supressoras entraram em remissão química limpa profunda continuada.", ruptureDesc: "Grau 4: Funciona como uma alavanca biológica. Subtrai toda uma matriz tecnológica dispendiosa desenvolvida exclusivamente para leucemia transferindo-a de modo eficaz para combater inflamações crónicas destrutivas imunitárias graves.", source: "Ranking CSV" },
+            { id: 25, label: "CRISPR in vivo Fígado", quad: 1, trl: 7, rupture: 5, institution: "Intellia", country: "EUA", solution: "Dose profilática e nano-estruturada que conduz e descarrega todo o mecanismo microscópico de edição e corte CRISPR a circular ativamente na corrente do sangue do utente vascular de forma isolada.", desc: "Anula permanentemente as causas letais associadas à paralisia e falência de toxinas da amiloidose atuando silenciosamente nas paredes glandulares e do fígado em funcionamento ativo fisiológico não estático.", trlDesc: "TRL 7: Baseado na solidificação extensa comprovada em relatórios oficiais e abertos relativos a fases um e dois de trials, confirmando cortes robustos e descidas consistentes brutais das toxinas mortais originárias humanas sem sequelas orgânicas severas associadas do produto injetado no processo de circulação vivo do grupo amostragem real testado.", ruptureDesc: "Grau 5: O fim do laboratório físico limpo como premissa primária operatória de luxo biológico e o marco onde o processo 'ex-vivo' custoso dá lugar a abordagens sistémicas da seringa terapêutica convencional hospitalar, que edita os defeitos fisiológicos crónicos orgânicos e estruturais dos genes em tempo real injetado nas macas da periferia médica corrente e democrática acessível sem processos extenuantes logísticos pesados fora do organismo na centrifugadora industrial externa.", source: "Ranking CSV" },
+            { id: 26, label: "Anticorpos Biespecíficos", quad: 1, trl: 9, rupture: 4, institution: "Múltiplos", country: "Global", solution: "Ferramenta sistémica fabricada laboratorialmente desenhada propositadamente na simulação de estrutura com pontas em formato bi-fásico simultâneo ligando por contato e atração direta o recetor letal do sistema do linfócito e a camada celular doentia invasora no cancro do paciente em tratamento.", desc: "Dita um abraço biológico forçado sem necessitar de colheita prévia do sistema hematológico. É a ponte desenhada que arrasta o sistema imunitário circulante diretamente até aos domínios patológicos malignos escondidos.", trlDesc: "TRL 9: Uma enorme diversidade de fármacos da classe madura a ganhar espaços comerciais autorizados generalizados e definitivos nas prateleiras e matrizes dos guidelines orientadores formais oncológicos prescritos globais mundiais das frentes de primeira ou terceira linha clínica da vida real do utente e planos públicos.", ruptureDesc: "Grau 4: Atua na substituição fulcral das onerosas e exaustivas fábricas biológicas celulares isoladas por caixas e pacotes sintéticos 'Off-The-Shelf' de resposta e extração fulminante curativa na prateleira do stock frigorífico do centro local, democratizando vertiginosamente a viabilidade económica da medicação no tratamento celular de rotina diária no hemisfério da periferia do centro cirúrgico doente agudo.", source: "Ranking CSV" },
+
+            // Eixo 2: Dispositivos
+            { id: 27, label: "Milli-spinner", quad: 2, trl: 6, rupture: 5, institution: "Stanford", country: "EUA", solution: "Estrutura material micro-ativa e giratória implantada via cateterismo concebida de modo inteligente no espectro de dimensões micrométricas para a desobstrução focada.", desc: "Avanço cirúrgico físico agudo capturando mecanicamente os emaranhados e blocos oclusivos isquémicos arteriais em zonas profundas intracranianas que a via isolada dos tratamentos líquidos solventes médicos e químicos endovenosos não soluciona ou dissolve na janela curativa de salvamento viável isquémico da massa nevrálgica e danos cerebrais adjacentes irreversíveis vitais das áreas de emergência doente AVC rotineiro vascular do coração ou da atividade encefálica da rotina global.", trlDesc: "TRL 6: Fase de consolidação sistêmica da prova inicial biológica cirúrgica transladada de modelos orgânicos vivos experimentais superiores com validação tátil física real antes do processo humano complexo legal formal escalado da academia laboratorial rigorosa americana.", ruptureDesc: "Grau 5: Potencial de quebra disruptiva aguda onde a eficácia e velocidade limpa estruturada do micro-robô se interpõe cirurgicamente minimizando os óbitos e incapacidades brutas isquémicas em detrimento exclusivo de injeções venosas genéricas inespecíficas lentas de perfuração doente de rotina médica padrão.", source: "stanford.edu" },
+            { id: 28, label: "Glicemia OTC", quad: 2, trl: 9, rupture: 4, institution: "Abbott/Dexcom", country: "EUA", solution: "Placas e biossensores analíticos físicos da pele e subcutâneos geradores e recetores contínuos eletrónicos transladados para os fluxos do regime comercial liberado sem intercepção e atestado médico ou receita curativa formal tradicional (medicina e controlo contínuo sobre o balcão da retalho).", desc: "Força a massificação preventiva, garantindo um olhar biológico não limitante da glicose em rotina diária para o acompanhamento em tempo real contínuo 24 horas sobre o pico metabólico e alimentação preditiva proativa longevidade no humano saudável diário, e utentes na linha pré-crónica inicial metabólica e glicémica dos hábitos de consumo alimentar não otimizado local e populacional em vigilância doente inicial e preventiva e em massificação desportiva não crônica base ou acompanhada.", trlDesc: "TRL 9: Presença absoluta em catálogos eletrónicos físicos abertos ao consumidor com dezenas de milhões de braços logados nos servidores analíticos diários destas IAs comerciais das big techs aprovadas estatais gerais.", ruptureDesc: "Grau 4: Abandona totalmente o monopólio e o ato invasivo da dor da lanceta perfuradora dolorosa crônica estrita hospitalar, migrando os dados de controlo orgânico profundo da redoma hermética reativa do laboratório ou enfermaria, e disponibilizando os logs informacionais para ações clínicas e nutricionais e otimização preventiva diária da base e autonomia ativa no utilizador informado.", source: "Ranking CSV" },
+            { id: 29, label: "Ultrassom IA Bolso", quad: 2, trl: 9, rupture: 4, institution: "Butterfly Network", country: "EUA", solution: "Impressão tecnológica dos transdutores cristalinos das ondas sísmicas compactada numa matriz minúscula sólida contínua on-a-chip guiada ativamente em processamento preditivo pelo aplicativo base num simples celular na ligação.", desc: "Muda os painéis dos complexos exames na própria algibeira móvel da bata do clínico genérico com alertas e medição guiada algorítmica exata automática focada em patologias de trauma e bloqueios internos urgentes viscerais cardíacos torácicos da consulta de base na observação geral das emergências periféricas sem intervenção prévia dos peritos técnicos radiologistas ou marcações longas em laboratórios radiológicos dedicados.", trlDesc: "TRL 9: Em mercado formal sólido distribuído, suportando já autorizações em bloco da agência regulamentar das Américas. Disperso e em função de rastreio crítico padronizado até nos fluxos operativos milicianos operacionais de frente e urgências desprovidas em vários polos transcontinentais desprovidos geográficos do mapa infraestrutural remoto e centros urbanos.", ruptureDesc: "Grau 4: Errradica e finta a longa burocracia complexa dependente das imponentes super-máquinas dispendiosas radiológicas limitadas de duzentos mil dólares dos blocos centrais e do médico especialista. É a ecografia real transladada ao estatuto portátil e básico equivalente do moderno auscultador básico, democratizando o primeiro acesso diagnóstico a visões detalhadas cruciais orgânicas com qualidade em qualquer ponto humano assistencial.", source: "Ranking CSV" },
+            { id: 30, label: "Órgãos-on-a-Chip", quad: 2, trl: 6, rupture: 4, institution: "Wyss Institute", country: "EUA", solution: "Sistemas complexos alinhados e desenvolvidos de cristal microfluídico que agrupam câmaras sintéticas infundidas ativamente e alinhadas em perfis celulares biológicos reais do tecido vascular hepático e alvéolo celular humano doente isolado vivo mantido simulado na pressão e oxigenação contínua e real nos reagentes físicos dos substratos laboratoriais sem uso do hospedeiro biológico orgânico e completo ou do roedor para ensaio biológico celular local animal toxicológico químico das moléculas e novas respostas no banco isolado pericial químico celular orgânico bio-mimético artificial e do modelo in silico dos dados e das formulações laboratoriais.", desc: "Elimina barreiras da ineficiência com redes onde moléculas farmacológicas circulam em respostas reais biológicas que imitam com uma exatidão sem precendentes os ritmos pulmonares hepáticos perante agressões de poluição e testes base nas reações fisiológicas vitais base puras nas respostas humanas celulares não inter-espécies dos bancos tóxicos primários ou fases clínicas inciais ou laboratórios suínos limitados das respostas biológicas cruzadas da biologia animal do organismo externo impreciso das pesquisas gerais padrão limitadas dos desenvolvimentos primários passados da velha indústria.", trlDesc: "TRL 6: Uso formal, operacionalizado de modo abrangente já como subsituto e ferramenta fiável viável adotado pela Big Pharma mundial P&D em toxicidade para gerar documentação exata, integrando formalmente os manuais de leis progressivas norte-americanas autorizantes da anulação base do teste clássico focado vivo em prol dos bio-chips de silício aprovadas no FDA Modernization Act em testes de fronteira inicial.", ruptureDesc: "Grau 4: Estilhaça o cruel e altamente impreciso dogma histórico de calibrar venenos e químicos vitais cruzados humanos e reações curativas nas estruturas imunes biológicas completamente dispares dos murganhos e cobaias; escalando drasticamente a aprovação e os rácios de passagem nas triagens do funil pré-clínico evitando erros fatais tardios humanos com modelos transparentes humanos espelhados da física real de tecidos nativos sintéticos nos laboratórios do futuro biomédicos da transição moderna livre de testes vivos.", source: "Ranking CSV" },
+            { id: 31, label: "Neuromodulação", quad: 2, trl: 8, rupture: 3, institution: "Startups", country: "Global", solution: "Geração e calibração de ondas focaies de alta frequência transcranianas das bandas e frequências não limitantes externas e magnéticas guiadas aos tecidos e cascas anatómicas e nódulos e recetores corticais específicos orgânicos.", desc: "Configurações que geram o desbloqueio neural reconectando as redes e religando a comunicação isolada patológica associada a doenças degenerativas crônicas agudas depressivas do paciente incapacitado por distúrbio crónico sem a exigência agressiva anestésica eletro-convulsiva do passado psiquiátrico de internamento e sedação do doente de transtorno agressivo não reativo sem soluções do leque curativo de químicos.", trlDesc: "TRL 8: Plataformas totalmente amadurecidas a uso em ambulatório clínico diário espalhadas na esfera privada da psiquiatria mundial. Tecnologias aceites para casos refratários em entidades e reguladores ocidentais para terapêuticas padronizadas na depressão severa crônica e desordem compulsiva do paciente com resistências sem intervenções físicas e lobotomias biológicas no paciente isolado rotineiro local em centros neurológicos especializados.", ruptureDesc: "Grau 3: Estrutura clínica avançada que permite o escoamento mecânico da dor mental suplementar onde a inércia sistémica da dependência e estagnação base da farmacologia pílula pura e pílulas anti-depressivas falharam. Permite atuar diretamente pela força física magnética não invasiva reescrevendo vias elétricas na fonte da anomalia do doente de alto risco contínuo crónico sem soluções do quadro formal base das receitas clínicas químicas da base tradicional primária do apoio generalista crónico local com mortalidade e suicídio persistente na base geral do mercado e utentes.", source: "Ranking CSV" },
+            { id: 32, label: "Válvulas Impressas 3D", quad: 2, trl: 5, rupture: 5, institution: "Bioimpressão", country: "Global", solution: "Disposição milimétrica automatizada algorítmica construtora de malhas e tecidos por máquinas e extrusão exata das tintas celulares reativas em géis elásticos biológicos programados das características volumétricas mapeadas a partir das próprias ressonâncias morfológicas originais vitais coronárias do paciente do banco isolado e recetor nativo orgânico único em espera com patologia obstrutiva estrutural falhada com cirurgia ou mal-formação do coração no peito vivo crónico interno.", desc: "Produção 'on-demand' laboratorial clínica e estanque que mimetiza integralmente o perfil cardíaco da válvula e flexibilidade hidrodinâmica mecânica exigida ao bom fluxo biológico do tecido, operando sobre modelos autólogos estruturais que escapam à armadilha da barreira mortífera imunitária e colapso anatômico nos enxertos tradicionais ou sintéticos cirúrgicos dos implantes base crónicos da atualidade da técnica hospitalar cardíaca.", trlDesc: "TRL 5: Ensaios de bancada intensivos e translacionais de robustez nos bioreatores simuladores ativos test-rigs. Os constructos batem milhões de vezes provando a elasticidade física e mecânica pura sem rasgões antes dos enxertos vivos dos corações originais reais humanos complexos em modelos avançados experimentais antes da aprovação escalada dos conselhos estritos das comissões oncológicas mundiais em fase do avanço legal biológico humano do enxerto e teste focado progressivo e contínuo translacional forte das academias isoladas trans-espécies ou modelos computacionais na avaliação real.", ruptureDesc: "Grau 5: O fecho radical ao modelo arcaico mecânico e cirúrgico restrito imunológico. Suplanta inteiramente a dependência do utente de soluções biológicas porcinas degradáveis rápidas orgânicas ou de elementos carbonados puramente artificiais que obrigam vidas condenadas a fluidificantes anticoagulantes perigosos de toma diária sistémica, introduzindo partes suplentes biológicas perfeitas desenhadas de forma nativa limpa sem risco de ataque macrofágico orgânico do hospedeiro nas reconstruções precisas cirúrgicas vitais do sistema orgânico central.", source: "Ranking CSV" },
+            { id: 33, label: "Wearables Clínicos", quad: 2, trl: 8, rupture: 3, institution: "Apple/Garmin", country: "EUA", solution: "Métricas fotopletismográficas contínuas emitidas e calibradas por recetores avançados no pulso humano alinhadas e combinadas numa teia computacional portátil do software de base das tecnologias integradas para ler micro-ritmos das alterações da onda contínua nos sistemas de hardware de ecrãs digitais desportivos e massivos no pulso popular do doente de risco diário generalista e desportista não doente ativo e doente sem foco médico base e registo sem anomalias anteriores focais em tempo orgânico real sistêmico ativo do ecossistema geral rotineiro da matriz contínua.", desc: "Algoritmos treinados profundamente nas oscilações elétricas nativas do músculo detetam imperfeições e ruídos mortais das vias do fluxo rítmico cardiovascular (ex: a fibrilação atrial oculta assintomática silenciosa e letal ou a paralisia hipóxica da apneia noturna isolada que causaria quadros de ataque sistêmico isolados nas urgências), permitindo que os alertas saltem com acuidade e exatidão base equivalente aos elétrodos grudados restritivos de pele dos painéis do hospital tradicional sem os desconfortos fixos e com acompanhamento constante dinâmico.", trlDesc: "TRL 8: Elevadas conquistas burocráticas globais. A adoção dos modelos das rotinas diárias com permissões exclusivas do formato SaMD (Software como Dispositivo Médico) atestadas pelo FDA americano confirmam os relatórios fotográficos destes sensores e algoritmos eletrónicos de pulso validando e confirmando estatisticamente a exatidão métrica com o rigor das cintas e cabos e holters de grau analítico hospitalar de fita física do laboratório real nos doentes monitorizados globais nos painéis de cardiologistas da saúde pública sem limites do mercado das companhias digitais modernas e gigantes.", ruptureDesc: "Grau 3: Fusão paradigmática real pragmática. O universo dedicado aos treinos desportivos de corrida e fitness e os relógios recreativos fundem as linhas cruzando a barreira lúdica para operar um rastreio preventivo real de base invisível e passiva do cidadão, invertendo o processo passivo reativo agudo das consultas para um acompanhamento diário ativo em milhares de milhões de doentes silenciosos mundiais prevenidos e intercetados e notificados pelo pulso nas ruas e em casa antes da dor do colapso fatal na maca da urgência nas áreas cardiovasculares críticas rotineiras diárias de emergência da base central e local.", source: "Ranking CSV" },
+            { id: 34, label: "Cirurgia Autônoma", quad: 2, trl: 5, rupture: 4, institution: "Johns Hopkins", country: "EUA", solution: "Arcabouço físico robótico de precisão integrado a software e recetores tridimensionais (visão laser estruturada) gerido ativamente e inteligentemente pelo computador nas linhas operativas da maca e bisturi do doente mecânico cirúrgico sem intervenções contínuas passivas de manivelas à distância focadas no especialista físico na câmara cega separada em blocos e focado unicamente na condução e supervisão da tomada algorítmica robótica e nas suturas teciduais independentes operativas sem auxílio central no bloco restrito físico de trauma e cirurgia e de reconstrução cirúrgica orgânica e de anastomose complexa rotineira e complexa focado em tempo real contínuo sem limitações cinéticas mecânicas da máquina médica.", desc: "Braços independentes efetuam o engaste cirúrgico exato não linear biológico orgânico (ex: anastomoses complexas teciduais nos frágeis intestinos do doente na robótica STAR) compensando de forma reativa os tremores mecânicos biológicos microscópicos, executando malhas suturais limpas milimétricas sem falhas tensionais base humanas exatas ou descuidos da fadiga operatória em horas críticas do bloco no processo manual isolado imperfeito com o material reativo da sala estéril dos cirurgiões cansados orgânicos no terreno prático sem os desvios focais algorítmicos autônomos ou da rede robótica da engenharia contínua do doente nas macas da periferia médica corrente e complexa de acesso limpo nas cirurgias e tecidos e nas incisões cirúrgicas no doente crítico real da rotina das urgências da clínica moderna e do bloco operatório isolado em tempo e cirurgias complexas das frentes de intervenção hospitalar base efetiva isolada de acesso real médico do sistema.", trlDesc: "TRL 5: Marco translacional alcançado e validado fisicamente pela medicina cirúrgica experiente universitária e experimental animal profunda (suína) com alta semelhança dos contornos digestivos comprovando, através da robótica pura operatória limpa isolada, que as suturas executadas pela via algorítmica bateram consistentemente nos quadros analíticos rigorosos de métricas o tecido curado manipulado fisicamente pelas mãos dos experts biológicos experientes treinados nas cirurgias de rotina do corpo nativo mecânico animal dos testes exaustivos e complexos na fase das academias americanas primárias fechadas.", ruptureDesc: "Grau 4: Abandona de modo efetivo a mecânica instrumental dependente onde os complexos tubos Da Vinci são unicamente 'fantoches caríssimos de extensão do braço', introduzindo uma autonomia na incisão operatória cirúrgica tecidual que padroniza milimetricamente a segurança universal base independente das mãos, sono ou experiência cirúrgica exaustiva dos humanos cirurgiões mortais nos procedimentos hospitalares do utente e planos públicos sem as desvantagens base do especialista e focada na independência central da ação na máquina algorítmica de acesso exato universal no tecido do doente nos cenários curativos diários em macas.", source: "Ranking CSV" },
+            { id: 35, label: "Tatuagens Suáveis", quad: 2, trl: 4, rupture: 4, institution: "UCSD", country: "EUA", solution: "Sistemas em películas invisíveis finas impressas de carbono, matriz micro-esponjosa estrutural de fita e eletrodos eletrônicos microscópicos orgânicos com acoplagem colada à barreira fisiológica natural base externa sudorípara no epiderme do tecido exterior e suor da base da estrutura corporal orgânica para monitorização química sem intrusão e sangramentos contínuos no ecrã computacional portátil celular algorítmico do paciente em tratamento contínuo isolado sem os métodos invasivos puros com as lâminas analíticas biológicas contínuas das químicas e dos marcadores da pele limpa e do tecido em doentes crônicos das químicas isoladas biológicas das frentes em ensaios práticos diários invisíveis da doença.", desc: "Captam as concentrações salinas vitais, metabolitos eletroquímicos de degradação orgânica de exercício base crítico (ex: ácido lático celular sistémico e glucose pura exsudada invisível nas pressões reativas diárias vitais orgânicas não agressivas externas da matriz) sem invocar reações dolorosas traumáticas nos perfurados na punção das pontas vasculares agressivas, libertando utentes, crianças com quadros crónicos frágeis, desportistas diários isolados do stress base de invasão contínua e hospitalar ou do posto com leituras biológicas invisíveis contínuas passivas de acesso contínuo e orgânico fora da bata médica.", trlDesc: "TRL 4: Resultados provados laboratorialmente de calibração base de extração fidedigna com os recetores analíticos testados das concentrações contra bases sanguíneas sistémicas e reais. Os protótipos avançam e procuram de forma exaustiva as vias das blindagens de interferências, os circuitos rádio e autonomia e robustez nas peles úmidas e o uso mecânico comercial diário de balcão e de calibração e empacotamento comercial sem os entraves das falhas físicas sem latência e os obstáculos das peles úmidas das academias isoladas e em voluntários vivos nos modelos experimentais.", ruptureDesc: "Grau 4: Remove efetivamente a barreira central letal anatômica limitante das leituras contínuas (a dor perfuradora biológica repetitiva vascular orgânica), permitindo perfis integrais metabólicos contínuos das pessoas invisíveis em atividade mecânica corrente do dia. A doença do utente silencioso não exige o sacrifício e o internamento hospitalar ou do posto com leituras biológicas em amostragens cruas químicas dolorosas diárias biológicas na rotina geral da clínica de acesso limpo nas avaliações do corpo contínuo no ambiente orgânico da tecnologia e inovação base diária de acompanhamento invisível.", source: "Ranking CSV" },
+            { id: 36, label: "Tomo por Impedância", quad: 2, trl: 7, rupture: 4, institution: "Fraunhofer / BR", country: "Alemanha", solution: "Instalação contínua e acoplamento base eletromagnético nas frentes flexíveis de eletrodos em cintas ativas em volta do diâmetro dos tórax respiratórios graves humanos não evasivos em frequências leves radioelétricas contínuas geradas pela matriz tecnológica focada analítica pulmonar nas áreas de emergência do doente acamado das ventilações pesadas das secções em tratamento crónico orgânico isolado nas camas fixas intensivas complexas sistémicas nas UTIs hospitalares saturadas doentes no ecossistema geral reativo na clínica moderna e no suporte ventilatório de respiração crônica e diária na assistência central das máquinas base puras operadas e respiradores do hospital do utente reativo.", desc: "Decodifica as oscilações rádio criadas entre correntes internas teciduais projetando de maneira espelhada tridimensional os gráficos vivos pulmonares de aeração oxigenada dos blocos exatos lobares orgânicos e sem invocar agressões nosocomial químicas com corantes letais radioativos das tomografias repetitivas ou da máquina externa pesada e do ventilador cego da medicina antiga de base do médico cego em frente ao equipamento nas infraestruturas intensivas base contínua e interligadas em ecrãs da máquina no centro hospitalar sem a intervenção pesada das máquinas grandes onerosas de ressonância no dia-a-dia do centro hospitalar e urgências desprovidas.", trlDesc: "TRL 7: Equipamento ativo translacional implementado com validações hospitalares contínuas fortes base nas instalações de bloco real (Hospitais piloto estruturados alemães e redes inovadoras SUS avançadas latino americanas, ex. centros clínicos Goianos). Dados fiáveis a proteger efetivamente e fidedignamente no doente sedado nas avaliações reais e com as agências de inovação operando no suporte ao clínico de emergência nas UTIs reais mundiais de balcão hospitalar e suporte ao doente crítico.", ruptureDesc: "Grau 4: Previne a epidemia traumática fatal ignorada (iatrogénio médico das ventilações intensivas cegas arcaicas das frentes urgentes) ao conceder à linha médica intensivista o dom da visão das pressões vivas de inflar no leito das camas fixas orgânicas, salvando lobos celulares das roturas biológicas da expansão aguda brutal não avaliada e invisível da ventilação do sistema curativo focado milagroso na emergência hospitalar de base do doente inconsciente sem a velha máquina cega médica contínua diária de acesso primário das unidades das redes públicas.", source: "Ranking CSV" },
+
+            // Eixo 3: Ecossistema
+            { 
+                id: 37, label: "Método Wolbachia", quad: 3, trl: 8, rupture: 5, institution: "Fiocruz/WMP", country: "Brasil", 
+                solution: "Introdução biológica estratégica de mosquitos vetores infectados propositadamente com uma bactéria benéfica no meio ambiente aberto.", 
+                desc: "A bactéria anula a capacidade do mosquito selvagem replicar e transmitir ativamente vírus letais, quebrando o ciclo epidêmico.", 
+                trlDesc: "TRL 8: Expansão macro, suportada ativamente pelos orçamentos estatais, demonstrando relatórios reais de erradicação da doença em metrópoles piloto sul-americanas.",
+                ruptureDesc: "Grau 5: Inovação conceitual máxima: combater patologias endêmicas através do redesenho ecológico e biotecnológico do próprio território físico habitacional, e não nos leitos de urgência.",
+                source: "fiocruz.br" 
+            },
+            { 
+                id: 38, label: "Pembrolizumab Subcutâneo", quad: 3, trl: 8, rupture: 4, institution: "NHS England", country: "Reino Unido", 
+                solution: "Conversão farmacêutica e mecânica da medicação imunoterápica intravenosa lenta para uma injeção dérmica ultra-rápida.", 
+                desc: "A droga mantém as características, mas a forma de administração transforma a ocupação hospitalar de horas para poucos minutos vitais.", 
+                trlDesc: "TRL 8: Adoção prática de grande escala no coração do sistema público inglês (NHS), já em vias ativas de tratamento e protocolos de linha de frente.",
+                ruptureDesc: "Grau 4: Disrupção logística inquestionável: com a mesma exata molécula sintética, os hospitais duplicam ou triplicam a capacidade oncológica instalada no mesmo espaço físico.",
+                source: "nhs.uk" 
+            },
+            { 
+                id: 39, label: "Ecossistema Chinês Farma", quad: 3, trl: 8, rupture: 4, institution: "China Hubs", country: "China", 
+                solution: "Estruturação planificada estatal ligando subsídios trilionários, biotechs ultra-ágeis e manufatura fabril para P&D agressivo biológico.", 
+                desc: "Plataforma nacional que recruta, desenvolve e patenteia curas (ex: genéticas e imunológicas) num ritmo vertiginoso e com baixíssimo custo logístico.", 
+                trlDesc: "TRL 8: Emissão massiva de drogas oncológicas inovadoras de resposta imune avançada já integrando o mercado global competitivo na fase final de adoção.",
+                ruptureDesc: "Grau 4: Destrói o monopólio exclusivo biotecnológico norte-americano histórico e insere o eixo asiático como a nova matriz acessível da medicina de ponta para a metade sul do globo.",
+                source: "Ranking CSV" 
+            },
+            { 
+                id: 40, label: "Escala Serum R21", quad: 3, trl: 9, rupture: 4, institution: "Serum Institute", country: "Índia", 
+                solution: "Potência industrial fabril desenhada propositadamente para multiplicar patentes estrangeiras complexas e enfrascar milhares de milhões de ampolas limpas.", 
+                desc: "Executa a produção material barata e física em volume inconcebível para as nações parceiras endémicas de África nas diretivas solidárias globais (OMS).", 
+                trlDesc: "TRL 9: Unidade fabril gigantesca operacional contínua e massificada, cujas remessas expedidas já ditam a capacidade de resposta das organizações (UNICEF).",
+                ruptureDesc: "Grau 4: Inovação por extrema acessibilidade: comprova que a engenharia de custo é tão vital quanto a molécula biológica. O brilho da academia de Oxford vira produto barato na fábrica indiana.",
+                source: "Ranking CSV" 
+            },
+            { 
+                id: 41, label: "Genomics England", quad: 3, trl: 7, rupture: 4, institution: "NHS", country: "Reino Unido", 
+                solution: "Iniciativa central e pública orientada para sequenciar de modo sistemático e profundo os genes totais dos cidadãos que dão entrada no serviço da saúde britânico.", 
+                desc: "A biologia mapeada liga instantaneamente os pacientes portadores de falhas às farmacêuticas ou estudos exatos da arquitetura estatal universal.", 
+                trlDesc: "TRL 7: Estrutura completamente enraizada e já processando dados formalmente em rotinas de triagem de câncer e raridades no seio do NHS operante.",
+                ruptureDesc: "Grau 4: Rompe e aniquila a ideia ocidental de que a 'genômica de precisão' é um teste de elite reservado ao seguro privado, convertendo a genética na primeira linha pública do cidadão.",
+                source: "genomicsengland.co.uk" 
+            },
+            { 
+                id: 42, label: "Marco Regulatório Terapias", quad: 3, trl: 9, rupture: 5, institution: "FDA", country: "EUA", 
+                solution: "Adaptação ágil governamental criando 'vias expressas' burocráticas (Breakthrough/RMAT) de análise científica para moléculas de alteração celular revolucionárias.", 
+                desc: "Ferramenta institucional burocrática que acelera e viabiliza a avaliação das edições do DNA na rotina comercial de farmacêuticas em Wall Street.", 
+                trlDesc: "TRL 9: Procedimento administrativo plenamente operante e sacramentado perante a emissão oficial legal dos primeiros produtos comerciais curativos CRISPR baseados nestas leis.",
+                ruptureDesc: "Grau 5: A ferramenta política que permite o avanço biomédico global; as patentes inovadoras e bilhões investidos secariam na inércia legal sem esta reinvenção dos canais de fiscalização do Estado.",
+                source: "fda.gov" 
+            },
+            { 
+                id: 43, label: "Rede Arboviroses", quad: 3, trl: 8, rupture: 4, institution: "Fiocruz", country: "Brasil", 
+                solution: "Orquestração de plataformas preditivas sistêmicas unificando Big Data de laboratórios de base estadual com as manchas da evolução climatérica de chuvas na matriz do SUS.", 
+                desc: "Painel de inteligência contínua governamental focado no alerta logístico para as capitais sul-americanas ameaçadas pela multiplicação vetorial térmica do mosquito endémico local.", 
+                trlDesc: "TRL 8: Sistema público governamental ativo acoplado à saúde nacional provando antevisão exata e redirecionamento de verbas e vacinas antes da eclosão fatal das urgências físicas epidêmicas e de internação massiva.",
+                ruptureDesc: "Grau 4: A visão preditiva analítica estruturada retira a ação desesperada base reagente passiva do gestor local, impondo intervenções vacinais táticas onde a ecologia acusa as brechas fatais vindouras preventivamente no continente imenso.",
+                source: "fiocruz.br" 
+            },
+            { 
+                id: 44, label: "Plataforma mRNA Nacional", quad: 3, trl: 7, rupture: 4, institution: "Cimatec", country: "Brasil", 
+                solution: "Transferência estratégica de complexidade fabril e estruturação laboratorial independente nacional da América do Sul orientada exclusivamente para reter soberania produtiva em RNAm.", 
+                desc: "Construção que impede as roturas de stock cruciais vividas com monopólios norte-americanos nas pandemias e permite agilidade biológica para produzir vacinas de RNA mutantes com autonomia regional continental pura.", 
+                trlDesc: "TRL 7: Instalações físicas atestadas e suportes translacionais concluídos garantindo a efetividade produtiva piloto e amostragem viável para submissões regulatórias locais em polos de alta inovação da federação nacional e institutos equivalentes.",
+                ruptureDesc: "Grau 4: Rompimento geopolítico vital biotecnológico para as nações não europeias, viabilizando que as próximas intervenções de terapia celular sistêmica imune ou viral letal estejam nas mãos fabris estatais próprias e com reação local independente imediata ao agente invasor.",
+                source: "Ranking CSV" 
+            },
+            { id: 45, label: "Ensaios Descentralizados", quad: 3, trl: 8, rupture: 3, institution: "CROs", country: "Global", solution: "RWD domiciliar.", desc: "Quebra fronteira física do ensaio clínico.", trlDesc: "TRL 8: Plataformas consolidadas nos RWD para ensaios globais clínicos sem limites de espaço físico das clínicas.", ruptureDesc: "Grau 3: Inovação ecossistêmica que dilui os custos massivos físicos dos trials nas amostragens virtuais eletrónicas nos wearables de ponta.", source: "Ranking CSV" },
+            { id: 46, label: "Value-Based Pricing", quad: 3, trl: 7, rupture: 4, institution: "Agências HTA", country: "Europa", solution: "Pagamento por cura.", desc: "Modelo atuarial futuro obriga anuidades.", trlDesc: "TRL 7: Estruturas burocráticas europeias assumem contratos contingentes vitais em faturamentos biológicos por patologias de sucesso contínuo da prova clínica a longo termo.", ruptureDesc: "Grau 4: Tecnologia burocrática. Evita o colapso e o banimento dos genomas milionários e o encrave financeiro, suportando o investimento prático à base dos retornos viáveis ao contribuinte.", source: "Ranking CSV" },
+            { id: 47, label: "One Health", quad: 3, trl: 6, rupture: 4, institution: "OMS", country: "Global", solution: "Vigilância Zoonoses.", desc: "Barreira RAM e pandêmica.", trlDesc: "TRL 6: Redes preditivas conjuntas operativas (Early Warning) transnacionais nos ensaios integrados veterinários e na orla humana florestal focada de matrizes hídricas agrárias e origens urbanas unidas ambientais das causas epidêmicas originais da vida biológica.", ruptureDesc: "Grau 4: Abordagem integral onde o sistema clínico deixa de combater os pandêmicos base doentes e passa a prever os saltos de barreira biológica com os agropecuários focados nos agentes multiresistentes moleculares na orla base do ecossistema.", source: "Ranking CSV" },
+            { id: 48, label: "Hospital-at-Home", quad: 3, trl: 8, rupture: 4, institution: "Mayo Clinic", country: "EUA", solution: "UTI domiciliar.", desc: "Desospitaliza com alta acuidade.", trlDesc: "TRL 8: Ecossistema implementado robusto com o Medicare focado em quadros sistêmicos médicos pós-agudos no conforto e monitoramento avançado real.", ruptureDesc: "Grau 4: Reorganiza os lucros das paredes dos leitos fixos por serviços virtuais orgânicos sem dor e isentos das infecções letais bacterianas rotineiras dos hospitais no paciente do dia.", source: "Ranking CSV" },
+            { id: 49, label: "Acesso Psicodélico", quad: 3, trl: 7, rupture: 4, institution: "TGA/FDA", country: "Austrália/EUA", solution: "MDMA/Psilocibina.", desc: "Liberação para traumas severos.", trlDesc: "TRL 7: Avaliações compassivas abertas na academia e liberação estrutural real em matriz de lei do continente base australiano sob supervisões críticas rigorosas psiquiátricas doente a doente no mercado legal focado restrito crônico.", ruptureDesc: "Grau 4: Fim da linha cronificada da farmacologia antidepressiva diária falha contínua por via da revolução de choques psíquicos profundos reconstrutores das matrizes elétricas nas desordens base contínuas terminais da depressão do paciente isolado doente base crónico crasso sem saídas lógicas.", source: "Ranking CSV" },
+            { id: 50, label: "Hub Translacional 4D", quad: 3, trl: 6, rupture: 4, institution: "Fraunhofer", country: "Alemanha", solution: "Ponte Laboratório-Mercado.", desc: "Reduz o Vale da Morte europeu.", trlDesc: "TRL 6: Puxa ativamente e orquestra o capital transnacional para suportar provas biológicas atestadas físicas e protótipos da academia continental em incubadoras test-rig rigorosas da aprovação final real biológica contínua do doente no mercado da união sem perdas do centro base europeu perante polos massivos norte americanos na saúde biológica pura ou tecnológica.", ruptureDesc: "Grau 4: Alavanca base europeia. Elimina as fronteiras de capital da investigação profunda para proteger patentes que aniquilam as mortes base isoladas da burocracia na tradução tecnológica das engenharias diárias complexas.", source: "fraunhofer.de" }
+        ];
+
+        // ========================================================
+        // 2. DADOS: BLOCO 1 (INSTITUIÇÕES LIDERANTES)
+        // ========================================================
+        const allInstitutions = [
+            { 
+                id: 1, name: "Fiocruz", country: "Brasil", axis: "Ecossistema & Acesso", thesis: "Saúde pública e engenharia territorial", 
+                projects: [ { name: "Método Wolbachia", note: "Estratégia de bioengenharia territorial que introduz mosquitos imunes aos vírus da Dengue e Zika." }, { name: "Rede Arboviroses", note: "Plataforma de vigilância para mapeamento precoce de surtos agravados pelas alterações climáticas." } ],
+                storytelling: "Transforma a biologia em infraestrutura territorial de saúde. Lidera intervenções no SUS provando que a melhor inovação contra epidemias climáticas é a engenharia do próprio ecossistema."
+            },
+            { 
+                id: 2, name: "Cleveland Clinic", country: "Estados Unidos", axis: "IA & Saúde Digital", thesis: "IA clínica e orquestração de dados", 
+                projects: [ { name: "Plataforma Oracle+G42", note: "Infraestrutura preditiva baseada na nuvem para gerir o trajeto integral do doente em tempo real." } ],
+                storytelling: "Redesenha o hospital físico como uma plataforma analítica preditiva global, saindo do modelo curativo-reativo para a orquestração de dados."
+            },
+            { 
+                id: 3, name: "Fraunhofer", country: "Alemanha", axis: "Dispositivos & Bioengenharia", thesis: "Pesquisa aplicada e 4D Health", 
+                projects: [ { name: "Hub 4D Health", note: "Consórcio que acelera a passagem de patentes (drugs, diagnostics, devices, data) para os hospitais." } ],
+                storytelling: "A espinha dorsal da translação europeia. Essencial para atravessar o 'Vale da Morte' da inovação, traduzindo as patentes de laboratório para uma escala comercial e acessível."
+            },
+            { 
+                id: 4, name: "Albert Einstein", country: "Brasil", axis: "IA & Saúde Digital", thesis: "Hospital-ICT e soluções nativas", 
+                projects: [ { name: "Centro CITS", note: "Centro interno focado na prototipagem ágil e desenvolvimento digital." }, { name: "IA Radiológica", note: "Modelos próprios de IA desenvolvidos com dados hospitalares para acelerar a precisão no diagnóstico." } ],
+                storytelling: "Pioneiro latino-americano a atuar como uma 'Big Tech' clínica. Desenvolve a sua própria propriedade intelectual e algoritmos que integram os dados diários."
+            },
+            { 
+                id: 5, name: "DeepMind (Isomorphic)", country: "Reino Unido", axis: "IA & Saúde Digital", thesis: "IA biomolecular e farmacêutica", 
+                projects: [ { name: "AlphaFold 3", note: "Prevê com precisão as dobras proteicas, fundamentais para a arquitetura de novas moléculas e tratamentos celulares." } ],
+                storytelling: "Decodificou o paradigma da biologia. A IA agora substitui os morosos ensaios de 'wet lab', desenhando medicamentos com elevada precisão antes de tocar num tubo de ensaio."
+            },
+            { 
+                id: 6, name: "Serum Institute of India", country: "Índia", axis: "Ecossistema & Acesso", thesis: "Escala industrial e acesso", 
+                projects: [ { name: "Manufatura R21", note: "Responsável pela produção massiva da vacina da malária a um custo altamente sustentável para os sistemas de saúde." } ],
+                storytelling: "A força motriz da equidade médica global. Democratiza o acesso viabilizando que as inovações laboratoriais existam a um custo de frações de dólar."
+            },
+            { 
+                id: 7, name: "World Mosquito Program", country: "Austrália", axis: "Ecossistema & Acesso", thesis: "Prevenção bio-vetorial direta", 
+                projects: [ { name: "Controle Wolbachia", note: "Aliança transnacional de bioengenharia focada na erradicação sistêmica do contágio endêmico." } ],
+                storytelling: "Substitui a prevenção farmacológica passiva por uma intervenção ativa no próprio vetor (o mosquito) para interromper os surtos tropicais."
+            },
+            { 
+                id: 8, name: "FDA", country: "Estados Unidos", axis: "Ecossistema & Acesso", thesis: "Regulação Habilitadora de Fronteira", 
+                projects: [ { name: "Fast-Track Gênico", note: "Procedimentos acelerados para garantir que terapias e edições de DNA que curam (N=1) não se percam em anos de burocracia." } ],
+                storytelling: "O marco que rege a velocidade de adoção do planeta. As suas vias-expressas determinam se as edições baseadas em CRISPR se tornarão comercialmente reais ou não."
+            },
+            { 
+                id: 9, name: "NHS (Genomics England)", country: "Reino Unido", axis: "Ecossistema & Acesso", thesis: "Integração genômica populacional", 
+                projects: [ { name: "Genomic Service", note: "Um serviço centralizado de leitura genética universal focado na deteção oncológica e doenças raras." } ],
+                storytelling: "A instituição pública pioneira em massificar o uso da genética. Integrou diretamente o sequenciamento na rotina de triagem de um sistema estatal (NHS)."
+            },
+            { 
+                id: 10, name: "Mayo Clinic", country: "Estados Unidos", axis: "IA & Saúde Digital", thesis: "Ecossistemas de Real-World Data", 
+                projects: [ { name: "Platform Insights", note: "Base de dados clínica desidentificada disponibilizada para consórcios globais no desenvolvimento ético de algoritmos." } ],
+                storytelling: "A vanguarda mundial na curadoria e partilha ética de dados não identificados. Uma verdadeira fonte de pesquisa para gerar as melhores IAs preditivas."
+            },
+            { 
+                id: 11, name: "Stanford University", country: "Estados Unidos", axis: "Dispositivos & Bioengenharia", thesis: "Bioengenharia e inovação cirúrgica", 
+                projects: [ { name: "Milli-spinner", note: "Microdispositivo focado em recuperar a vasculatura aguda através de intervenções minimamente invasivas de rápida resposta no AVC." } ],
+                storytelling: "O epicentro onde o fabrico em silício se encontra com a cirurgia. O rigor académico transformado em dispositivos de salvamento micro-invasivos."
+            },
+            { 
+                id: 12, name: "Novo Nordisk", country: "Dinamarca", axis: "Terapia Gênica & Biotecnologia", thesis: "Farma biológica metabólica", 
+                projects: [ { name: "GLP-1 / Semaglutido", note: "Intervenção terapêutica que redefine a resposta inflamatória através da imitação de hormonas de saciedade e metabolização de glucose." } ],
+                storytelling: "Provocou um abalo sísmico na economia médica planetária, convertendo a obesidade crónica de 'vício de estilo de vida' numa disfunção biológica altamente tratável."
+            },
+            { 
+                id: 13, name: "Eli Lilly", country: "Estados Unidos", axis: "Terapia Gênica & Biotecnologia", thesis: "Avanço e pressão metabólica", 
+                projects: [ { name: "Agonista Tirzepatida", note: "Combinação duplo-hormonal (GIP/GLP-1) otimizada para aumentar o poder endócrino e reverter o peso severo." } ],
+                storytelling: "O contrapeso de inovação crucial que eleva as expectativas terapêuticas a níveis recorde no domínio da redução inflamatória contínua."
+            },
+            { 
+                id: 14, name: "Vertex Pharmaceuticals", country: "EUA", axis: "Terapia Gênica & Biotecnologia", thesis: "Terapia Gênica Comercial (CRISPR)", 
+                projects: [ { name: "Casgevy", note: "A primeira plataforma celular editada por CRISPR-Cas9 aprovada para interromper ciclos graves de doenças sanguíneas (anemia falciforme)." } ],
+                storytelling: "A organização que transpôs a edição de base em laboratório diretamente para as prateleiras clínicas aprovadas pelo governo, definindo a era terapêutica."
+            },
+            { 
+                id: 15, name: "CHOP / Penn Medicine", country: "Estados Unidos", axis: "Terapia Gênica & Biotecnologia", thesis: "Cura hiper-personalizada (Medicina N=1)", 
+                projects: [ { name: "Edição in vivo CPS1", note: "Edição pontual e personalizada num modelo de resposta imune singular com urgência pediátrica extrema." } ],
+                storytelling: "Prova material do avanço absoluto e do estrangulamento da 'Medicina N=1', moldando fármacos criados especificamente para curar uma única pessoa no planeta."
+            },
+            { 
+                id: 16, name: "Instituto Butantan", country: "Brasil", axis: "Terapia Gênica & Biotecnologia", thesis: "Vacinas epidêmicas territoriais", 
+                projects: [ { name: "Vacina Butantan-DV", note: "Imunizante focado no alcance equitativo de múltiplas cepas perigosas com aplicação dose-única facilitada." } ],
+                storytelling: "Salvaguarda tecnológica para os ecossistemas tropicais. Desbravador independente na viabilização de segurança com abordagens eficazes orientadas a populações endémicas."
+            },
+            { 
+                id: 17, name: "Moderna / BioNTech", country: "EUA / Alemanha", axis: "Terapia Gênica & Biotecnologia", thesis: "Reestruturação do mRNA", 
+                projects: [ { name: "Vacinas Oncológicas", note: "Reutilização do modelo flexível do mRNA para ensinar o sistema imune a caçar perfis exatos das biópsias de cancro individuais." } ],
+                storytelling: "Migraram estrategicamente a sua força motriz pandémica para as imunizações personalizadas orientadas puramente a tumores sólidos e mutáveis."
+            },
+            { 
+                id: 18, name: "Epic Systems", country: "Estados Unidos", axis: "IA & Saúde Digital", thesis: "Interoperabilidade Cloud", 
+                projects: [ { name: "EHRs Nativos em Nuvem", note: "Um fluxo orquestrado e conectado que abrange a documentação, faturação e análise profunda em vastos consórcios sanitários." } ],
+                storytelling: "Representam o verdadeiro sistema nervoso central das instalações hospitalares com interoperabilidade garantida pela nuvem."
+            },
+            { 
+                id: 19, name: "Wyss Institute", country: "Estados Unidos", axis: "Dispositivos & Bioengenharia", thesis: "Microfluídica e ensaios sintéticos", 
+                projects: [ { name: "Órgãos-on-a-Chip", note: "Circuito de mimetização sintética das microestruturas humanas como rins, fígados e pulmões para aceleração da fase pré-clínica." } ],
+                storytelling: "Eliminam barreiras éticas arcaicas com testes fluídicos que aceleram o 'screening' inicial sem recurso aos ineficientes processos com animais vivos."
+            },
+            { 
+                id: 20, name: "Google Health", country: "Estados Unidos", axis: "IA & Saúde Digital", thesis: "Infraestrutura cognitiva médica", 
+                projects: [ { name: "MedLM (LLM)", note: "Base computacional e generativa de fundação treinada intensivamente no corpo massivo dos periódicos técnicos acreditados globalmente." } ],
+                storytelling: "A força fundacional na oferta de raciocínio lógico capaz de revolucionar as assistências conversacionais, triagem e integração transversal."
+            }
+        ];
+
+        // ========================================================
+        // 3. DADOS: BLOCO 2 (MATRIZ DE EIXOS - BENTO GRID)
+        // ========================================================
+        const bentoData = [
+            {
+                id: 'hematologia', title: 'Terapia Gênica', icon: 'dna',
+                imageUrl: 'https://i.postimg.cc/wMWfWjW1/Terapia-Genica.jpg',
+                techExpl: 'A edição gênica atua como uma "tesoura molecular", corrigindo o DNA doente. O paradigma médico abandona o tratamento crônico e abraça a "cura em dose única" (N=1).',
+                insight: 'O desafio atuarial: Governos e planos de saúde migrarão obrigatoriamente para "Precificação Baseada em Valor" para pagar as curas de US$ 2 milhões.',
+                sourceDefense: 'Aprovações pioneiras FDA (Casgevy/Lyfgenia) e tratamento N=1 para CPS1 no CHOP.',
+                institutions: ['Vertex', 'CRISPR Tx', 'bluebird bio'], countries: ['EUA', 'UK'],
+                projects: 'Casgevy, Lyfgenia, Terapia CRISPR Bebê KJ',
+                solutionIds: [12, 13, 16] // IDs reais do radarItems para puxar os dados
+            },
+            {
+                id: 'arboviroses', title: 'Saúde Pública Vetorial', icon: 'sun',
+                imageUrl: 'https://i.postimg.cc/26nNXhvF/Saude.jpg',
+                techExpl: 'Engenharia populacional via Método Wolbachia e vacinas de dose única. O ambiente deixa de ser inimigo e vira infraestrutura biológica.',
+                insight: 'A mudança climática exige que epidemias vetorizadas sejam combatidas através da "Saúde Única" (One Health), manipulando o próprio território.',
+                sourceDefense: 'Comunicados do Ministério da Saúde e Fiocruz sobre a expansão nacional do Wolbachia e vacina Butantan.',
+                institutions: ['Fiocruz', 'Butantan', 'WMP'], countries: ['Brasil', 'Austrália'],
+                projects: 'Wolbachia, Butantan-DV',
+                solutionIds: [37, 18]
+            },
+            {
+                id: 'oncologia', title: 'Oncologia de Precisão', icon: 'microscope',
+                imageUrl: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&q=80&w=800',
+                techExpl: 'Terapias TIL que engajam o sistema imune (Amtagvi) cruzadas com inovações mecânicas de formulação subcutânea (NHS).',
+                insight: 'A eficiência logística tornou-se disruptiva: converter quimioterapia IV de 4h em injeção de 5min dobra a capacidade instalada do SUS/NHS.',
+                sourceDefense: 'Aprovação celular Amtagvi (FDA) e reestruturação de fluxos oncológicos via injeção rápida no NHS.',
+                institutions: ['Iovance', 'NHS England'], countries: ['EUA', 'UK'],
+                projects: 'Amtagvi (TILs), Pembrolizumab Subcutâneo',
+                solutionIds: [20, 38]
+            },
+            {
+                id: 'cardiometabolico', title: 'Risco Cardiometabólico', icon: 'heart-pulse',
+                imageUrl: 'https://i.postimg.cc/Kz38c1TF/Cardiometabolico.png',
+                techExpl: 'Plataformas GLP-1/GIP tratam a obesidade como doença biológica sistêmica, desinflamando vias vasculares e preparando campo para edição de genes de colesterol.',
+                insight: 'A redução das comorbidades ligadas ao peso colapsará o faturamento futuro focado em bariátricas, amputações e eventos infarto-agudos.',
+                sourceDefense: 'Impactos financeiros de Eli Lilly e Novo Nordisk; publicações da Nature sobre o YOLT-101.',
+                institutions: ['Novo Nordisk', 'Eli Lilly'], countries: ['Dinamarca', 'EUA', 'China'],
+                projects: 'Incretinas, Tirzepatida, YOLT-101',
+                solutionIds: [15, 22, 17]
+            },
+            {
+                id: 'iaestrutural', title: 'IA Estrutural & Dados', icon: 'cpu',
+                imageUrl: 'https://i.postimg.cc/ryC378d7/IA.jpg',
+                techExpl: 'A IA prevê dobras de proteínas para novas drogas (AlphaFold) e converte hospitais em companhias de dados para auditoria assistencial em tempo real.',
+                insight: 'Os grandes hospitais viraram empresas de software (Data Companies) focadas em predição e orquestração de pacientes, não em aluguel de leitos.',
+                sourceDefense: 'AlphaFold (Google) e plataforma Oracle/G42 liderada pela Cleveland Clinic.',
+                institutions: ['DeepMind', 'Cleveland Clinic', 'Google'], countries: ['EUA', 'UK'],
+                projects: 'AlphaFold, Plataforma IA Global',
+                solutionIds: [1, 2]
+            },
+            {
+                id: 'ecossistema', title: 'Manufatura & Acesso', icon: 'globe-2',
+                imageUrl: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&q=80&w=800',
+                techExpl: 'A ponte entre o laboratório e o paciente. Envolve regulação fast-track (FDA), hiperescala barata de vacinas (Índia) e descentralização de testes clínicos.',
+                insight: 'A inovação bruta virou commodity. O diferencial desta década é baratear a última milha de entrega e escalar a manufatura, liderado pela Ásia.',
+                sourceDefense: 'Escala R21/Matrix-M pelo Serum Institute e designações Breakthrough do FDA.',
+                institutions: ['Serum Institute', 'FDA', 'NHS'], countries: ['Índia', 'EUA', 'Reino Unido'],
+                projects: 'Escala Serum, Regulação FDA, RWD',
+                solutionIds: [40, 42]
+            }
+        ];
+
+        // ========================================================
+        // 4. ESTADO GLOBAL E REFERÊNCIAS DO DOM
+        // ========================================================
+        let hoveredItem = null;
+        let activeFilterAxis = 'all';
+        let activeFilterMaturity = 'all';
+        let activeFilterCountry = 'all';
+
+        // ========================================================
+        // 5. INICIALIZAÇÃO DO DASHBOARD (Apenas executada uma vez)
+        // ========================================================
+        function initDashboard() {
+            // Verificar a presença dos contentores críticos
+            const instGrid = document.getElementById('institutions-grid');
+            if(!instGrid) return; 
+
+            // Configurar Filtros de Instituições
+            const instFilterCountry = document.getElementById('filter-inst-country');
+            const instCountries = [...new Set(allInstitutions.map(i => i.country))].sort();
+            instCountries.forEach(country => {
+                instFilterCountry.appendChild(new Option(country, country));
+            });
+
+            // Configurar Filtros do Radar
+            const radarCountrySelect = document.getElementById('filter-country');
+            [...new Set(radarItems.map(item => item.country.split('/')[0].trim()))].sort().forEach(country => {
+                radarCountrySelect.appendChild(new Option(country, country));
+            });
+
+            // Adicionar Listeners de Modais
+            ['close-modal', 'modal-backdrop', 'close-radar-modal', 'radar-modal-backdrop'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.addEventListener('click', closeModalGlobal);
+            });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModalGlobal(); });
+
+            // Adicionar Listeners de Filtros - Instituições
+            document.getElementById('filter-inst-axis').addEventListener('change', renderInstitutions);
+            document.getElementById('filter-inst-country').addEventListener('change', renderInstitutions);
+
+            // Adicionar Listeners de Filtros - Radar
+            ['filter-axis', 'filter-maturity', 'filter-country'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) {
+                    el.addEventListener('change', (e) => {
+                        if(id === 'filter-axis') activeFilterAxis = e.target.value;
+                        if(id === 'filter-maturity') activeFilterMaturity = e.target.value;
+                        if(id === 'filter-country') activeFilterCountry = e.target.value;
+                        
+                        hoveredItem = null; 
+                        const tooltip = document.getElementById('radarTooltip');
+                        if(tooltip) tooltip.classList.add('hidden'); 
+                        
+                        buildRadarLegend(); 
+                        drawRadar();
+
+                        const filteredCount = getFilteredItems().length;
+                        const panel = document.getElementById('filter-insight-container');
+                        const textEl = document.getElementById('filter-insight-text');
+                        
+                        if(panel && textEl) {
+                            panel.classList.remove('opacity-100'); 
+                            panel.classList.add('opacity-50');
+                            setTimeout(() => {
+                                textEl.innerHTML = generateFilterInsight(activeFilterAxis, activeFilterMaturity, activeFilterCountry, filteredCount);
+                                panel.classList.remove('opacity-50'); 
+                                panel.classList.add('opacity-100', 'ring-2', 'ring-brand-500/50');
+                                setTimeout(() => panel.classList.remove('ring-2', 'ring-brand-500/50'), 1000);
+                            }, 300);
+                        }
+                    });
+                }
+            });
+
+            // Inicializar Ângulos e Raios do Radar
+            radarItems.forEach((item, index) => {
+                let baseAngle = item.quad * (Math.PI / 2);
+                let angleOffset = ((index % 10) / 10 + 0.1) * (Math.PI / 2) * 0.8; 
+                item.angle = baseAngle + angleOffset;
+                if (item.trl >= 8) item.r = 0.1 + (Math.random() * 0.2); 
+                else if (item.trl >= 5) item.r = 0.4 + (Math.random() * 0.2); 
+                else item.r = 0.7 + (Math.random() * 0.2); 
+            });
+
+            // Configurar Canvas do Radar
+            const canvas = document.getElementById('techRadar');
+            if(canvas) {
+                canvas.addEventListener('mousemove', (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    let found = null;
+                    const quadrants = getQuadrants();
+                    
+                    getFilteredItems().forEach(item => {
+                        const dx = (e.clientX - rect.left) - item.x; const dy = (e.clientY - rect.top) - item.y;
+                        if(dx*dx + dy*dy <= 196) found = item;
+                    });
+                    
+                    const tooltip = document.getElementById('radarTooltip');
+                    if (found) {
+                        if (hoveredItem !== found) { 
+                            hoveredItem = found; canvas.style.cursor = 'pointer'; 
+                            tooltip.innerHTML = `<span class="block text-[10px] font-bold text-gray-400 uppercase mb-1" style="color: ${quadrants[found.quad].color}">${quadrants[found.quad].name}</span><strong class="text-base">${found.label}</strong><span class="block text-xs mt-1 text-gray-300 font-mono">TRL ${found.trl} | Ruptura ${found.rupture}</span><span class="block text-xs mt-2 border-t border-gray-700 pt-2 text-gray-400">Fonte: ${found.institution}</span>`; 
+                            tooltip.classList.remove('hidden'); drawRadar(); 
+                        }
+                        tooltip.style.left = (e.clientX - rect.left + 15) + 'px'; tooltip.style.top = (e.clientY - rect.top + 15) + 'px';
+                    } else if (hoveredItem !== null) { 
+                        hoveredItem = null; canvas.style.cursor = 'default'; tooltip.classList.add('hidden'); drawRadar(); 
+                    }
+                });
+                
+                canvas.addEventListener('click', () => { 
+                    if(hoveredItem) openRadarModal(hoveredItem, getQuadrants()[hoveredItem.quad]); 
+                });
+                
+                canvas.addEventListener('mouseleave', () => { 
+                    hoveredItem = null; 
+                    const tooltip = document.getElementById('radarTooltip');
+                    if(tooltip) tooltip.classList.add('hidden'); 
+                    drawRadar(); 
+                });
+                
+                window.addEventListener('resize', drawRadar);
+            }
+
+            // Renderização Primária
+            renderInstitutions();
+            renderBentoCards();
+            buildRadarLegend();
+            drawRadar();
+            
+            // Carregar os ícones (se lucide estiver disponível)
+            if(window.lucide) {
+                window.lucide.createIcons();
+            }
+        }
+
+        // ========================================================
+        // 6. FUNÇÕES DE LÓGICA E RENDERIZAÇÃO
+        // ========================================================
+        
+        function closeModalGlobal() {
+            const infoModal = document.getElementById('info-modal');
+            const radarModal = document.getElementById('radar-modal');
+            if(infoModal) infoModal.classList.add('hidden');
+            if(radarModal) radarModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function getQuadrants() {
+            return [
+                { id: 0, name: "IA & Saúde Digital", color: "#3b82f6" }, 
+                { id: 1, name: "Biotecnologia", color: "#10b981" }, 
+                { id: 2, name: "Dispositivos", color: "#f59e0b" }, 
+                { id: 3, name: "Ecossistema", color: "#8b5cf6" }  
+            ];
+        }
+
+        function getMaturityLevel(trl) {
+            if(trl >= 8) return "8-9";
+            if(trl >= 5) return "5-7";
+            return "1-4";
+        }
+
+        function getFilteredItems() {
+            return radarItems.filter(item => {
+                return (activeFilterAxis === 'all' || item.quad.toString() === activeFilterAxis) &&
+                       (activeFilterMaturity === 'all' || getMaturityLevel(item.trl) === activeFilterMaturity) &&
+                       (activeFilterCountry === 'all' || item.country.includes(activeFilterCountry));
+            });
+        }
+
+        function renderInstitutions() {
+            const instGrid = document.getElementById('institutions-grid');
+            const instFilterAxis = document.getElementById('filter-inst-axis');
+            const instFilterCountry = document.getElementById('filter-inst-country');
+            const instCountText = document.getElementById('inst-filtered-count');
+            
+            if(!instGrid || !instFilterAxis || !instFilterCountry || !instCountText) return;
+
+            const fAxis = instFilterAxis.value;
+            const fCountry = instFilterCountry.value;
+
+            const filteredInst = allInstitutions.filter(inst => {
+                return (fAxis === 'all' || inst.axis === fAxis) &&
+                       (fCountry === 'all' || inst.country.includes(fCountry));
+            });
+
+            instCountText.textContent = filteredInst.length;
+            instGrid.innerHTML = '';
+
+            if (filteredInst.length === 0) {
+                instGrid.innerHTML = `<div class="col-span-full p-8 text-center text-gray-500 bg-gray-50 rounded-2xl border border-gray-200">Não existem instituições que correspondam a este cruzamento estrito de filtros.</div>`;
+                return;
+            }
+
+            filteredInst.forEach(inst => {
+                const isTop4 = inst.id <= 4;
+                const borderClass = isTop4 ? "border-brand-300 shadow-md ring-1 ring-brand-500/10" : "border-gray-200";
+
+                const projectButtons = inst.projects.map((p) => `
+                    <button class="btn-project inline-block bg-white hover:bg-brand-100 text-gray-700 hover:text-brand-800 text-[10px] px-2.5 py-1.5 rounded-md font-medium mr-1.5 mb-1.5 border border-gray-200 hover:border-brand-300 shadow-sm transition-colors text-left" 
+                            data-note="${p.note}" data-title="${p.name}">
+                        ${p.name}
+                    </button>
+                `).join('');
+
+                instGrid.innerHTML += `
+                    <div class="inst-card cursor-pointer bg-white rounded-2xl p-6 border ${borderClass} hover:border-brand-400 shadow-sm transition-all duration-300 group flex flex-col h-full relative overflow-hidden" data-id="${inst.id}">
+                        ${isTop4 ? '<div class="absolute -top-10 -right-10 w-24 h-24 bg-brand-50 rounded-full blur-xl z-0"></div>' : ''}
+                        
+                        <div class="relative z-10 flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded bg-gray-50 flex items-center justify-center border border-gray-100 text-gray-400 group-hover:text-brand-500 transition-colors">
+                                    <i data-lucide="building" class="h-4 w-4"></i>
+                                </div>
+                                <h4 class="text-lg font-black text-gray-900 leading-tight group-hover:text-brand-600 transition-colors">${inst.name}</h4>
+                            </div>
+                            <div class="expand-icon text-brand-500 bg-brand-50 p-1.5 rounded-full transition-transform duration-300 shadow-sm">
+                                <i data-lucide="chevron-down" class="h-4 w-4"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="relative z-10 mb-1">
+                            <p class="text-xs font-bold text-gray-700">${inst.thesis}</p>
+                        </div>
+
+                        <div class="inst-details hidden flex-col flex-grow mt-4 border-t border-gray-100 pt-4 relative z-10">
+                            <div class="mb-4">
+                                <span class="text-[9px] font-bold uppercase tracking-widest text-gray-500 bg-gray-50 border border-gray-200 px-2 py-1 rounded-md shadow-sm inline-flex items-center mb-3"><i data-lucide="globe" class="h-3 w-3 mr-1 text-gray-400"></i> Origem: ${inst.country}</span>
+                                <p class="text-xs text-gray-600 leading-relaxed border-l-2 border-brand-200 pl-3 italic font-medium">"${inst.storytelling}"</p>
+                            </div>
+                            
+                            <div class="mt-auto projects-wrapper bg-gray-50 p-3 rounded-xl border border-gray-100">
+                                <span class="block text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2 flex items-center"><i data-lucide="zap" class="h-3 w-3 mr-1 text-gray-400"></i> Projetos Interativos</span>
+                                <div class="flex flex-wrap btn-container">
+                                    ${projectButtons}
+                                </div>
+                                <div class="project-note-display hidden mt-2 p-3 bg-white border border-brand-100 rounded-lg text-[11px] text-brand-900 leading-relaxed transition-all shadow-sm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            if(window.lucide) window.lucide.createIcons();
+
+            // Re-vincular eventos
+            document.querySelectorAll('.inst-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.projects-wrapper')) return;
+                    const details = card.querySelector('.inst-details');
+                    const icon = card.querySelector('.expand-icon');
+                    
+                    if (details.classList.contains('hidden')) {
+                        details.classList.remove('hidden'); details.classList.add('flex');
+                        icon.classList.add('rotate-180', 'bg-brand-500', 'text-white'); icon.classList.remove('text-brand-500', 'bg-brand-50');
+                    } else {
+                        details.classList.add('hidden'); details.classList.remove('flex');
+                        icon.classList.remove('rotate-180', 'bg-brand-500', 'text-white'); icon.classList.add('text-brand-500', 'bg-brand-50');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.btn-project').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); 
+                    const noteText = btn.getAttribute('data-note');
+                    const titleText = btn.getAttribute('data-title');
+                    const parentWrapper = btn.closest('.projects-wrapper');
+                    const displayDiv = parentWrapper.querySelector('.project-note-display');
+                    
+                    parentWrapper.querySelectorAll('.btn-project').forEach(b => {
+                        b.classList.remove('bg-brand-100', 'border-brand-300', 'text-brand-800'); b.classList.add('bg-white', 'border-gray-200', 'text-gray-700');
+                    });
+                    
+                    btn.classList.add('bg-brand-100', 'border-brand-300', 'text-brand-800'); btn.classList.remove('bg-white', 'border-gray-200', 'text-gray-700');
+                    displayDiv.innerHTML = `<strong class="block mb-1 text-brand-700 uppercase tracking-wider text-[9px] flex items-center"><i data-lucide="info" class="h-3 w-3 mr-1"></i> ${titleText}</strong>${noteText}`;
+                    displayDiv.classList.remove('hidden');
+                    if(window.lucide) window.lucide.createIcons({ root: displayDiv });
+                });
+            });
+        }
+
+        function renderBentoCards() {
+            const grid = document.getElementById('topics-grid');
+            if(!grid) return;
+
+            bentoData.forEach((topic, index) => {
+                const card = document.createElement('div');
+                card.className = index < 2 ? 'col-span-1 md:col-span-2 lg:col-span-1 group relative flex flex-col justify-between rounded-2xl bg-white border border-gray-200 shadow-sm card-hover cursor-pointer overflow-hidden' 
+                                        : 'col-span-1 group relative flex flex-col justify-between rounded-2xl bg-white border border-gray-200 shadow-sm card-hover cursor-pointer overflow-hidden';
+
+                card.innerHTML = `
+                    <div class="h-24 w-full relative overflow-hidden bg-gray-900 border-b border-gray-100">
+                        <img src="${topic.imageUrl}" alt="Visual" class="w-full h-full object-cover opacity-50 group-hover:opacity-70 group-hover:scale-105 transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
+                        <div class="absolute bottom-2 left-4 flex items-center gap-2">
+                            <div class="flex-shrink-0 h-6 w-6 items-center justify-center rounded bg-gray-900 text-white flex"><i data-lucide="${topic.icon}" class="h-3 w-3"></i></div>
+                            <h3 class="text-sm font-black text-gray-900 leading-tight drop-shadow-sm bg-white/80 px-1 rounded">${topic.title}</h3>
+                        </div>
+                    </div>
+                    <div class="p-4 flex-grow flex flex-col">
+                        <div class="border-t border-gray-100 pt-2 mb-3">
+                            <span class="block text-[10px] font-bold text-brand-600 uppercase tracking-widest mb-1.5"><i data-lucide="layers" class="inline h-3 w-3 mr-1"></i> Principais Projetos</span>
+                            <p class="text-[11px] font-semibold text-gray-700 bg-gray-50 p-2 rounded-lg border border-gray-100 line-clamp-2">${topic.projects}</p>
+                        </div>
+
+                        <div class="mt-auto border-t border-gray-100 pt-3">
+                            <p class="text-[9px] text-gray-500 leading-relaxed"><strong class="text-gray-700">Legenda Explicativa:</strong> Agrupamento macro das inovações mapeadas. Clique no card para aceder à análise de impacto técnico.</p>
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => {
+                    document.getElementById('modal-title').textContent = topic.title;
+                    document.getElementById('modal-caption').textContent = "Relatório Deep Dive Setorial";
+                    document.getElementById('modal-cover-image').src = topic.imageUrl;
+                    
+                    document.getElementById('modal-tech-expl').textContent = topic.techExpl;
+                    document.getElementById('modal-insight').textContent = topic.insight;
+                    document.getElementById('modal-source-defense').textContent = topic.sourceDefense;
+                    
+                    // Renderizar Soluções Acordeão
+                    const solutionsHTML = topic.solutionIds.map(solId => {
+                        const sol = radarItems.find(r => r.id === solId);
+                        if(!sol) return '';
+                        
+                        return `
+                        <div class="solution-accordion bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden mb-3">
+                            <div class="solution-header cursor-pointer flex items-center justify-between p-3 hover:bg-gray-50 transition-colors">
+                                <span class="text-sm font-bold text-gray-800">${sol.label}</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] bg-gray-100 border text-gray-700 font-bold px-2 py-0.5 rounded flex items-center"><i data-lucide="activity" class="h-3 w-3 mr-1"></i> TRL ${sol.trl}</span>
+                                    <span class="text-[10px] bg-blue-50 border text-blue-700 font-bold px-2 py-0.5 rounded flex items-center"><i data-lucide="zap" class="h-3 w-3 mr-1"></i> Rup: ${sol.rupture}</span>
+                                    <i data-lucide="chevron-down" class="h-4 w-4 text-gray-400 transform transition-transform"></i>
+                                </div>
+                            </div>
+                            <div class="solution-body hidden p-4 border-t border-gray-100 bg-gray-50/50">
+                                <p class="text-xs text-gray-800 mb-3 leading-relaxed"><strong>Resumo Funcional:</strong> ${sol.solution} ${sol.desc}</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div class="bg-white p-3 rounded border border-gray-200 shadow-inner">
+                                        <span class="block text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-1 text-brand-600">Justificativa de Maturidade (TRL ${sol.trl})</span>
+                                        <p class="text-[10px] text-gray-600 leading-relaxed">${sol.trlDesc || getGenericTRLDesc(sol.trl)}</p>
+                                    </div>
+                                    <div class="bg-white p-3 rounded border border-gray-200 shadow-inner">
+                                        <span class="block text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-1 text-blue-600">Justificativa de Ruptura (${sol.rupture}/5)</span>
+                                        <p class="text-[10px] text-gray-600 leading-relaxed">${sol.ruptureDesc || getGenericRuptureDesc(sol.rupture)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                    }).join('');
+                    
+                    document.getElementById('modal-solutions-list').innerHTML = solutionsHTML;
+
+                    // Ativar Lógica do Acordeão para estas soluções
+                    document.querySelectorAll('.solution-header').forEach(header => {
+                        header.addEventListener('click', () => {
+                            const body = header.nextElementSibling;
+                            const icon = header.querySelector('i.lucide-chevron-down');
+                            if (body.classList.contains('hidden')) {
+                                body.classList.remove('hidden');
+                                icon.classList.add('rotate-180');
+                            } else {
+                                body.classList.add('hidden');
+                                icon.classList.remove('rotate-180');
+                            }
+                        });
+                    });
+
+                    document.getElementById('modal-institutions-tags').innerHTML = topic.institutions.map(inst => `<span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded border shadow-sm font-medium">${inst}</span>`).join('');
+                    document.getElementById('modal-countries-tags').innerHTML = topic.countries.map(c => `<span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded border shadow-sm font-medium">${c}</span>`).join('');
+                    document.getElementById('modal-icon-container').innerHTML = `<i data-lucide="${topic.icon}" class="h-6 w-6 text-white"></i>`;
+                    
+                    document.getElementById('info-modal').classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                    if(window.lucide) window.lucide.createIcons({ root: document.getElementById('info-modal') });
+                });
+                grid.appendChild(card);
+            });
+        }
+
+        function drawRadar() {
+            const canvas = document.getElementById('techRadar');
+            if(!canvas) return;
+            const container = canvas.parentElement;
+            const size = container.clientWidth || 300; 
+            canvas.style.width = size + 'px'; canvas.style.height = size + 'px';
+            const scale = window.devicePixelRatio || 1;
+            canvas.width = size * scale; canvas.height = size * scale;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.scale(scale, scale);
+            
+            const cx = size / 2; const cy = size / 2;
+            const maxRadius = Math.max(0, (size / 2) - 40);
+            if (maxRadius <= 0) return;
+            ctx.clearRect(0, 0, size, size);
+            
+            const rings = [
+                { name: "TRL 8-9: Mercado & Escala", radius: 0.33, color: "#f8fafc", stroke: "#cbd5e1" },
+                { name: "TRL 5-7: Validação", radius: 0.66, color: "#f1f5f9", stroke: "#e2e8f0" },
+                { name: "TRL 1-4: Pesquisa", radius: 1.00, color: "#f1f5f9", stroke: "#f1f5f9" }
+            ];
+
+            const quadrants = getQuadrants();
+
+            [...rings].reverse().forEach(ring => {
+                ctx.beginPath(); ctx.arc(cx, cy, maxRadius * ring.radius, 0, Math.PI * 2);
+                ctx.fillStyle = ring.color; ctx.fill(); ctx.strokeStyle = ring.stroke; ctx.lineWidth = 1; ctx.stroke();
+            });
+
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - maxRadius); ctx.lineTo(cx, cy + maxRadius);
+            ctx.moveTo(cx - maxRadius, cy); ctx.lineTo(cx + maxRadius, cy);
+            ctx.strokeStyle = "#cbd5e1"; ctx.setLineDash([4, 4]); ctx.stroke(); ctx.setLineDash([]);
+
+            ctx.font = "bold 10px Inter"; ctx.fillStyle = "#64748b"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+            rings.forEach(ring => {
+                const tw = ctx.measureText(ring.name).width;
+                ctx.fillStyle = ring.color;
+                ctx.fillRect(cx - tw/2 - 4, cy - (maxRadius * ring.radius) - 6, tw + 8, 12);
+                ctx.fillStyle = "#64748b"; ctx.fillText(ring.name, cx, cy - (maxRadius * ring.radius));
+            });
+
+            getFilteredItems().forEach(item => {
+                const r = maxRadius * item.r;
+                const x = cx + r * Math.cos(item.angle); const y = cy + r * Math.sin(item.angle);
+                item.x = x; item.y = y;
+                const isHovered = hoveredItem && hoveredItem.id === item.id;
+                
+                if (isHovered) {
+                    ctx.beginPath(); ctx.arc(x, y, 16, 0, Math.PI * 2);
+                    ctx.fillStyle = quadrants[item.quad].color + "40"; ctx.fill();
+                }
+                ctx.beginPath(); ctx.arc(x, y, isHovered ? 12 : 9, 0, Math.PI * 2);
+                ctx.fillStyle = quadrants[item.quad].color; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = "#ffffff"; ctx.stroke();
+                ctx.font = isHovered ? "bold 12px Mono" : "bold 9px Mono"; ctx.fillStyle = "#ffffff"; ctx.fillText(item.id, x, y + 1);
+            });
+        }
+
+        function buildRadarLegend() {
+            const legendContainer = document.getElementById('radarLegend');
+            if(!legendContainer) return;
+            
+            legendContainer.innerHTML = '';
+            const filteredItems = getFilteredItems();
+            
+            const totalEl = document.getElementById('total-filtered-count');
+            if(totalEl) totalEl.textContent = filteredItems.length;
+            
+            const quadrants = getQuadrants();
+
+            quadrants.forEach(quad => {
+                const items = filteredItems.filter(i => i.quad === quad.id);
+                const countBadge = document.getElementById(`count-quad-${quad.id}`);
+                if (countBadge) {
+                    countBadge.textContent = items.length;
+                }
+                
+                if (items.length === 0) return;
+
+                const group = document.createElement('div'); group.className = "mb-6";
+                group.innerHTML = `<h4 class="text-xs font-black flex items-center uppercase tracking-widest mb-3 border-b border-gray-200 pb-2" style="color: ${quad.color}"><div class="w-3 h-3 rounded-md mr-2" style="background-color: ${quad.color}"></div>${quad.name}</h4><ul class="space-y-2"></ul>`;
+                const ul = group.querySelector('ul');
+                
+                items.sort((a,b) => b.trl - a.trl).forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = "flex flex-col text-sm text-gray-700 cursor-pointer p-4 mb-3 rounded-xl transition-all hover:bg-gray-50 border border-gray-200 shadow-sm bg-white relative group";
+                    li.innerHTML = `
+                        <div class="absolute top-0 left-0 w-1 h-full rounded-l-xl opacity-70 group-hover:w-2 transition-all" style="background-color: ${quad.color}"></div>
+                        <div class="pl-3">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="font-black text-gray-900 text-sm">${item.label}</span>
+                                <span class="w-6 h-6 rounded-md font-mono text-white text-[10px] flex items-center justify-center font-bold" style="background-color: ${quad.color}">${item.id}</span>
+                            </div>
+                            <span class="text-xs font-medium text-gray-500 block border-b border-gray-100 pb-2 mb-2">${item.institution}</span>
+                            <div class="flex gap-2 mb-2">
+                                <span class="text-[9px] px-2 py-1 rounded font-bold uppercase" style="background-color: ${quad.color}15; color: ${quad.color}"><i data-lucide="activity" class="inline h-3 w-3 mr-0.5"></i> TRL ${item.trl}</span>
+                                <span class="text-[9px] px-2 py-1 rounded font-bold uppercase bg-gray-100 text-gray-600"><i data-lucide="zap" class="inline h-3 w-3 mr-0.5"></i> Rup: ${item.rupture}</span>
+                            </div>
+                        </div>
+                    `;
+                    li.addEventListener('mouseenter', () => { hoveredItem = item; drawRadar(); });
+                    li.addEventListener('mouseleave', () => { hoveredItem = null; drawRadar(); });
+                    li.addEventListener('click', () => openRadarModal(item, quad));
+                    ul.appendChild(li);
+                });
+                legendContainer.appendChild(group);
+            });
+            if(window.lucide) window.lucide.createIcons({ root: legendContainer });
+        }
+
+        function openRadarModal(item, quadData) {
+            const modal = document.getElementById('radar-modal');
+            if(!modal) return;
+
+            document.getElementById('radar-modal-title').textContent = item.label;
+            document.getElementById('radar-modal-badge').textContent = item.id;
+            document.getElementById('radar-modal-badge').style.backgroundColor = quadData.color;
+            document.getElementById('modal-top-bar').style.backgroundColor = quadData.color;
+            document.getElementById('radar-modal-quadrant').innerHTML = `<div class="w-3 h-3 rounded mr-2" style="background-color: ${quadData.color}"></div> ${quadData.name}`;
+            document.getElementById('radar-modal-institution').textContent = item.institution;
+            document.getElementById('radar-modal-country').textContent = item.country;
+            
+            document.getElementById('radar-modal-trl-num').textContent = item.trl;
+            document.getElementById('radar-modal-trl-desc').innerHTML = `<strong>Análise de Maturidade:</strong> ${item.trlDesc || getGenericTRLDesc(item.trl)}`;
+            
+            document.getElementById('radar-modal-solution').textContent = item.solution;
+            document.getElementById('radar-modal-desc').textContent = item.desc;
+            
+            const srcLink = document.getElementById('radar-modal-source');
+            if(srcLink) {
+                srcLink.style.display = item.source.includes('.') ? "inline-flex" : "none";
+                srcLink.href = "https://" + item.source.replace('https://', '');
+            }
+
+            const stars = document.getElementById('radar-modal-rupture-stars');
+            if(stars) {
+                stars.innerHTML = '';
+                for(let i=1; i<=5; i++) {
+                    const cl = i <= item.rupture ? 'text-blue-500 fill-blue-500' : 'text-gray-200';
+                    stars.innerHTML += `<svg class="w-5 h-5 mr-0.5 ${cl}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+                }
+            }
+            
+            const rupDesc = document.getElementById('radar-modal-rupture-desc');
+            if(rupDesc) rupDesc.innerHTML = `<strong>Índice de Paradigma:</strong> ${item.ruptureDesc || getGenericRuptureDesc(item.rupture)}`;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            if(window.lucide) window.lucide.createIcons({ root: modal });
+        }
+
+        function generateFilterInsight(axis, maturity, country, count) {
+            if (count === 0) return "Nenhuma tecnologia atende a esta combinação estrita. Isto indica o 'Vale da Morte' da inovação, onde há pouca tração sistêmica validada.";
+            if (axis === 'all' && maturity === 'all' && country === 'all') return "A Matriz Geral demonstra que a arquitetura médica está a ser forçada a mudar por três vetores: supercomputação, edição gênica e a crise universal de acesso. O modelo de hospital reativo está a dar lugar à engenharia preditiva contínua.";
+
+            let text = "";
+            if (axis === '0') text += "O recorte evidencia que a inteligência artificial superou a fase do reconhecimento de imagem isolado. O foco agora está na 'Orquestração Clínica'. ";
+            else if (axis === '1') text += "A biotecnologia filtrada foca-se na cura funcional 'one-shot' através da edição de DNA, alterando completamente a precificação de tratamentos para o futuro. ";
+            else if (axis === '2') text += "A bioengenharia filtrada aproxima a biometria intensiva da casa do paciente, descentralizando o papel físico da UTI. ";
+            else if (axis === '3') text += "O filtro foca-se nos atores capazes de escalar a produção e orquestrar ensaios adaptativos para que a ciência pura chegue de facto aos doentes. ";
+
+            if (maturity === '8-9') text += "<br><span class='text-gray-300 mt-2 block'>➤ Fase de Escala: Estas inovações já venceram a regulação primária. O desafio agora é puramente atuarial (acesso e financiamento).</span>";
+            else if (maturity === '5-7') text += "<br><span class='text-gray-300 mt-2 block'>➤ Zona de Translação: O 'pipeline de ouro'. Projetos com eficácia real que ditarão as patentes globais dos próximos 5 anos.</span>";
+            else if (maturity === '1-4') text += "<br><span class='text-gray-300 mt-2 block'>➤ Horizonte Profundo: Alta mortalidade académica, mas carrega os blocos de fundação da próxima revolução do hardware celular.</span>";
+            return text;
+        }
+
+        // ========================================================
+        // 7. INICIALIZADOR (Oculta problemas de Load)
+        // ========================================================
+        
+        // Garante que o código arranque sem erros seja qual for a fase de carregamento
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initDashboard);
+        } else {
+            initDashboard();
+        }
+        
+    </script>
+</body>
+</html>
