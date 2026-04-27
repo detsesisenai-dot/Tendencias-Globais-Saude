@@ -403,7 +403,65 @@
             </div>
         </section>
 
-        <!-- SLIDE 3: AMEAÇAS SISTÊMICAS -->
+        <!-- SLIDE 3: O IMPACTO ECONÓMICO E A PRODUTIVIDADE -->
+        <section class="slide">
+            <button class="btn-insight flex items-center gap-2 bg-white text-black px-5 py-3 rounded-full hover:bg-gray-100 transition text-sm font-bold border border-gray-200 shadow-md" onclick="toggleInsight(event)">
+                <i data-lucide="lightbulb" class="w-4 h-4 text-yellow-500"></i> <span>Insight Estratégico</span> <span class="hidden md:inline-block text-[0.65rem] uppercase tracking-widest opacity-80 ml-2 border-l border-current pl-2 animate-pulse">Clique Aqui</span>
+            </button>
+            <div class="insight-overlay">
+                <div class="flex justify-between items-center mb-8 border-b pb-4">
+                    <h4 class="font-black text-xl text-black flex items-center gap-2"><i data-lucide="briefcase" class="w-6 h-6 text-blue-600"></i> Saúde como Ativo Económico</h4>
+                    <button onclick="toggleInsight(event)" class="p-2 bg-gray-100 rounded-full hover:bg-red-100"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
+                <div class="mb-8">
+                    <h5 class="text-xs font-black uppercase tracking-widest text-gray-400 mb-3 border-l-2 border-gray-400 pl-2">Contexto Didático</h5>
+                    <p class="text-gray-700 text-sm leading-relaxed">Com a redução da natalidade e o envelhecimento da população, a economia global dependerá da permanência dos indivíduos no mercado de trabalho durante faixas etárias mais avançadas. A saúde deixa de ser apenas uma despesa assistencial para se converter no principal motor de sustentação do Produto Interno Bruto (PIB).</p>
+                </div>
+                <div>
+                    <h5 class="text-xs font-black uppercase tracking-widest text-blue-600 mb-3 border-l-2 border-blue-600 pl-2">Análise & Implicações</h5>
+                    <p class="text-gray-700 text-sm leading-relaxed">A degradação do <em>Healthspan</em> (anos de vida com autonomia e saúde) através de condições crónicas ou distúrbios mentais gera um efeito de contração económica em duas frentes: a explosão dos custos de tratamento prolongado e a paralisação da capacidade produtiva das indústrias devido ao absentismo e à invalidez precoce. O investimento em prevenção tornou-se uma necessidade estrita de estabilidade macroeconómica.</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col h-full justify-center mt-4 md:mt-0">
+                <h2 class="anim-el text-xl md:text-3xl font-bold uppercase tracking-widest text-gray-400 mb-2">Economia e Força de Trabalho</h2>
+                <h3 class="anim-el delay-1 text-4xl md:text-5xl font-black leading-tight mb-6 md:mb-8">O PREÇO DA MORBILIDADE<br>NA PRODUTIVIDADE GLOBAL</h3>
+                <p class="anim-el delay-2 text-base md:text-xl text-gray-600 mb-8 max-w-4xl leading-relaxed">No futuro próximo, a sustentabilidade económica exigirá a manutenção de uma força laboral funcional e apta. A falha na prevenção médica reflete-se diretamente na erosão do valor gerado pelas nações.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-0">
+                    <!-- Fator 1: Saúde Mental -->
+                    <div class="anim-el delay-1 bg-white border border-gray-200 p-6 md:p-8 rounded-3xl shadow-xl border-t-8 border-blue-600 relative overflow-hidden group hover:-translate-y-2 transition-all">
+                        <div class="absolute -right-6 -top-6 opacity-5 group-hover:opacity-10 transition-opacity"><i data-lucide="brain" class="w-32 h-32 md:w-48 md:h-48"></i></div>
+                        <h4 class="text-4xl md:text-6xl font-black accent-blue mb-2 md:mb-4">US$ 6</h4>
+                        <p class="text-lg font-bold mb-2">Retorno por cada Dólar Investido</p>
+                        <p class="text-gray-600 text-xs md:text-sm leading-relaxed">A intervenção precoce em saúde mental apresenta um dos mais altos multiplicadores económicos. Cada dólar alocado na prevenção e tratamento de distúrbios reflete-se em até seis dólares recuperados na forma de produtividade corporativa.</p>
+                    </div>
+
+                    <!-- Fator 2: AMR e Absentismo -->
+                    <div class="anim-el delay-2 bg-white border border-gray-200 p-6 md:p-8 rounded-3xl shadow-xl border-t-8 border-red-600 relative overflow-hidden group hover:-translate-y-2 transition-all">
+                        <div class="absolute -right-6 -top-6 opacity-5 group-hover:opacity-10 transition-opacity"><i data-lucide="users-2" class="w-32 h-32 md:w-48 md:h-48"></i></div>
+                        <h4 class="text-4xl md:text-6xl font-black accent-red mb-2 md:mb-4">10.2 Mi</h4>
+                        <p class="text-lg font-bold mb-2">Défice Laboral Anual Estimado</p>
+                        <p class="text-gray-600 text-xs md:text-sm leading-relaxed">Projeções alertam que o aumento de infecções prolongadas derivadas da Resistência Antimicrobiana (AMR) pode drenar severamente o mercado, subtraindo anualmente mais de dez milhões de indivíduos em idade ativa da força de trabalho global.</p>
+                    </div>
+
+                    <!-- Fator 3: Desigualdade Funcional -->
+                    <div class="anim-el delay-3 bg-white border border-gray-200 p-6 md:p-8 rounded-3xl shadow-xl border-t-8 border-black relative overflow-hidden group hover:-translate-y-2 transition-all">
+                        <div class="absolute -right-6 -top-6 opacity-5 group-hover:opacity-10 transition-opacity"><i data-lucide="activity" class="w-32 h-32 md:w-48 md:h-48"></i></div>
+                        <h4 class="text-4xl md:text-6xl font-black text-black mb-2 md:mb-4">15 Anos</h4>
+                        <p class="text-lg font-bold mb-2">Hiato de Sobrevida Funcional</p>
+                        <p class="text-gray-600 text-xs md:text-sm leading-relaxed">A aptidão para a longevidade está estratificada. Populações com acesso estruturado a literacia financeira, nutricional e clínica preventiva apresentam até 15 anos adicionais de independência produtiva face a grupos vulneráveis.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> O retorno de produtividade em saúde mental apoia-se nas análises do McKinsey Health Institute. A estimativa de perda de força de trabalho baseia-se nas modelações macroeconómicas do Banco Mundial sobre as externalidades da AMR.</p>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: AMEAÇAS SISTÊMICAS -->
         <section class="slide bg-red-600 text-white">
             <button class="btn-insight flex items-center gap-2 bg-white text-black px-5 py-3 rounded-full hover:bg-gray-100 transition text-sm font-bold border border-transparent shadow-lg" onclick="toggleInsight(event)">
                 <i data-lucide="alert-triangle" class="w-4 h-4 text-red-600"></i> <span>Insight Estratégico</span> <span class="hidden md:inline-block text-[0.65rem] uppercase tracking-widest opacity-80 ml-2 border-l border-current pl-2 animate-pulse">Clique Aqui</span>
