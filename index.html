@@ -143,6 +143,39 @@
             transform: scale(1.02);
         }
 
+        /* Notas Explicativas de Rodapé */
+        .slide-footer-note {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 4rem;
+            max-width: 60%;
+            border-left: 3px solid rgba(0,0,0,0.15);
+            padding-left: 1.25rem;
+            z-index: 50;
+        }
+        .slide-footer-note p.note-title {
+            font-size: 0.65rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+        .slide-footer-note p.note-text {
+            font-size: 0.75rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        .bg-black .slide-footer-note, .bg-blue-900 .slide-footer-note, .bg-red-600 .slide-footer-note { border-left-color: rgba(255,255,255,0.3); }
+        .bg-black .note-title, .bg-blue-900 .note-title, .bg-red-600 .note-title { color: rgba(255,255,255,0.6); }
+        .bg-black .note-text, .bg-blue-900 .note-text, .bg-red-600 .note-text { color: rgba(255,255,255,0.8); }
+        .bg-white .note-title, .slide:not(.bg-black):not(.bg-blue-900):not(.bg-red-600) .note-title { color: #94a3b8; }
+        .bg-white .note-text, .slide:not(.bg-black):not(.bg-blue-900):not(.bg-red-600) .note-text { color: #475569; }
+        
+        @media (max-width: 768px) {
+            .slide-footer-note { left: 1.5rem; bottom: 5rem; max-width: 85%; padding-left: 1rem; }
+            .slide-footer-note p.note-text { font-size: 0.65rem; }
+        }
+
         /* Estilos do Radar TRL (Novo Slide) */
         .radar-tooltip {
             background: rgba(15, 23, 42, 0.95);
@@ -224,6 +257,11 @@
 </head>
 <body class="bg-grid">
 
+    <!-- Logomarca Fixa (Canto Superior Esquerdo) -->
+    <header class="fixed top-5 left-5 md:top-8 md:left-10 z-[100] pointer-events-none">
+        <img src="https://i.postimg.cc/c49ZCVqm/gtidet.png" alt="" class="h-7 md:h-10 w-auto opacity-90 drop-shadow-sm">
+    </header>
+
     <div id="slider-container">
 
         <!-- SLIDE 0: CAPA -->
@@ -263,6 +301,11 @@
                     </button>
                 </div>
             </div>
+
+            <div class="slide-footer-note anim-el delay-4 hidden md:block">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto Documental:</strong> Relatório executivo fundamentado no mapeamento cruzado de 50 inovações disruptivas, 20 instituições globais de fronteira e dados preditivos da economia da longevidade (2025-2050).</p>
+            </div>
         </section>
 
         <!-- SLIDE 1: TRANSIÇÃO EPIDEMIOLÓGICA -->
@@ -301,7 +344,11 @@
                     <p class="text-lg md:text-2xl font-bold mt-2 md:mt-4 uppercase tracking-wider">Dos óbitos globais<br>(39 milhões de vidas)</p>
                 </div>
             </div>
-            <div class="sources anim-el">Fontes: OMS (GHE 2024/2025); McKinsey Health Institute.</div>
+            
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Relatórios Global Health Estimates (GHE) da OMS a mapear as doenças isquémicas. O impacto económico de US$ 4,4 Triliões provém do modelo preditivo atuarial do McKinsey Health Institute.</p>
+            </div>
         </section>
 
         <!-- SLIDE 2: A CRISE METABÓLICA 2050 -->
@@ -349,6 +396,11 @@
                     </div>
                 </div>
             </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Projeções demográficas e metabólicas do <em>Institute for Health Metrics and Evaluation (IHME)</em> publicadas na <em>The Lancet</em>. A inversão da pirâmide com 1.6 Bi de idosos segue a matriz do Fórum Económico Mundial (2025).</p>
+            </div>
         </section>
 
         <!-- SLIDE 3: AMEAÇAS SISTÊMICAS -->
@@ -390,7 +442,11 @@
                     </div>
                 </div>
             </div>
-            <div class="sources anim-el text-red-200">Fontes: Projeto GRAM / IHME; Banco Mundial; OMS.</div>
+            
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> A contração do PIB em US$ 1,7 Tri é suportada pelos relatórios do Banco Mundial e modelos do Projeto GRAM/IHME. A Doença X integra a lista prioritária oficial do R&D Blueprint da OMS.</p>
+            </div>
         </section>
 
         <!-- SLIDE 4: EIXO DO PODER GLOBAL -->
@@ -452,6 +508,11 @@
                     </div>
                 </div>
             </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Cruzamento de balanços da WIPO e patentes (Instituições Top 20). A China blinda o agro-genoma com volume maciço, enquanto os EUA dominam os fundos de Venture Capital atrelados à IA (ex: Harvard/Cleveland Clinic).</p>
+            </div>
         </section>
 
         <!-- SLIDE 5: ARSENAL TECNOLÓGICO -->
@@ -510,6 +571,11 @@
                     <p class="text-sm md:text-base text-gray-600">Terapias in vivo (CRISPR) curando doenças incuráveis; Bioimpressão a avançar de organoides focais para desafios anatómicos vascularizados em 3D.</p>
                 </div>
             </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Matriz TRL Global (Ranking Top 50). Inclui a validação do <em>AlphaFold 3</em> (DeepMind - TRL 7), o sucesso clínico da imunoterapia <em>mRNA-4157</em> (Moderna - Fase 3) e o revolucionário <em>Casgevy</em> (Vertex - TRL 9 / FDA).</p>
+            </div>
         </section>
 
         <!-- SLIDE 6: BRASIL PROTAGONISMO -->
@@ -546,6 +612,11 @@
                         <i data-lucide="check-circle" class="inline w-5 h-5 mb-1"></i> O INPI atesta robustez: mais de 23.500 patentes em tramitação e 13.600 já concedidas consolidadas.
                     </p>
                 </div>
+            </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Auditoria governamental com base nos relatórios de depósitos de ativos do Instituto Nacional da Propriedade Industrial (INPI) de 2010 a 2025, atestando a independência inventiva nacional face aos blocos europeus e asiáticos.</p>
             </div>
         </section>
 
@@ -592,6 +663,11 @@
                     <p class="text-xs md:text-sm text-gray-600">Einstein tornou-se a 3ª corporação inovadora geral do Brasil (acelerando +140 startups); A.C. Camargo usa redes de IA cortando laudos de 25 para 5 dias.</p>
                 </div>
             </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Mapeamento do polo científico brasileiro. Inclui as patentes da <em>Calixcoca</em> (UFMG), laboratório NB3 <em>Orion</em> (CNPEM), inovação aberta no <em>Einstein</em> e ecossistema de saúde transatlântico da <em>Fiocruz</em>.</p>
+            </div>
         </section>
 
         <!-- SLIDE 8: GOIÁS FARMACÊUTICO -->
@@ -631,6 +707,11 @@
                         <p class="text-xs md:text-lg font-bold text-gray-500 uppercase tracking-widest text-center px-2 md:px-4 leading-tight mt-2">Da produção nacional<br>de medicamentos</p>
                     </div>
                 </div>
+            </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Dados industriais fornecidos pela CODEGO e SINDIFARGO. O polo de Anápolis sustenta 20% do volume nacional, reforçado pelo aporte de R$ 250 Milhões da Brainfarma para internalizar a síntese isolada do IFA ativo.</p>
             </div>
         </section>
 
@@ -681,6 +762,11 @@
                         </li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Plataformas de Transparência de Fomento. A injeção de R$ 125,7 Milhões advém dos balanços da FAPEG. O uso de IA nas filas de córneas é um caso prático dos Editais GovTech / CPSI da SES-GO.</p>
             </div>
         </section>
 
@@ -740,6 +826,11 @@
                         <li class="flex gap-2"><span class="text-red-500">•</span> Soluções a nascer no centro, impactando o globo.</li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Relatórios de investimento da Secretaria de Ciência, Tecnologia e Inovação (SECITEC). A UFG capta +R$ 300M no CEIA, incubando o <em>Codex.AI</em> e fortalecendo startups de base profunda (Deep Techs) como a Nanoterra.</p>
             </div>
         </section>
 
@@ -859,6 +950,11 @@
                     </div>
                 </div>
             </div>
+
+            <div class="slide-footer-note anim-el delay-4 hidden md:block">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Compilação exaustiva da "Matriz Inovação Saúde 2025/2026". Avaliação cruzada de 50 projetos através do Nível de Maturidade (TRL) e Índice de Ruptura, incluindo dados do FDA, EMA, Anvisa e publicações científicas.</p>
+            </div>
         </section>
 
         <!-- SLIDE 12: GEOGRAFIA DA INOVAÇÃO EM GOIÁS -->
@@ -919,6 +1015,11 @@
                     </div>
                 </div>
             </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Análise geoeconómica suportada pelos códigos CNAE (IBGE). O agrupamento 21.21-1 domina a farmoquímica em Anápolis, enquanto os eixos 26.60-4 e 32.50-7 ancoram a infraestrutura de hardware médico em Aparecida de Goiânia.</p>
+            </div>
         </section>
 
         <!-- SLIDE 13: INFRAESTRUTURA DE TRANSLAÇÃO (SENAI / ZEISS) -->
@@ -976,6 +1077,11 @@
                     <p class="text-xs text-gray-400 mb-3 flex-grow">R$ 40 Milhões aportados para inspecionar peças médicas críticas sem destruição física, operando na casa dos micrómetros.</p>
                     <span class="text-[10px] font-bold text-white uppercase bg-white/20 px-2 py-1 rounded inline-block w-fit">Tomografia RX Industrial</span>
                 </div>
+            </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Portfólio oficial de serviços do SENAI Goiás (Farma, Automação e Lab ABC) a responder às RDCs 166/167 da Anvisa. O Centro ZEISS reflete um aporte internacional de R$ 40 Milhões para metrologia 3D não-destrutiva.</p>
             </div>
         </section>
 
@@ -1039,6 +1145,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Diretrizes da Academia Brasileira de Ciências sobre a urgência da Inovação Radical. A integração tática é validada pelo Edital nº 42/2025 da FAPEG, inserindo bolsistas de CTI diretamente no chão de fábrica do SENAI.</p>
             </div>
         </section>
 
@@ -1110,6 +1221,11 @@
                     <p class="text-xs md:text-sm font-bold uppercase tracking-widest text-gray-300">Fim do Relatório — Inteligência em Tendências (2025/2026)</p>
                     <div class="bg-gradient-to-r from-blue-600 to-red-600 h-1 w-12 rounded-full"></div>
                 </div>
+            </div>
+
+            <div class="slide-footer-note anim-el delay-4">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Síntese do Dossiê Executivo de Tendências. O cruzamento das 50 inovações da Matriz confirma que a autonomia biotecnológica e de metadados deixou de ser política setorial para configurar a fundação da Defesa Nacional moderna.</p>
             </div>
         </section>
 
