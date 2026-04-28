@@ -892,7 +892,104 @@
             </div>
         </section>
 
-        <!-- SLIDE 11: RADAR TRL E ECOSSISTEMA BRASILEIRO E GLOBAL (50 Inovações) -->
+        <!-- SLIDE 11: OS QUATRO EIXOS DE INOVAÇÃO (INTRODUÇÃO AO RADAR) -->
+        <section class="slide">
+            <button class="btn-insight flex items-center gap-2 bg-white text-black px-5 py-3 rounded-full hover:bg-gray-100 transition text-sm font-bold border border-gray-200 shadow-md" onclick="toggleInsight(event)">
+                <i data-lucide="lightbulb" class="w-4 h-4 text-yellow-500"></i> <span>Insight Estratégico</span> <span class="hidden md:inline-block text-[0.65rem] uppercase tracking-widest opacity-80 ml-2 border-l border-current pl-2 animate-pulse">Clique Aqui</span>
+            </button>
+            <div class="insight-overlay">
+                <div class="flex justify-between items-center mb-8 border-b pb-4">
+                    <h4 class="font-black text-xl text-black flex items-center gap-2"><i data-lucide="layers" class="w-6 h-6 text-black"></i> A Lógica da Matriz</h4>
+                    <button onclick="toggleInsight(event)" class="p-2 bg-gray-100 rounded-full hover:bg-red-100"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
+                <div class="mb-8">
+                    <h5 class="text-xs font-black uppercase tracking-widest text-gray-400 mb-3 border-l-2 border-gray-400 pl-2">Contexto Didático</h5>
+                    <p class="text-gray-700 text-sm leading-relaxed">Para auditar e classificar inovações de origens tão distintas — desde um algoritmo de triagem a uma vacina de edição genética —, foi necessário estruturar o mapeamento em quatro "Eixos de Saúde". Estes quadrantes representam as principais avenidas pelas quais a medicina moderna avança.</p>
+                </div>
+                <div>
+                    <h5 class="text-xs font-black uppercase tracking-widest text-blue-600 mb-3 border-l-2 border-blue-600 pl-2">Análise & Implicações</h5>
+                    <p class="text-gray-700 text-sm leading-relaxed">Nenhuma inovação atua em isolamento. O sucesso de um projeto no Eixo de Biotecnologia depende frequentemente da modulação de dados do Eixo de IA, da entrega física via Eixo de Dispositivos e da viabilidade financeira e regulamentar ditada pelo Eixo de Ecossistema. A interdependência destas quatro hélices dita a robustez de um sistema de saúde nacional.</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col h-full mt-4 md:mt-0 justify-center">
+                <h2 class="anim-el text-xl md:text-3xl font-bold uppercase tracking-widest text-gray-400 mb-2">Estrutura Analítica</h2>
+                <h3 class="anim-el delay-1 text-4xl md:text-5xl font-black leading-tight mb-6 md:mb-8">OS 4 EIXOS DA SAÚDE</h3>
+                
+                <p class="anim-el delay-1 text-sm md:text-base text-gray-600 mb-8 max-w-4xl leading-relaxed">
+                    Antes de explorarmos a maturidade individual das 50 inovações, é essencial compreender as categorias que estruturam o nosso mapeamento. Estes eixos traduzem a transição da pesquisa isolada para o impacto clínico sistémico.
+                </p>
+
+                <div class="anim-el delay-2 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 flex-grow">
+                    <!-- Eixo 0: IA & Digital -->
+                    <div class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden flex flex-col group hover:-translate-y-1 hover:border-[#1D3557] transition-all">
+                        <div class="h-24 md:h-32 bg-gray-900 relative overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="" class="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#1D3557] to-transparent"></div>
+                            <div class="absolute bottom-3 left-4 flex items-center gap-2">
+                                <i data-lucide="cpu" class="text-white w-5 h-5"></i>
+                                <h4 class="font-black text-white text-lg tracking-wider">IA & SAÚDE DIGITAL</h4>
+                            </div>
+                        </div>
+                        <div class="p-4 md:p-5 flex-grow bg-white">
+                            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">Computação avançada aplicada à predição clínica. Engloba o desenvolvimento de inteligência artificial para apoio a diagnósticos, descoberta acelerada de fármacos (*Drug Discovery*) e orquestração de dados em tempo real para a gestão hospitalar e acompanhamento de doentes crónicos.</p>
+                        </div>
+                    </div>
+
+                    <!-- Eixo 1: Biotecnologia -->
+                    <div class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden flex flex-col group hover:-translate-y-1 hover:border-[#E63946] transition-all">
+                        <div class="h-24 md:h-32 bg-gray-900 relative overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1633422615468-b807eb89dd2b?auto=format&fit=crop&w=600&q=80" alt="" class="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#E63946] to-transparent"></div>
+                            <div class="absolute bottom-3 left-4 flex items-center gap-2">
+                                <i data-lucide="dna" class="text-white w-5 h-5"></i>
+                                <h4 class="font-black text-white text-lg tracking-wider">BIOTEC. E TERAPIAS</h4>
+                            </div>
+                        </div>
+                        <div class="p-4 md:p-5 flex-grow bg-white">
+                            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">A manipulação e reestruturação do código biológico celular. Inclui a edição genética (CRISPR), as plataformas autoamplificáveis de RNA mensageiro e a imunologia avançada. O foco recai na transição de tratamentos paliativos para terapias funcionais e curativas.</p>
+                        </div>
+                    </div>
+
+                    <!-- Eixo 2: Dispositivos -->
+                    <div class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden flex flex-col group hover:-translate-y-1 hover:border-black transition-all">
+                        <div class="h-24 md:h-32 bg-gray-900 relative overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=600&q=80" alt="" class="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <div class="absolute bottom-3 left-4 flex items-center gap-2">
+                                <i data-lucide="activity" class="text-white w-5 h-5"></i>
+                                <h4 class="font-black text-white text-lg tracking-wider">DISPOSITIVOS E BIOENG.</h4>
+                            </div>
+                        </div>
+                        <div class="p-4 md:p-5 flex-grow bg-white">
+                            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">A intersecção prática entre a engenharia mecânica, física de materiais e a anatomia. Envolve o desenho de biossensores eletrónicos integrados, bioimpressão 3D de órgãos sintéticos, ultrassons focalizados e nanorrobótica para intervenções médicas de alta precisão.</p>
+                        </div>
+                    </div>
+
+                    <!-- Eixo 3: Ecossistema -->
+                    <div class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden flex flex-col group hover:-translate-y-1 hover:border-gray-500 transition-all">
+                        <div class="h-24 md:h-32 bg-gray-900 relative overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=600&q=80" alt="" class="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-700 to-transparent"></div>
+                            <div class="absolute bottom-3 left-4 flex items-center gap-2">
+                                <i data-lucide="globe" class="text-white w-5 h-5"></i>
+                                <h4 class="font-black text-white text-lg tracking-wider">ECOSSISTEMA E SUS</h4>
+                            </div>
+                        </div>
+                        <div class="p-4 md:p-5 flex-grow bg-white">
+                            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">A infraestrutura estrutural que assegura a aplicabilidade da ciência. Contempla o planeamento logístico governamental, agilização de vias regulamentares, manufatura escalável de insumos críticos e a engenharia socioterritorial para controlo de endemias e ameaças pandémicas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-footer-note anim-el delay-4 hidden md:block">
+                <p class="note-title">Base de Evidência & Auditoria</p>
+                <p class="note-text"><strong>Contexto de Dados:</strong> Metodologia de estruturação baseada nas orientações da "Matriz Inovação Saúde", desenhada para permitir a análise cruzada sistemática e objetiva de tecnologias de diferentes naturezas perante a sua maturidade comercial.</p>
+            </div>
+        </section>
+
+        <!-- SLIDE 12: RADAR TRL E ECOSSISTEMA BRASILEIRO E GLOBAL (50 Inovações) -->
         <section class="slide" id="slide-radar">
             
             <!-- Painel Dinâmico para os itens do Radar -->
