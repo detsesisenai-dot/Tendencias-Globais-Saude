@@ -1,515 +1,649 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Globe, MapPin, TrendingUp, Activity, 
-  Microscope, Cpu, Pill, Stethoscope, 
-  Smartphone, MonitorHeart, Award, Building2,
-  Syringe, BrainCircuit, Dna, Rocket,
-  Lightbulb, ChevronDown, ChevronUp, Info, BookOpen, Layers,
-  ChevronLeft, ChevronRight, ArrowRight, ArrowLeft, Target, Eye, FlaskConical, Beaker
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geopolítica da Inovação Médica 2025</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel para compilar JSX no navegador -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-// --- DATA STRUCTURES ---
+    <style>
+        /* Esconder barra de rolagem mantendo a funcionalidade */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+    <div id="root"></div>
 
-const globalStats = [
-  { label: 'Mercado global de saúde', value: '$9T', color: 'text-blue-900', source: 'Deloitte' },
-  { label: 'Países no GII (Índice de Inovação)', value: '139', color: 'text-slate-800', source: 'WIPO' },
-  { label: 'Mercado HealthTech', value: '$880B', color: 'text-indigo-900', source: 'IQVIA' },
-  { label: 'Brasil no GII 2025', value: '52º', color: 'text-emerald-700', source: 'WIPO' },
-];
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-const trends = [
-  { icon: '🧬', title: 'Genômica & Precisão', desc: 'Sequenciamento de nova geração (NGS) e terapias CAR-T personalizadas dominam os investimentos para tratamentos oncológicos customizados.', source: 'Nature / IBIS', image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Sequenciamento de DNA]' },
-  { icon: '🤖', title: 'IA & Diagnóstico', desc: 'Aplicações de Inteligência Artificial em diagnóstico por imagem de alta resolução e descoberta acelerada de medicamentos e risco clínico.', source: 'Deloitte 2025', image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Inteligência Artificial]' },
-  { icon: '💊', title: 'Biofármacos & GLP-1', desc: 'Anticorpos monoclonais e análogos de GLP-1 (Ozempic/Mounjaro) redefinem o mercado de doenças crônicas e obesidade.', source: 'IQVIA Trends', image: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Biofármacos]' },
-  { icon: '🔬', title: 'Terapias Avançadas', desc: 'Terapia gênica in vivo, edição via CRISPR e a expansão das plataformas de mRNA para vacinas oncológicas e doenças raras.', source: 'PharmaShots', image: 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Terapias Celulares]' },
-  { icon: '📱', title: 'Saúde Digital', desc: 'Monitoramento remoto, prontuário eletrônico interoperável e wearables de grau médico que redefinem a jornada do paciente.', source: 'HIMSS 2025', image: 'https://images.unsplash.com/photo-1557825835-70d97c4aa567?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Dispositivos Vestíveis]' },
-  { icon: '🏭', title: 'MedTech & Robótica', desc: 'Cirurgia robótica avançada, implantes neurais inteligentes e diagnósticos Point-of-Care para democratização do acesso à saúde.', source: 'MedTech Europe', image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Cirurgia Robótica]' },
-];
+        // --- DATA STRUCTURES ---
 
-const top10 = [
-  { id: 'us', rank: 1, country: 'Estados Unidos 🇺🇸', axis: 'Terapias avançadas, IA médica, Genômica', stats: ['22 Polos WIPO', '35% Ensaios Clínicos', '1º Intensidade SF', 'Biopharma & VC'], detail: 'Liderança absoluta combinando capital de risco (VC) agressivo com NIH, Harvard e MIT. Empresas: Pfizer, Eli Lilly, Merck, Moderna.', source: 'WIPO / IQVIA', image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Laboratório Biotech]', specialty: 'Biotecnologia & Capital', note: 'Maior potência global pela integração massiva de IA e MedTech com o maior orçamento de pesquisa do mundo.' },
-  { id: 'cn', rank: 2, country: 'China 🇨🇳', axis: 'IA hospitalar, Genômica, Biomanufatura', stats: ['24 Polos WIPO', '1º Polo Global', '30% Ensaios', 'Produção em Escala'], detail: 'Academia Chinesa de Ciências, Tsinghua. Empresas líderes como Huawei, BGI, Mindray e WuXi Biologics.', source: 'WIPO / NMPA', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de IA na China]', specialty: 'Escala & Manufatura', note: 'Lidera o maior polo de inovação do mundo (Shenzhen-HK-Guangzhou). Foco em processamento massivo de dados.' },
-  { id: 'de', rank: 3, country: 'Alemanha 🇩🇪', axis: 'MedTech, Equipamentos, Terapias digitais', stats: ['7 Polos WIPO', '€170B Mercado', 'Engenharia Clínica', 'Indústria 4.0'], detail: 'Referência em engenharia e diagnóstico por imagem. Charité Berlin, Fraunhofer. Empresas: Siemens Healthineers, Bayer, BioNTech.', source: 'WIPO / EPO', image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Engenharia Médica]', specialty: 'Engenharia & Diagnóstico', note: 'Força motriz na Indústria 4.0 aplicada à saúde e diagnósticos de alta precisão.' },
-  { id: 'ch', rank: 4, country: 'Suíça 🇨🇭', axis: 'Farma Inovadora, Diagnóstico, Imunologia', stats: ['1º GII 2025', 'Líder Access', 'Polo de Zurique', 'Prop. Intelectual'], detail: 'Potência de alto valor. ETH Zürich. Lar da Roche e Novartis, que detêm juntas mais de 100 mil patentes ativas.', source: 'GII 2025', image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Farma de Precisão]', specialty: 'Pesquisa Farma', note: 'País número 1 no GII. Foco em oncologia e biomanufatura de altíssimo valor agregado.' },
-  { id: 'uk', rank: 5, country: 'Reino Unido 🇬🇧', axis: 'Genômica, Dados do NHS, IA em Saúde', stats: ['4 Polos WIPO', 'Londres (8º)', '100k Genomas', 'Liderança ATS'], detail: 'Aproveita a base de dados do NHS. Oxford, Cambridge. Empresas: AstraZeneca, GSK, Oxford Nanopore.', source: 'NHS Digital', image: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Pesquisa Genômica]', specialty: 'Dados & Genômica', note: 'Destaque na descoberta de fármacos via IA e genômica populacional utilizando dados públicos.' },
-  { id: 'jp', rank: 6, country: 'Japão 🇯🇵', axis: 'Robótica, Endoscopia, Longevidade', stats: ['2º Polo Global', '135k Patentes', 'Regenerativa', 'Imaging'], detail: 'Líder em robótica médica. Univ. Tokyo, RIKEN. Empresas: Takeda, Olympus, Daiichi Sankyo, Fujifilm.', source: 'MHLW', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Robótica Médica]', specialty: 'Robótica & Óptica', note: 'Foco total em células iPSC e digitalização da assistência ao envelhecimento.' },
-  { id: 'fr', rank: 7, country: 'França 🇫🇷', axis: 'Vacinas, Biotecnologia, Saúde Pública', stats: ['12º Polo Global', 'Paris Hub', 'Pesquisa Translacional', 'Infectologia'], detail: 'Institut Pasteur, Inserm. Empresas: Sanofi (líder em vacinas), Servier, bioMérieux, Doctolib.', source: 'WIPO', image: 'https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Biotecnologia]', specialty: 'Saúde & Vacinas', note: 'Paris consolidou-se como polo estratégico combinando rede hospitalar com biotecnologia.' },
-  { id: 'kr', rank: 8, country: 'Coreia do Sul 🇰🇷', axis: 'Hospital Digital, Biossimilares, IA', stats: ['4º GII 2025', '5º Polo Global', '784k Litros CDMO', 'Semicondutores'], detail: 'Eletrônica e biomanufatura. Seoul National Univ. Empresas: Samsung Biologics, Celltrion, Lunit.', source: 'Samsung Data', image: 'https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Biomanufatura]', specialty: 'Eletrônica & Manufatura', note: 'Maior investimento em P&D/PIB do G20. Liderança em biossimilares e IA aplicada.' },
-  { id: 'dk', rank: 9, country: 'Dinamarca 🇩🇰', axis: 'Diabetes, GLP-1, Doenças Metabólicas', stats: ['9º GII 2025', 'Polo Copenhagen', '55% Mkt GLP-1', 'Biológicos'], detail: 'Univ. Copenhagen. Lar da Novo Nordisk (empresa mais valiosa da Europa), Lundbeck.', source: 'Market Data', image: 'https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Tratamento Diabetes]', specialty: 'Endocrinologia Digital', note: 'Novo Nordisk representa mais de 25% do PIB dinamarquês e lidera o mercado de GLP-1.' },
-  { id: 'nl', rank: 10, country: 'Países Baixos 🇳🇱', axis: 'Imagem Médica, IA Clínica, Engenharia', stats: ['8º GII 2025', 'Líder Patentes EPO', 'Polo Amsterdã', 'Conectada'], detail: 'Erasmus MC, TU Delft. Empresas: Philips (líder em patentes de imagem), Galapagos.', source: 'EPO 2024', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Engenharia Médica]', specialty: 'Engenharia Hospitalar', note: 'Potência na transição hospital-casa e monitoramento inteligente conectado.' },
-];
+        const globalStats = [
+          { label: 'Mercado global de saúde', value: '$9T', color: 'text-blue-900', source: 'Deloitte' },
+          { label: 'Países no GII (Índice de Inovação)', value: '139', color: 'text-slate-800', source: 'WIPO' },
+          { label: 'Mercado HealthTech', value: '$880B', color: 'text-indigo-900', source: 'IQVIA' },
+          { label: 'Brasil no GII 2025', value: '52º', color: 'text-emerald-700', source: 'WIPO' },
+        ];
 
-const brazilCard = {
-  id: 'br', rank: '52', country: 'Brasil 🇧🇷', axis: 'Saúde Pública, Vacinas, Doenças Tropicais', stats: ['52º GII 2025', '49º Polo WIPO (SP)', 'Escala SUS', 'Biomanufatura'], detail: 'Destaque para USP (polo #49 global), Fiocruz, Butantan e Unicamp. Indústria: EMS e Eurofarma.', source: 'Min. Saúde', image: 'https://images.unsplash.com/photo-1584467735815-f778f274e296?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Pesquisador Brasileiro]', specialty: 'Potência Emergente', note: 'O Brasil possui o maior sistema universal (SUS). Desafio: transformar ciência acadêmica em patentes.'
-};
+        const trends = [
+          { icon: '🧬', title: 'Genômica & Medicina de Precisão', desc: 'Sequenciamento de nova geração (NGS), farmacogenômica e terapias CAR-T personalizadas dominam os investimentos de ponta para tratamentos oncológicos customizados.', source: 'Nature / IBIS', image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Sequenciamento de DNA]' },
+          { icon: '🤖', title: 'IA (Inteligência Artificial) & Diagnóstico', desc: 'Aplicações de IA em diagnóstico por imagem de alta resolução, descoberta acelerada de medicamentos e modelos de linguagem especializados para predição de risco clínico.', source: 'Deloitte Global Health 2025', image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Inteligência Artificial]' },
+          { icon: '💊', title: 'Biofármacos & GLP-1', desc: 'Anticorpos monoclonais, biossimilares e os revolucionários análogos de GLP-1 (Ozempic e Mounjaro) redefinem o mercado global de controle de doenças crônicas.', source: 'IQVIA Global Trends', image: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Biofármacos]' },
+          { icon: '🔬', title: 'Terapias Avançadas', desc: 'Terapia gênica in vivo, edição de genes via CRISPR, células-tronco e a expansão das plataformas de mRNA para vacinas oncológicas e doenças raras.', source: 'PharmaShots', image: 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Terapias Celulares]' },
+          { icon: '📱', title: 'Saúde Digital & Wearables', desc: 'Monitoramento remoto de pacientes, prontuário eletrônico interoperável e dispositivos vestíveis de grau médico que redefinem a jornada do paciente fora do hospital.', source: 'HIMSS 2025', image: 'https://images.unsplash.com/photo-1557825835-70d97c4aa567?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Dispositivos Vestíveis]' },
+          { icon: '🏭', title: 'MedTech & Dispositivos', desc: 'Cirurgia robótica avançada, implantes neurais inteligentes, exoesqueletos para reabilitação e diagnósticos Point-of-Care para democratização do acesso.', source: 'MedTech Europe', image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Cirurgia Robótica]' },
+        ];
 
-const allMapCards = [...top10, brazilCard];
+        const top10 = [
+          { id: 'us', rank: 1, country: 'Estados Unidos 🇺🇸', axis: 'Terapias avançadas, IA médica, Genômica', stats: ['22 Polos WIPO', '35% Ensaios Clínicos', '1º Intensidade SF', 'Biopharma & VC'], detail: 'NIH, Harvard, MIT, Stanford. Empresas: Pfizer, Eli Lilly, Merck, Moderna, Illumina, Medtronic.', source: 'WIPO / IQVIA 2024', image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Laboratório Biotech]', specialty: 'Biotecnologia & Capital', note: 'Maior potência global pela integração massiva de IA e MedTech com o maior orçamento de pesquisa do mundo.' },
+          { id: 'cn', rank: 2, country: 'China 🇨🇳', axis: 'IA hospitalar, Genômica, Biomanufatura', stats: ['24 Polos WIPO', '1º Polo Global (Shenzhen)', '30% Ensaios', 'Produção em Escala'], detail: 'Academia Chinesa de Ciências, Tsinghua, Fudan. Empresas: Huawei, BGI, Mindray, WuXi, BeiGene, Tencent.', source: 'WIPO / NMPA 2024', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de IA na China]', specialty: 'Escala & Manufatura', note: 'Lidera o maior polo de inovação do mundo (Shenzhen-HK-Guangzhou). Foco em processamento massivo de dados.' },
+          { id: 'de', rank: 3, country: 'Alemanha 🇩🇪', axis: 'MedTech, Equipamentos, Terapias digitais', stats: ['7 Polos WIPO', '€170B Mercado MedTech', 'Engenharia Clínica', 'Indústria 4.0'], detail: 'Charité Berlin, Fraunhofer, Max Planck. Empresas: Siemens Healthineers, Bayer, BioNTech, Merck KGaA.', source: 'WIPO / EPO 2024', image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Engenharia Médica]', specialty: 'Engenharia & Diagnóstico', note: 'Força motriz na Indústria 4.0 aplicada à saúde e diagnósticos de alta precisão.' },
+          { id: 'ch', rank: 4, country: 'Suíça 🇨🇭', axis: 'Farma Inovadora, Diagnóstico, Imunologia', stats: ['1º GII 2025', 'Líder Access to Medicine', 'Polo de Zurique', 'Prop. Intelectual'], detail: 'ETH Zürich, Univ. Basel. Empresas: Roche, Novartis, Lonza, Sandoz, Sonova, Straumann.', source: 'GII 2025 / Index 2024', image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Farma de Precisão]', specialty: 'Pesquisa Farma de Luxo', note: 'País número 1 no GII. Foco em oncologia e biomanufatura de altíssimo valor agregado.' },
+          { id: 'uk', rank: 5, country: 'Reino Unido 🇬🇧', axis: 'Genômica, Dados do NHS, IA em Saúde', stats: ['4 Polos WIPO', 'Londres (8º Global)', '100k Genomas', 'Liderança em ATS'], detail: 'Oxford, Cambridge, Francis Crick Institute. Empresas: AstraZeneca, GSK, Oxford Nanopore.', source: 'WIPO / NHS Digital', image: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Pesquisa Genômica]', specialty: 'Dados & Genômica', note: 'Destaque na descoberta de fármacos via IA e genômica populacional utilizando dados do NHS.' },
+          { id: 'jp', rank: 6, country: 'Japão 🇯🇵', axis: 'Robótica, Endoscopia, Longevidade', stats: ['2º Maior Polo Global', '135k Patentes PCT', 'Medicina Regenerativa', 'Imaging'], detail: 'Univ. Tokyo, RIKEN. Empresas: Takeda, Olympus, Daiichi Sankyo, Sysmex, Fujifilm.', source: 'WIPO / MHLW', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Robótica Médica]', specialty: 'Robótica & Óptica', note: 'Demografia dita a inovação: foco total em células iPSC e digitalização da assistência ao envelhecimento.' },
+          { id: 'fr', rank: 7, country: 'França 🇫🇷', axis: 'Vacinas, Biotecnologia, Saúde Pública', stats: ['12º Polo Global', 'Paris Hub Central', 'Pesquisa Translacional', 'Infectologia'], detail: 'Institut Pasteur, Inserm, Sorbonne. Empresas: Sanofi, Servier, bioMérieux, Doctolib.', source: 'WIPO / Access to Medicine', image: 'https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Biotecnologia]', specialty: 'Saúde Pública & Vacinas', note: 'Paris consolidou-se como polo estratégico combinando rede hospitalar com biotecnologia.' },
+          { id: 'kr', rank: 8, country: 'Coreia do Sul 🇰🇷', axis: 'Hospital Digital, Biossimilares, IA Radiológica', stats: ['4º GII 2025', '5º Polo Global (Seoul)', '784k Litros CDMO', 'Semicondutores'], detail: 'Seoul National Univ., KAIST. Empresas: Samsung Biologics, Celltrion, Lunit, SK Bioscience.', source: 'GII 2025 / Samsung Data', image: 'https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Biomanufatura]', specialty: 'Eletrônica & Manufatura', note: 'Maior investimento em P&D do G20. Liderança em hospitais inteligentes e biossimilares.' },
+          { id: 'dk', rank: 9, country: 'Dinamarca 🇩🇰', axis: 'Diabetes, GLP-1, Doenças Metabólicas', stats: ['9º GII 2025', 'Copenhagen Cluster', '55% Market Share GLP-1', 'Biológicos'], detail: 'Univ. Copenhagen, Rigshospitalet. Empresas: Novo Nordisk, Lundbeck, Leo Pharma, Coloplast.', source: 'Market Data 2024', image: 'https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Tratamento Diabetes]', specialty: 'Endocrinologia Digital', note: 'Domínio de nicho: Novo Nordisk lidera a revolução mundial no tratamento da obesidade.' },
+          { id: 'nl', rank: 10, country: 'Países Baixos 🇳🇱', axis: 'Imagem Médica, IA Clínica, Engenharia Hospitalar', stats: ['8º GII 2025', 'Líder Patentes MedTech', 'Polo Amsterdã', 'Saúde Conectada'], detail: 'Erasmus MC, TU Delft. Empresas: Philips, Galapagos, DSM-Firmenich.', source: 'GII 2025 / EPO 2024', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Engenharia Médica]', specialty: 'Engenharia Hospitalar', note: 'Potência na transição hospital-casa e monitoramento inteligente conectado.' },
+        ];
 
-const mapData = [
-  { id: 'us', name: 'Estados Unidos 🇺🇸', rankingNumber: '1', top: '32%', left: '19%', size: 44, color: 'bg-blue-600' },
-  { id: 'br', name: 'Brasil 🇧🇷', rankingNumber: '52', top: '68%', left: '31%', size: 36, color: 'bg-emerald-500' },
-  { id: 'uk', name: 'Reino Unido 🇬🇧', rankingNumber: '5', top: '23%', left: '46%', size: 32, color: 'bg-blue-500' },
-  { id: 'fr', name: 'França 🇫🇷', rankingNumber: '7', top: '29%', left: '47.5%', size: 30, color: 'bg-blue-400' },
-  { id: 'nl', name: 'Países Baixos 🇳🇱', rankingNumber: '10', top: '23%', left: '48.5%', size: 28, color: 'bg-indigo-400' },
-  { id: 'dk', name: 'Dinamarca 🇩🇰', rankingNumber: '9', top: '19%', left: '49%', size: 28, color: 'bg-blue-400' },
-  { id: 'de', name: 'Alemanha 🇩🇪', rankingNumber: '3', top: '25%', left: '50.5%', size: 36, color: 'bg-blue-500' },
-  { id: 'ch', name: 'Suíça 🇨🇭', rankingNumber: '4', top: '29%', left: '49.5%', size: 36, color: 'bg-indigo-600' },
-  { id: 'cn', name: 'China 🇨🇳', rankingNumber: '2', top: '36%', left: '75%', size: 42, color: 'bg-red-500' },
-  { id: 'kr', name: 'Coreia do Sul 🇰🇷', rankingNumber: '8', top: '35%', left: '81%', size: 32, color: 'bg-indigo-500' },
-  { id: 'jp', name: 'Japão 🇯🇵', rankingNumber: '6', top: '34%', left: '86%', size: 34, color: 'bg-blue-500' },
-];
+        const brazilCard = {
+          id: 'br', rank: '52', country: 'Brasil 🇧🇷', axis: 'Saúde Pública, Vacinas, Doenças Tropicais', stats: ['52º GII 2025', '49º Polo WIPO (SP)', 'Escala SUS', 'Biomanufatura'], detail: 'USP, Fiocruz, Butantan, Unicamp. Indústria: EMS, Eurofarma, Aché. HealthTechs em expansão.', source: 'WIPO / Min. Saúde', image: 'https://images.unsplash.com/photo-1584467735815-f778f274e296?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Pesquisador Brasileiro]', specialty: 'Potência Emergente', note: 'O Brasil possui o maior sistema universal de saúde (SUS). Desafio: transformar ciência básica em patentes industriais.'
+        };
 
-const brazilInstitutions = [
-  { name: 'USP, Unicamp & Unesp', desc: 'Polo #49 do GII. Foco em genômica, biologia celular e medicina regenerativa.', source: 'WIPO', image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Campus]' },
-  { name: 'Fiocruz & Butantan', desc: 'Pilares do SUS. Biomanufatura massiva, vacinas e biossegurança NB4.', source: 'Min. Saúde', image: 'https://images.unsplash.com/photo-1618015359908-7f485c8f1ec1?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Vacinas]' },
-  { name: 'Indústria Farma Nacional', desc: 'EMS, Eurofarma e Aché asseguram o abastecimento interno e iniciam biossimilares.', source: 'Sindusfarma', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Produção]' },
-  { name: 'HealthTechs (Dasa, Hilab)', desc: 'Startups acelerando a transformação digital e telediagnóstico no setor público e privado.', source: 'Distrito', image: 'https://images.unsplash.com/photo-1576091160550-2173ff9e5ee5?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Saúde Digital]' },
-];
+        const allMapCards = [...top10, brazilCard];
 
-const goiasInstitutions = [
-  { name: 'HC-UFG (Hospital)', desc: 'Referência regional em alta complexidade e pesquisa translacional.', source: 'Ebserh', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&q=80' },
-  { name: 'UFG (Universidade)', desc: 'Motor de inovação em IA, telemedicina e odontologia oncológica.', source: 'PRPI', image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=400&q=80' },
-  { name: 'IPTSP / UFG', desc: 'Instituto focado em bioprospecção do Cerrado e arboviroses.', source: 'CNPq', image: 'https://images.unsplash.com/photo-1611078703759-4d7a8686fc6a?auto=format&fit=crop&w=400&q=80' },
-  { name: 'Polo Farma (Anápolis)', desc: '2º maior polo do país, vital para transformar pesquisa em escala industrial.', source: 'IBGE', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=400&q=80' },
-];
+        const mapData = [
+          { id: 'us', name: 'Estados Unidos 🇺🇸', rankingNumber: '1', top: '32%', left: '19%', size: 50, color: 'bg-blue-600' },
+          { id: 'br', name: 'Brasil 🇧🇷', rankingNumber: '52', top: '68%', left: '31%', size: 42, color: 'bg-emerald-500' },
+          { id: 'uk', name: 'Reino Unido 🇬🇧', rankingNumber: '5', top: '23%', left: '46%', size: 36, color: 'bg-blue-500' },
+          { id: 'fr', name: 'França 🇫🇷', rankingNumber: '7', top: '29%', left: '47.5%', size: 34, color: 'bg-blue-400' },
+          { id: 'nl', name: 'Países Baixos 🇳🇱', rankingNumber: '10', top: '23%', left: '48.5%', size: 32, color: 'bg-indigo-400' },
+          { id: 'dk', name: 'Dinamarca 🇩🇰', rankingNumber: '9', top: '19%', left: '49%', size: 32, color: 'bg-blue-400' },
+          { id: 'de', name: 'Alemanha 🇩🇪', rankingNumber: '3', top: '25%', left: '50.5%', size: 40, color: 'bg-blue-500' },
+          { id: 'ch', name: 'Suíça 🇨🇭', rankingNumber: '4', top: '29%', left: '49.5%', size: 40, color: 'bg-indigo-600' },
+          { id: 'cn', name: 'China 🇨🇳', rankingNumber: '2', top: '36%', left: '75%', size: 48, color: 'bg-red-500' },
+          { id: 'kr', name: 'Coreia do Sul 🇰🇷', rankingNumber: '8', top: '35%', left: '81%', size: 36, color: 'bg-indigo-500' },
+          { id: 'jp', name: 'Japão 🇯🇵', rankingNumber: '6', top: '34%', left: '86%', size: 38, color: 'bg-blue-500' },
+        ];
 
-const goiasResearches = [
-  { title: 'Chagas & NEDOCH', desc: 'Referência OMS. Mapeamento de biomarcadores e novas terapias.', image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Pesquisa]' },
-  { title: 'Neurocirurgia Robótica', desc: 'Implantes via estereotaxia robótica para epilepsia resistente no SUS.', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Cérebro]' },
-  { title: 'IA Aplicada (SBCAS)', desc: 'Algoritmos para segmentação de microlesões e telemonitoramento.', image: 'https://images.unsplash.com/photo-1516110833967-0b5716ca1387?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de IA]' },
-  { title: 'Biodiversidade Cerrado', desc: 'Mapeamento genético da flora para descoberta de novos princípios bioativos.', image: 'https://images.unsplash.com/photo-1611078703759-4d7a8686fc6a?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Folhas]' },
-];
+        const brazilInstitutions = [
+          { name: 'USP, Unicamp & Unesp', desc: 'Único polo brasileiro no Top 100 GII. Forte atuação em genômica, biologia celular e medicina regenerativa.', source: 'WIPO', image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Campus Universitário]' },
+          { name: 'Fiocruz & Butantan', desc: 'Pilares históricos do SUS. Capazes de biomanufatura massiva, vacinas nacionais e laboratórios de biossegurança máxima (NB4).', source: 'Min. Saúde', image: 'https://images.unsplash.com/photo-1618015359908-7f485c8f1ec1?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Vacinas]' },
+          { name: 'Indústria Farma Nacional', desc: 'EMS, Eurofarma e Aché asseguram abastecimento interno e iniciam transição estrutural para biossimilares e PD&I radical.', source: 'Sindusfarma', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Produção]' },
+          { name: 'Ecossistema HealthTech', desc: 'Startups que aceleram a transformação digital, telediagnóstico e logística hospitalar inteligente integrando o setor público.', source: 'Distrito', image: 'https://images.unsplash.com/photo-1576091160550-2173ff9e5ee5?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Saúde Digital]' },
+        ];
 
-const featuredInnovations = [
-  { id: 'biosensor-pancreas-usp', title: 'Biossensor Câncer de Pâncreas', subtitle: 'Diagnóstico em 10 minutos', country: 'Brasil 🇧🇷', institution: 'USP', solution: 'Biossensor eletroquímico de baixo custo capaz de detectar a proteína CA19-9 no sangue em estágios iniciais da doença.', details: 'Entrega resultados rápidos por uma fração do custo tradicional. Vital para um câncer assintomático com baixa sobrevida.', source: 'CNN / saaudeeoficial', image: 'https://images.unsplash.com/photo-1579154341098-e4e158cc7f55?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Análise Bioquímica]', icon: '🧪' },
-  { id: 'tecido-cardiaco-espinafre', title: 'Coração de Espinafre', subtitle: 'Regeneração com andaime vegetal', country: 'Estados Unidos 🇺🇸', institution: 'WPI', solution: 'Remoção de células vegetais de uma folha de espinafre para aproveitar sua rede de celulose como suporte vascular para células humanas.', details: 'As células semeadas contraíram-se como músculo real. A rede de veias da folha imitou o fluxo sanguíneo necessário para tecidos.', source: 'autoexplicando / Biomaterials', image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Veias de Folha]', icon: '🍃' },
-  { id: 'eli-lilly-ajax-cancer', title: 'Oncologia Hematológica', subtitle: 'Investimento de US$ 2,3 bilhões', country: 'Estados Unidos 🇺🇸', institution: 'Eli Lilly / Ajax', solution: 'Acordo para reforçar tratamento de cânceres do sangue como a mielofibrose, reprogramando células do corpo contra tumores.', details: 'A Eli Lilly utiliza capital de sucessos como o Mounjaro para impulsionar terapias experimentais e validação clínica de alto risco.', source: 'ofitfeed / Eli Lilly', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Farma]', icon: '💊' },
-  { id: 'microrobo-urease', title: 'Micro-robô para Rins', subtitle: 'Dissolução sem cirurgia', country: 'Canadá 🇨🇦', institution: 'U. Waterloo', solution: 'Filamento magnético de hidrogel com urease navegado via ultrassom. Atua diretamente sobre pedras de ácido úrico no local.', details: 'Elimina endoscopias dolorosas ou laser, dissolvendo cálculos quimicamente em poucos dias com riscos mínimos.', source: 'ACS Nano', image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Precisão]', icon: '🧲' },
-  { id: 'vacina-anti-envelhecimento', title: 'Vacina contra Envelhecimento', subtitle: 'Bloqueio de senescência celular', country: 'Rússia 🇷🇺', institution: 'Min. Ciência Rússia', solution: 'Tratamento inovador baseado em terapia genética focado no bloqueio de receptores específicos das células do envelhecimento.', details: 'Aposta experimental no combate ao envelhecimento celular, descrita como a primeira "vacina" preventiva contra o tempo biológico.', source: 'geolive.br', image: 'https://images.unsplash.com/photo-1614935151651-0bea6508db6b?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Vacina]', icon: '💉' },
-  { id: 'mapeamento-cerebral-realtime', title: 'Mapeamento Cerebral', subtitle: 'Realidade Aumentada Cirúrgica', country: 'Global / EUA 🇺🇸', institution: 'Ciência do Futuro', solution: 'Sistemas que sobrepõem mapas de fibras neurais sobre o cérebro vivo durante a cirurgia, guiando o cirurgião em tempo real.', details: 'Reduz sequelas ao remover tumores complexos, mapeando áreas de fala e movimento enquanto o paciente está na mesa cirúrgica.', source: 'Neurocirurgia Moderna', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Neurocirurgia]', icon: '👁️' },
-  { id: 'implante-cerebral-dot', title: 'Implante Neural (DOT)', subtitle: 'Estimulação para Depressão', country: 'Estados Unidos 🇺🇸', institution: 'Motif Neurotech', solution: 'Microimplante posicionado acima do crânio. Utiliza estimulação programável para modular circuitos neurais sem penetrar o tecido.', details: 'Alternativa precisa para depressão profunda resistente, atuando nos circuitos cerebrais sem os efeitos de drogas sistêmicas.', source: 'Martha Gabriel', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Sinapses]', icon: '🧠' },
-  { id: 'cerume-cancer', title: 'Marcador no Cerume', subtitle: 'Detecção Não Invasiva', country: 'Brasil 🇧🇷', institution: 'Univ. Brasileira', solution: 'Identificação de assinaturas de compostos voláteis na cera de ouvido que sinalizam a presença de biomarcadores oncológicos.', details: 'Método indolor e de baixíssimo custo para triagem preventiva em massa, detectando câncer antes dos sintomas clínicos.', source: 'Jornal Nacional', image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Bioquímica]', icon: '🔬' },
-  { id: 'veneno-marimbondo-alzheimer', title: 'Veneno contra Alzheimer', subtitle: 'Inibição de Placas Neurais', country: 'Brasil 🇧🇷', institution: 'Santa Casa São Carlos', solution: 'Isolamento de peptídeos ativos capazes de quebrar placas beta-amiloides e inibir a neuroinflamação degenerativa.', details: 'Abre uma nova via bioquímica para o tratamento de demências crônicas, protegendo os neurônios do avanço da doença.', source: 'Med Nucleo', image: 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Bioquímica]', icon: '🐝' },
-];
+        const goiasInstitutions = [
+          { name: 'HC-UFG (Hospital das Clínicas)', desc: 'Referência regional em alta complexidade e pesquisa translacional. Atende 6.000 pacientes pelo NEDOCH.', source: 'Ebserh', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&q=80' },
+          { name: 'UFG (Universidade Federal de Goiás)', desc: 'Motor de inovação em IA, telemedicina, neurocirurgia e o polo de odontologia oncológica digital.', source: 'PRPI', image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=400&q=80' },
+          { name: 'IPTSP / UFG', desc: 'Instituto focado em bioprospecção do Cerrado e controle intensivo de arboviroses.', source: 'CNPq', image: 'https://images.unsplash.com/photo-1611078703759-4d7a8686fc6a?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Polo Farma (Anápolis)', desc: '2º maior polo do país, vital para transformar a pesquisa acadêmica regional em escala industrial farmacêutica.', source: 'IBGE', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=400&q=80' },
+        ];
 
-const TABS = [
-  { id: 'global', label: 'Tendências', icon: TrendingUp },
-  { id: 'top10', label: 'As Potências', icon: Globe },
-  { id: 'brasil', label: 'Brasil 🇧🇷', icon: MapPin },
-  { id: 'goias', label: 'Goiás 📍', icon: MapPin },
-  { id: 'innovations', label: 'Radar', icon: Target },
-];
+        const goiasResearches = [
+          { title: 'Doença de Chagas & NEDOCH', desc: 'Referência OMS. Mapeamento de biomarcadores cardíacos e novas terapias para fase crônica.', image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Pesquisa]' },
+          { title: 'Neurocirurgia Robótica', desc: 'Pioneirismo no SUS com implantes de eletrodos via estereotaxia robótica para tratamento de epilepsia resistente.', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Cérebro]' },
+          { title: 'IA Aplicada (SBCAS 2024)', desc: 'Algoritmos premiados para segmentação de microlesões e telemonitoramento epidemiológico em tempo real.', image: 'https://images.unsplash.com/photo-1516110833967-0b5716ca1387?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de IA]' },
+          { title: 'Biodiversidade Cerrado', desc: 'Mapeamento genético da flora para a descoberta de princípios bioativos naturais contra doenças tropicais.', image: 'https://images.unsplash.com/photo-1611078703759-4d7a8686fc6a?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Folhas]' },
+        ];
 
-// --- COMPONENTS ---
+        const featuredInnovations = [
+          {
+            id: 'biosensor-pancreas-usp',
+            title: 'Biossensor para Câncer de Pâncreas',
+            subtitle: 'Diagnóstico precoce via biomarcadores em 10 minutos',
+            country: 'Brasil 🇧🇷',
+            institution: 'USP (Universidade de São Paulo)',
+            solution: 'Desenvolvimento de um biossensor eletroquímico capaz de detectar quantidades ínfimas da proteína CA19-9 no sangue. A tecnologia permite identificar o tumor em estágio inicial de forma simples e acessível.',
+            details: 'Entrega resultados em apenas 10 minutos por uma fração do custo dos exames tradicionais. Fundamental para um tipo de câncer assintomático cujas taxas de sobrevida tardia são inferiores a 3%.',
+            source: 'saaudeeoficial / CNN Brasil',
+            image: 'https://images.unsplash.com/photo-1579154341098-e4e158cc7f55?auto=format&fit=crop&w=800&q=80',
+            icon: '🧪'
+          },
+          {
+            id: 'tecido-cardiaco-espinafre',
+            title: 'Coração Funcional de Espinafre',
+            subtitle: 'Regeneração cardíaca usando andaime biológico vegetal',
+            country: 'Estados Unidos 🇺🇸',
+            institution: 'Worcester Polytechnic Institute (WPI)',
+            solution: 'Remoção das células vegetais de uma folha de espinafre para aproveitar sua rede de celulose. A estrutura restante serve como um "andaime" biocompatível para o crescimento de células cardíacas humanas.',
+            details: 'A rede natural de veias da folha consegue transportar fluidos e microesferas, imitando o fluxo sanguíneo necessário para órgãos humanos. Após a semeadura, o tecido vegetal começou a se contrair de forma semelhante a um músculo real.',
+            source: 'autoexplicando / Biomaterials',
+            image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80',
+            icon: '🍃'
+          },
+          {
+            id: 'eli-lilly-ajax-cancer',
+            title: 'Aposta em Oncologia Hematológica',
+            subtitle: 'Aquisição da Ajax Therapeutics pela Eli Lilly (Dona do Mounjaro)',
+            country: 'Estados Unidos 🇺🇸',
+            institution: 'Eli Lilly / Ajax Therapeutics',
+            solution: 'Acordo estratégico de até US$ 2,3 bilhões para reforçar a presença no tratamento de cânceres do sangue, focando especialmente na mielofibrose (tipo raro de câncer hematológico).',
+            details: 'O principal ativo é um medicamento experimental em fase inicial de testes clínicos. A Eli Lilly utiliza o capital de sucessos como Mounjaro para reprogramar células do próprio corpo contra tumores, investindo em validação clínica de alto risco.',
+            source: 'ofitfeed / Eli Lilly',
+            image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=800&q=80',
+            icon: '💊'
+          },
+          {
+            id: 'microrobo-urease',
+            title: 'Micro-robô Magnético para Rins',
+            subtitle: 'Dissolução de pedras nos rins sem intervenção cirúrgica',
+            country: 'Canadá 🇨🇦',
+            institution: 'University of Waterloo',
+            solution: 'Um filamento magnético flexível carregado com a enzima urease. Navegado por um braço robótico externo guiado por ultrassom, ele viaja até o cálculo renal.',
+            details: 'O robô atua diretamente sobre as pedras de ácido úrico, dissolvendo-as quimicamente no local em poucos dias. Elimina a dor de endoscopias, brocas a laser ou ondas de choque invasivas.',
+            source: 'fatoscuriosos.x / ACS Nano',
+            image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=800&q=80',
+            icon: '🧲'
+          },
+          {
+            id: 'vacina-anti-envelhecimento-russia',
+            title: 'Vacina contra o Envelhecimento',
+            subtitle: 'Terapia genética para bloqueio da senescência celular',
+            country: 'Rússia 🇷🇺',
+            institution: 'Ministério da Ciência e Ensino Superior (Rússia)',
+            solution: 'Desenvolvimento de um tratamento inovador baseado em terapia genética que foca no bloqueio de receptores específicos das células responsáveis pelo processo de envelhecimento.',
+            details: 'O projeto, anunciado pelo vice-ministro Denis Sekirinsky, busca um avanço potencial no combate ao envelhecimento celular celular em fase experimental. É descrito pelas autoridades como a primeira "vacina" preventiva contra o tempo biológico.',
+            source: 'geolive.br / The Moscow Times',
+            image: 'https://images.unsplash.com/photo-1614935151651-0bea6508db6b?auto=format&fit=crop&w=800&q=80',
+            icon: '💉'
+          },
+          {
+            id: 'mapeamento-cerebral-realtime',
+            title: 'Mapeamento Cerebral em Tempo Real',
+            subtitle: 'Neuro-navegação intraoperatória com realidade aumentada',
+            country: 'Global / EUA 🇺🇸',
+            institution: 'Ciência do Futuro',
+            solution: 'Sistemas que sobrepõem mapas de fibras neurais (DTI) e ressonância funcional sobre o cérebro vivo do paciente durante a cirurgia usando realidade aumentada.',
+            details: 'O cirurgião visualiza exatamente onde estão as áreas de fala e movimento antes de fazer cortes, reduzindo sequelas permanentes ao remover tumores adjacentes a áreas críticas.',
+            source: 'Ciência do Futuro / Neurocirurgia Moderna',
+            image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=800&q=80',
+            icon: '👁️'
+          },
+          {
+            id: 'implante-cerebral-dot',
+            title: 'Implante Neural Sem Fio (DOT)',
+            subtitle: 'Estimulação elétrica para depressão resistente',
+            country: 'Estados Unidos 🇺🇸',
+            institution: 'Motif Neurotech / FDA',
+            solution: 'Microimplante miniaturizado posicionado acima do crânio. Utiliza estimulação programável para modular circuitos cerebrais ligados à depressão profunda sem penetrar o tecido neural.',
+            details: 'Uma alternativa direta e precisa à dependência exclusiva de medicamentos tradicionais, atuando nos circuitos neurais que não respondem a terapias convencionais.',
+            source: 'Martha Gabriel / Motif Neurotech',
+            image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80',
+            icon: '🧠'
+          },
+          {
+            id: 'cerume-cancer',
+            title: 'Biomarcador Oncológico no Cerume',
+            subtitle: 'Cera de ouvido como método de detecção não invasiva',
+            country: 'Brasil 🇧🇷',
+            institution: 'Universidade Brasileira / JN',
+            solution: 'Assinaturas metabólicas de compostos voláteis retidos na cera de ouvido sinalizam a presença de biomarcadores oncológicos no organismo.',
+            details: 'Método indolor e de baixíssimo custo para triagem populacional em massa, permitindo a detecção precoce muito antes dos sintomas clínicos tradicionais.',
+            source: 'Jornal Nacional',
+            image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=800&q=80',
+            icon: '🔬'
+          },
+          {
+            id: 'veneno-marimbondo-alzheimer',
+            title: 'Veneno de Marimbondo contra Alzheimer',
+            subtitle: 'Inibição de placas neurodegenerativas',
+            country: 'Brasil 🇧🇷',
+            institution: 'Santa Casa São Carlos / CIDI',
+            solution: 'Isolamento de peptídeos ativos que demonstram capacidade de quebrar as placas beta-amiloides, responsáveis pela degeneração no Alzheimer.',
+            details: 'A substância atua inibindo a neuroinflamação e protegendo os neurônios, abrindo uma nova via bioquímica para o tratamento de demências crônicas que atualmente carecem de cura.',
+            source: 'Med Nucleo / Santa Casa',
+            image: 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=800&q=80',
+            icon: '🐝'
+          }
+        ];
 
-const SectionHeader = ({ title, subtitle, icon: Icon }) => (
-  <div className="mb-4 border-b-2 border-slate-900 pb-2 flex justify-between items-end">
-    <div className="flex items-center gap-3">
-      {Icon && <Icon className="w-8 h-8 text-slate-900" />}
-      <h2 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none">{title}</h2>
-    </div>
-    {subtitle && <p className="text-slate-600 text-[10px] md:text-xs font-black max-w-sm text-right leading-tight hidden md:block uppercase tracking-widest">{subtitle}</p>}
-  </div>
-);
+        const TABS = [
+          { id: 'global', label: 'Eixos e Tendências', icon: 'fa-solid fa-arrow-trend-up' },
+          { id: 'top10', label: 'As 10 Potências', icon: 'fa-solid fa-earth-americas' },
+          { id: 'brasil', label: 'Brasil 🇧🇷', icon: 'fa-solid fa-location-dot' },
+          { id: 'goias', label: 'Goiás 📍', icon: 'fa-solid fa-location-dot' },
+          { id: 'innovations', label: 'Radar de Inovação', icon: 'fa-solid fa-bullseye' },
+        ];
 
-const DidacticIntro = ({ text }) => (
-  <div className="bg-slate-50 border-l-4 border-blue-600 p-3 mb-5 rounded-r-xl text-slate-800 leading-relaxed text-sm md:text-base shadow-sm font-medium italic">
-    "{text}"
-  </div>
-);
+        // --- COMPONENTS ---
 
-const SourceTag = ({ source }) => (
-  <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-slate-100">
-    <Beaker className="w-3 h-3 text-slate-400" />
-    <span className="text-[10px] text-slate-500 uppercase font-black tracking-widest">Fonte: {source}</span>
-  </div>
-);
-
-const StatBadge = ({ value, label }) => (
-  <div className="bg-slate-100 p-3 rounded-2xl border border-slate-200 text-center flex flex-col justify-center shadow-md hover:bg-white transition-all group">
-    <div className="font-black text-slate-900 text-xl leading-none mb-1 group-hover:text-blue-600">{value}</div>
-    <div className="text-[9px] text-slate-500 uppercase font-black tracking-widest leading-tight">{label}</div>
-  </div>
-);
-
-const ExecutiveSummaryCard = ({ title, desc, icon, colorClass }) => (
-  <div className={`border-l-8 ${colorClass} bg-white p-3 rounded-r-2xl shadow-lg flex gap-4 items-center hover:scale-[1.02] transition-transform`}>
-    <span className="text-3xl">{icon}</span>
-    <div>
-      <h4 className="font-black text-slate-900 text-sm uppercase tracking-tighter leading-none mb-1">{title}</h4>
-      <p className="text-[11px] text-slate-600 font-medium leading-tight m-0">{desc}</p>
-    </div>
-  </div>
-);
-
-const InteractiveMap = ({ selectedId, onSelect }) => {
-  const [hovered, setHovered] = useState(null);
-
-  return (
-    <div className="relative w-full aspect-[2/1] md:aspect-[3/1] bg-slate-100 rounded-[32px] overflow-hidden shadow-inner border-4 border-white mb-6 group select-none">
-      <img src="https://i.postimg.cc/Bbm1W0xq/mapa-mundi.jpg" alt="Mapa" className="w-full h-full object-cover opacity-60 saturate-50 group-hover:saturate-100 transition-all duration-1000" />
-      <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-4 py-1.5 rounded-xl shadow-lg border border-slate-200 pointer-events-none z-10">
-        <h3 className="font-black text-slate-900 flex items-center gap-2 text-sm uppercase tracking-tighter"><Globe className="w-4 h-4 text-blue-600"/> Matriz 2025</h3>
-      </div>
-      {mapData.map((pt) => (
-        <div
-          key={pt.id}
-          className="absolute cursor-pointer transform -translate-x-1/2 -translate-y-1/2 z-20 flex justify-center items-center"
-          style={{ top: pt.top, left: pt.left }}
-          onClick={() => onSelect(pt.id)}
-          onMouseEnter={() => setHovered(pt)}
-          onMouseLeave={() => setHovered(null)}
-        >
-          <div className={`absolute rounded-full animate-ping opacity-20 ${pt.color}`} style={{ width: pt.size, height: pt.size }}></div>
-          <div 
-            className={`relative rounded-full shadow-xl border-2 border-white transition-all flex items-center justify-center font-black text-white drop-shadow-lg
-              ${pt.color} ${selectedId === pt.id ? 'scale-125 ring-4 ring-blue-300 ring-opacity-50 z-30' : 'opacity-90 hover:opacity-100'}`}
-            style={{ width: pt.size, height: pt.size }}
-          >
-            <span style={{ fontSize: pt.size > 30 ? '12px' : '9px' }}>{pt.rankingNumber}</span>
-          </div>
-          {(hovered?.id === pt.id || selectedId === pt.id) && (
-            <span className="absolute top-full mt-1 bg-slate-900 text-white text-[9px] uppercase font-black px-2 py-0.5 rounded-full shadow-2xl z-30">{pt.name}</span>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export default function App() {
-  const [activeTab, setActiveTab] = useState(TABS[0].id);
-  const [activeCountryId, setActiveCountryId] = useState('us'); 
-
-  const activeIndex = TABS.findIndex(t => t.id === activeTab);
-  
-  const goToNext = () => {
-    if (activeIndex < TABS.length - 1) setActiveTab(TABS[activeIndex + 1].id);
-    window.scrollTo({ top: 0, behavior: 'smooth' }); 
-  };
-  
-  const goToPrev = () => {
-    if (activeIndex > 0) setActiveTab(TABS[activeIndex - 1].id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  return (
-    <div className="min-h-screen bg-white text-slate-900 overflow-x-hidden flex flex-col font-sans" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
-      
-      {/* Hero Section - Reduced Padding */}
-      <header className="bg-slate-900 text-white py-8 px-8 lg:px-12 border-b-8 border-blue-600 relative overflow-hidden shrink-0">
-        <Dna className="absolute top-0 right-0 w-80 h-80 -mt-16 -mr-16 text-blue-400 opacity-10 pointer-events-none" />
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
-          <div className="md:w-3/5">
-            <div className="inline-block px-4 py-1 bg-blue-600/30 border border-blue-400/50 rounded-full text-blue-200 text-[10px] font-black tracking-widest uppercase mb-4 shadow-xl">
-              PANORAMA ESTRATÉGICO 2025-2026
+        const SectionHeader = ({ title, subtitle, icon }) => (
+          <div className="mb-8 border-b-2 border-slate-900 pb-4 flex justify-between items-end">
+            <div className="flex items-center gap-4">
+              {icon && <i className={`${icon} text-[40px] text-slate-900`}></i>}
+              <h2 className="text-3xl md:text-5xl font-black text-slate-900 uppercase tracking-tighter leading-none">{title}</h2>
             </div>
-            <h1 className="text-3xl md:text-5xl font-black tracking-tighter leading-none mb-3">
-              GEOPOLÍTICA <span className="text-blue-400">DA INOVAÇÃO MÉDICA</span>
-            </h1>
-            <p className="text-base md:text-lg text-slate-300 font-light max-w-2xl leading-relaxed">
-              Escala, especialização e excelência científica na corrida tecnológica global.
-            </p>
+            {subtitle && <p className="text-slate-600 text-sm md:text-base font-black max-w-sm text-right leading-tight hidden md:block uppercase tracking-widest">{subtitle}</p>}
           </div>
-          <div className="md:w-2/5 flex flex-col items-end gap-6 w-full">
-            <div className="bg-white px-4 py-2 rounded-2xl shadow-xl border-2 border-slate-100">
-              <img src="https://i.postimg.cc/L6vCnk9g/gtidet.png" alt="Logo GTIDET" className="h-8 md:h-12 object-contain" />
+        );
+
+        const DidacticIntro = ({ text }) => (
+          <div className="bg-slate-50 border-l-8 border-blue-600 p-6 mb-10 rounded-r-2xl text-slate-800 leading-relaxed text-lg md:text-xl shadow-md font-medium italic">
+            "{text}"
+          </div>
+        );
+
+        const SourceTag = ({ source }) => (
+          <div className="flex items-center gap-2 mt-4 pt-4 border-t-2 border-slate-100">
+            <i className="fa-solid fa-flask text-xl text-slate-400"></i>
+            <span className="text-[12px] text-slate-500 uppercase font-black tracking-widest">Fonte: {source}</span>
+          </div>
+        );
+
+        const StatBadge = ({ value, label }) => (
+          <div className="bg-slate-100 p-6 rounded-3xl border-2 border-slate-200 text-center flex flex-col justify-center shadow-lg hover:bg-white hover:border-blue-600 transition-all group">
+            <div className="font-black text-slate-900 text-3xl leading-none mb-2 group-hover:text-blue-600">{value}</div>
+            <div className="text-[12px] text-slate-500 uppercase font-black tracking-widest leading-tight">{label}</div>
+          </div>
+        );
+
+        const ExecutiveSummaryCard = ({ title, desc, icon, colorClass }) => (
+          <div className={`border-l-[12px] ${colorClass} bg-white p-6 rounded-r-3xl shadow-xl flex gap-6 items-center hover:scale-[1.03] transition-transform cursor-default`}>
+            <span className="text-5xl drop-shadow-md">{icon}</span>
+            <div>
+              <h4 className="font-black text-slate-900 text-xl uppercase tracking-tighter leading-none mb-2">{title}</h4>
+              <p className="text-base text-slate-600 font-medium leading-snug m-0">{desc}</p>
             </div>
-            
-            <div className="grid grid-cols-2 gap-3 w-full">
-              {globalStats.map((stat, i) => (
-                <div key={i} className="bg-white/10 p-3 rounded-2xl border border-white/20 backdrop-blur-md shadow-lg">
-                  <div className="text-xl font-black text-white leading-none mb-1">{stat.value}</div>
-                  <div className="text-[9px] text-blue-200 font-black uppercase tracking-tight">{stat.label}</div>
+          </div>
+        );
+
+        const InteractiveMap = ({ selectedId, onSelect }) => {
+          const [hovered, setHovered] = useState(null);
+
+          return (
+            <div className="relative w-full aspect-[2/1] md:aspect-[2.5/1] bg-slate-100 rounded-[40px] overflow-hidden shadow-2xl border-8 border-white mb-10 group select-none">
+              <img src="https://i.postimg.cc/Bbm1W0xq/mapa-mundi.jpg" alt="Mapa Mundi" className="w-full h-full object-cover opacity-60 saturate-50 group-hover:saturate-100 transition-all duration-1000" />
+              <div className="absolute top-6 left-6 bg-white/95 backdrop-blur px-6 py-3 rounded-2xl shadow-2xl border border-slate-200 pointer-events-none z-10">
+                <h3 className="font-black text-slate-900 flex items-center gap-3 text-lg uppercase tracking-tighter"><i className="fa-solid fa-earth-americas text-2xl text-blue-600"></i> Matriz Estratégica 2025</h3>
+              </div>
+              {mapData.map((pt) => (
+                <div
+                  key={pt.id}
+                  className="absolute cursor-pointer transform -translate-x-1/2 -translate-y-1/2 z-20 flex justify-center items-center"
+                  style={{ top: pt.top, left: pt.left }}
+                  onClick={() => onSelect(pt.id)}
+                  onMouseEnter={() => setHovered(pt)}
+                  onMouseLeave={() => setHovered(null)}
+                >
+                  <div className={`absolute rounded-full animate-ping opacity-30 ${pt.color}`} style={{ width: pt.size, height: pt.size }}></div>
+                  <div 
+                    className={`relative rounded-full shadow-2xl border-4 border-white transition-all flex items-center justify-center font-black text-white drop-shadow-xl
+                      ${pt.color} ${selectedId === pt.id ? 'scale-125 ring-8 ring-blue-300 ring-opacity-50 z-30' : 'opacity-90 hover:opacity-100 hover:scale-110'}`}
+                    style={{ width: pt.size, height: pt.size }}
+                  >
+                    <span style={{ fontSize: pt.size > 30 ? '16px' : '12px' }}>{pt.rankingNumber}</span>
+                  </div>
+                  {(hovered?.id === pt.id || selectedId === pt.id) && (
+                    <span className="absolute top-full mt-3 bg-slate-900 text-white text-[12px] uppercase font-black px-4 py-2 rounded-full shadow-2xl z-30 border-2 border-white/20 whitespace-nowrap">{pt.name}</span>
+                  )}
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </header>
+          );
+        };
 
-      {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-6 py-6 w-full flex-1 flex flex-col bg-white">
-        
-        {/* Navigation Control Bar - Compacted */}
-        <div className="flex items-center gap-3 mb-8 shrink-0">
-          <button onClick={goToPrev} disabled={activeIndex === 0} className="p-3 rounded-xl bg-slate-100 border border-slate-200 hover:bg-blue-600 hover:text-white disabled:opacity-20 shadow-md transition-all"><ChevronLeft className="w-6 h-6" /></button>
-          <div className="flex-1 flex gap-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-inner overflow-x-auto no-scrollbar">
-            {TABS.map((tab, idx) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 min-w-[130px] flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black transition-all ${activeTab === tab.id ? 'bg-white text-slate-900 shadow-lg scale-[1.02]' : 'text-slate-500 hover:bg-slate-200'}`}
-              >
-                <tab.icon className={`w-4 h-4 shrink-0 ${activeTab === tab.id ? 'text-blue-600' : ''}`} /> <span className="uppercase tracking-tight whitespace-nowrap">{tab.label}</span>
-              </button>
-            ))}
-          </div>
-          <button onClick={goToNext} disabled={activeIndex === TABS.length - 1} className="p-3 rounded-xl bg-slate-100 border border-slate-200 hover:bg-blue-600 hover:text-white disabled:opacity-20 shadow-md transition-all"><ChevronRight className="w-6 h-6" /></button>
-        </div>
+        function App() {
+          const [activeTab, setActiveTab] = useState(TABS[0].id);
+          const [activeCountryId, setActiveCountryId] = useState('us'); 
 
-        {/* Sliding Viewport */}
-        <div className="relative overflow-hidden w-full flex-1">
-          <div className="flex transition-transform duration-700 ease-in-out items-start w-full" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
-            
-            {/* SLIDE 1: Global Trends */}
-            <div className={`w-full shrink-0 px-2 transition-opacity duration-700 ${activeIndex === 0 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-              <SectionHeader title="Tendências Globais" icon={Activity} />
-              <DidacticIntro text="Convergência radical: IA prevendo o design proteico e wearables acelerando terapias genéticas de ponta." />
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {trends.map((trend, i) => (
-                  <div key={i} className="flex flex-col border-2 border-slate-50 rounded-[32px] bg-white overflow-hidden shadow-xl group">
-                    <div className="h-44 w-full relative overflow-hidden bg-slate-100">
-                      <img src={trend.image} alt={trend.imageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-                      <div className="absolute bottom-4 left-6 text-3xl bg-white w-12 h-12 rounded-2xl flex items-center justify-center shadow-xl border-2 border-slate-50">{trend.icon}</div>
+          const activeIndex = TABS.findIndex(t => t.id === activeTab);
+          
+          const goToNext = () => {
+            if (activeIndex < TABS.length - 1) setActiveTab(TABS[activeIndex + 1].id);
+            window.scrollTo({ top: 0, behavior: 'smooth' }); 
+          };
+          
+          const goToPrev = () => {
+            if (activeIndex > 0) setActiveTab(TABS[activeIndex - 1].id);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          };
+
+          return (
+            <div className="min-h-screen flex flex-col font-sans">
+              
+              {/* Hero Section */}
+              <header className="bg-slate-900 text-white py-16 px-8 lg:px-20 border-b-[12px] border-blue-600 relative overflow-hidden shrink-0">
+                <i className="fa-solid fa-dna absolute top-0 right-0 text-[500px] -mt-32 -mr-32 text-blue-400 opacity-10 pointer-events-none"></i>
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
+                  <div className="md:w-3/5">
+                    <div className="inline-block px-5 py-2 bg-blue-600/30 border-2 border-blue-400/50 rounded-full text-blue-200 text-sm font-black tracking-[0.2em] uppercase mb-8 shadow-xl">
+                      PANORAMA ESTRATÉGICO 2025-2026
                     </div>
-                    <div className="p-5 flex-1 flex flex-col">
-                      <h3 className="text-lg font-black text-slate-900 leading-tight mb-2 uppercase tracking-tighter">{trend.title}</h3>
-                      <p className="text-slate-600 text-sm leading-snug flex-1 font-medium">{trend.desc}</p>
-                      <SourceTag source={trend.source} />
+                    <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-6">
+                      GEOPOLÍTICA <br/><span className="text-blue-400">DA INOVAÇÃO MÉDICA</span>
+                    </h1>
+                    <p className="text-xl md:text-3xl text-slate-300 font-light max-w-2xl leading-relaxed">
+                      As mentes, os polos e as máquinas que dominam a biologia humana na corrida tecnológica pela vida.
+                    </p>
+                  </div>
+                  <div className="md:w-2/5 flex flex-col items-end gap-10 w-full">
+                    <div className="bg-white px-8 py-4 rounded-[32px] shadow-2xl border-4 border-slate-100">
+                      <img src="https://i.postimg.cc/L6vCnk9g/gtidet.png" alt="Logo GTIDET" className="h-12 md:h-20 object-contain" />
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-6 w-full">
+                      {globalStats.map((stat, i) => (
+                        <div key={i} className="bg-white/10 p-6 rounded-[32px] border-2 border-white/20 backdrop-blur-md shadow-2xl">
+                          <div className="text-4xl font-black text-white leading-none mb-2">{stat.value}</div>
+                          <div className="text-[12px] text-blue-200 font-black uppercase tracking-[0.1em]">{stat.label}</div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* SLIDE 2: Top 10 Mundial */}
-            <div className={`w-full shrink-0 px-2 transition-opacity duration-700 ${activeIndex === 1 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-              <SectionHeader title="Matriz de Potências" icon={Globe} />
-              <div className="grid md:grid-cols-3 gap-4 mb-8">
-                <ExecutiveSummaryCard title="Escala & Capital" desc="Domínio em investimentos (EUA, China)." icon="🏭" colorClass="border-blue-600" />
-                <ExecutiveSummaryCard title="Especialização" desc="Nichos de precisão (Europa/Japão)." icon="🔬" colorClass="border-indigo-500" />
-                <ExecutiveSummaryCard title="Integração" desc="Engenharia e Manufatura (Coreia)." icon="🤖" colorClass="border-emerald-500" />
-              </div>
-
-              <div className="mb-6 flex flex-col md:flex-row items-center justify-between bg-slate-50 p-3 rounded-2xl border-2 border-slate-100 shadow-sm gap-3">
-                <div className="flex items-center gap-3 px-3"><MapPin className="w-5 h-5 text-blue-600" /><label className="font-black text-slate-800 text-sm uppercase tracking-tighter">Analisar Nação:</label></div>
-                <div className="relative w-full md:w-80">
-                  <select value={activeCountryId} onChange={(e) => setActiveCountryId(e.target.value)} className="appearance-none w-full bg-white border border-slate-200 text-slate-900 font-black text-base rounded-xl py-2 px-4 cursor-pointer outline-none focus:border-blue-600 shadow-md">
-                    {allMapCards.map((card) => (<option key={card.id} value={card.id}>{card.rank}º - {card.country}</option>))}
-                  </select>
-                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
                 </div>
-              </div>
+              </header>
 
-              <InteractiveMap selectedId={activeCountryId} onSelect={setActiveCountryId} />
+              {/* Main Content Area */}
+              <main className="max-w-7xl mx-auto px-8 py-12 w-full flex-1 flex flex-col bg-white">
+                
+                {/* Navigation Control Bar */}
+                <div className="flex items-center gap-6 mb-16 shrink-0">
+                  <button onClick={goToPrev} disabled={activeIndex === 0} className="p-6 rounded-3xl bg-slate-100 border-2 border-slate-200 hover:bg-blue-600 hover:text-white disabled:opacity-20 shadow-2xl transition-all group">
+                     <i className="fa-solid fa-chevron-left text-4xl group-active:scale-90"></i>
+                  </button>
+                  <div className="flex-1 flex gap-4 bg-slate-100 p-3 rounded-[32px] border-2 border-slate-200 shadow-inner overflow-x-auto no-scrollbar">
+                    {TABS.map((tab, idx) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`flex-1 min-w-[200px] flex items-center justify-center gap-4 py-5 px-8 rounded-2xl text-base font-black transition-all ${activeTab === tab.id ? 'bg-white text-slate-900 shadow-2xl scale-[1.03] ring-2 ring-slate-900/5' : 'text-slate-500 hover:bg-slate-200 uppercase tracking-widest'}`}
+                      >
+                        <i className={`${tab.icon} text-2xl shrink-0 ${activeTab === tab.id ? 'text-blue-600' : ''}`}></i> <span className="uppercase tracking-tight whitespace-nowrap">{tab.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <button onClick={goToNext} disabled={activeIndex === TABS.length - 1} className="p-6 rounded-3xl bg-slate-100 border-2 border-slate-200 hover:bg-blue-600 hover:text-white disabled:opacity-20 shadow-2xl transition-all group">
+                    <i className="fa-solid fa-chevron-right text-4xl group-active:scale-90"></i>
+                  </button>
+                </div>
 
-              <div className="mt-8">
-                {allMapCards.filter(item => item.id === activeCountryId).map((selectedData) => (
-                  <div key={selectedData.id} className="flex flex-col lg:flex-row bg-white border-2 border-slate-50 rounded-[32px] overflow-hidden shadow-2xl group">
-                    <div className="bg-slate-900 text-white w-full lg:w-40 p-6 flex flex-col justify-center items-center shrink-0">
-                      <span className="text-6xl font-black leading-none drop-shadow-xl">#{selectedData.rank}</span>
-                      <span className="text-xs font-black uppercase tracking-[0.2em] text-blue-400 mt-4">{selectedData.country.split(' ')[0]}</span>
-                    </div>
-                    <div className="w-full lg:w-[400px] shrink-0 relative bg-slate-200 border-r border-slate-50">
-                      <img src={selectedData.image} alt={selectedData.imageAlt} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
-                      <div className="absolute bottom-4 left-4 right-4 bg-blue-600/90 backdrop-blur-xl text-white text-[10px] font-black p-3 rounded-xl border border-white/20 shadow-2xl uppercase tracking-widest text-center">
-                        DOMÍNIO: {selectedData.specialty}
-                      </div>
-                    </div>
-                    <div className="p-8 flex-1 flex flex-col justify-center">
-                      <div className="flex items-center gap-3 border-b-2 border-slate-100 pb-4 mb-4">
-                        <Award className="w-8 h-8 text-yellow-500" /> 
-                        <h4 className="text-2xl font-black text-slate-900 uppercase tracking-tighter leading-none">{selectedData.country}</h4>
-                      </div>
-                      <strong className="block text-base text-blue-600 mb-2 uppercase tracking-tighter font-black">{selectedData.axis}</strong>
-                      <p className="text-slate-700 text-base leading-snug mb-6 font-medium">{selectedData.detail}</p>
-                      
-                      <div className="bg-blue-50 border-l-[8px] border-blue-500 p-4 rounded-r-2xl mb-6 shadow-inner">
-                        <p className="text-base text-slate-800 leading-relaxed font-bold italic">"{selectedData.note}"</p>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2 mt-auto">
-                        {selectedData.stats.map((stat, i) => (
-                          <div key={i} className="bg-slate-50 border border-slate-100 rounded-lg px-3 py-1.5 text-[10px] font-black text-slate-800 uppercase tracking-tighter shadow-sm">{stat}</div>
+                {/* Sliding Viewport */}
+                <div className="relative overflow-hidden w-full flex-1">
+                  <div className="flex transition-transform duration-700 ease-in-out items-start w-full" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
+                    
+                    {/* SLIDE 1: Global Trends */}
+                    <div className={`w-full shrink-0 px-4 transition-opacity duration-700 ${activeIndex === 0 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                      <SectionHeader title="Tendências Globais" subtitle="Biologia Sintética e Manufatura Avançada." icon="fa-solid fa-heart-pulse" />
+                      <DidacticIntro text="A inovação médica contemporânea é definida pela convergência radical: IA prevendo o design de novas proteínas e wearables acelerando terapias genéticas de ponta diretamente na jornada do paciente." />
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {trends.map((trend, i) => (
+                          <div key={i} className="flex flex-col border-4 border-slate-50 rounded-[40px] bg-white overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all group">
+                            <div className="h-64 w-full relative overflow-hidden bg-slate-100">
+                              <img src={trend.image} alt={trend.imageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent"></div>
+                              <div className="absolute bottom-6 left-8 text-5xl bg-white w-20 h-20 rounded-3xl flex items-center justify-center shadow-2xl border-4 border-slate-50">{trend.icon}</div>
+                            </div>
+                            <div className="p-8 flex-1 flex flex-col">
+                              <h3 className="text-2xl font-black text-slate-900 leading-tight mb-4 uppercase tracking-tighter">{trend.title}</h3>
+                              <p className="text-slate-600 text-lg leading-relaxed flex-1 font-medium">{trend.desc}</p>
+                              <SourceTag source={trend.source} />
+                            </div>
+                          </div>
                         ))}
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            {/* SLIDE 3: Brasil */}
-            <div className={`w-full shrink-0 px-4 transition-opacity duration-700 ${activeIndex === 2 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-              <SectionHeader title="Recorte Brasil" icon={MapPin} />
-              <DidacticIntro text="Ativos raros: SUS universal, institutos mundiais e indústria nacional farmacêutica." />
-
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <StatBadge value="52º" label="GII Global 2025" />
-                <StatBadge value="49º" label="Cluster WIPO (SP)" />
-                <StatBadge value="SUS" label="Maior Escala Real" />
-                <StatBadge value="Vacinas" label="Destaque Tropical" />
-              </div>
-
-              <div className="grid lg:grid-cols-2 gap-10">
-                <div className="space-y-6">
-                  <h3 className="text-xl font-black mb-4 text-slate-900 border-b-4 pb-2 flex items-center gap-3"><Building2 className="w-8 h-8 text-blue-600"/> Instituições de Vanguarda</h3>
-                  <div className="grid grid-cols-1 gap-4">
-                    {brazilInstitutions.map((inst, i) => (
-                      <div key={i} className="flex gap-6 p-6 border-2 border-slate-50 rounded-[32px] bg-white shadow-xl group hover:border-emerald-500 transition-all">
-                        <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden shadow-xl border-2 border-white">
-                          <img src={inst.image} alt={inst.imageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
-                        </div>
-                        <div className="flex-1">
-                          <h4 className="font-black text-base text-slate-900 mb-1 uppercase tracking-tighter leading-none">{inst.name}</h4>
-                          <p className="text-slate-600 text-xs leading-tight mb-2 font-medium">{inst.desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="bg-slate-900 text-white p-8 rounded-[40px] border-t-[12px] border-emerald-500 shadow-2xl flex flex-col justify-center">
-                  <h3 className="text-xl font-black mb-8 flex items-center gap-4 border-b border-slate-700 pb-4 uppercase tracking-tighter"><Rocket className="w-8 h-8 text-emerald-400"/> Eixos Chave</h3>
-                  <ul className="space-y-8">
-                    <li className="flex gap-8 items-start">
-                      <div className="w-16 h-16 bg-blue-600/30 rounded-2xl flex items-center justify-center shrink-0 border-2 border-blue-500/50 text-4xl shadow-xl">🦠</div>
-                      <div>
-                        <strong className="block text-xl text-blue-300 font-black mb-1 uppercase tracking-tighter">Virologia</strong>
-                        <p className="text-slate-300 text-base leading-tight font-light">Vacinas para Dengue e Zika. Inovação no SUS.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-8 items-start">
-                      <div className="w-16 h-16 bg-emerald-600/30 rounded-2xl flex items-center justify-center shrink-0 border-2 border-emerald-500/50 text-4xl shadow-xl">💊</div>
-                      <div>
-                        <strong className="block text-xl text-emerald-300 font-black mb-1 uppercase tracking-tighter">Indústria Farma</strong>
-                        <p className="text-slate-300 text-base leading-tight font-light">Nova Indústria Brasil (NIB) e Biofármacos.</p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* SLIDE 4: Goiás */}
-            <div className={`w-full shrink-0 px-4 transition-opacity duration-700 ${activeIndex === 3 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-              <SectionHeader title="Recorte Goiás" icon={MapPin} />
-              <DidacticIntro text="Hub tecnológico do Centro-Oeste focado em doenças negligenciadas." />
-
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <StatBadge value="R$ 21,6M" label="Inv. Ceti-Saúde" />
-                <StatBadge value="6.000+" label="Pacientes Chagas" />
-                <StatBadge value="R$ 10M" label="Inv. HC-UFG" />
-                <StatBadge value="30+" label="Indústrias" />
-              </div>
-
-              <div className="grid lg:grid-cols-2 gap-10">
-                <div className="flex flex-col gap-6">
-                  <div className="bg-slate-900 p-8 rounded-[40px] text-white shadow-2xl relative overflow-hidden group border-b-[12px] border-indigo-600">
-                    <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=800&q=80" className="absolute inset-0 w-full h-full object-cover opacity-20" alt="" />
-                    <div className="relative z-10 flex flex-col gap-4">
-                      <Award className="w-12 h-12 text-yellow-400 drop-shadow-2xl" />
-                      <div>
-                        <h3 className="text-2xl font-black mb-2 uppercase tracking-tighter leading-none">Ceti-Saúde (2025)</h3>
-                        <p className="text-blue-100 text-lg leading-snug font-light">Maior investimento histórico integrando rigor acadêmico com incorporação tecnológica no SUS.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    {goiasInstitutions.map((inst, i) => (
-                      <div key={i} className="p-6 border-2 border-slate-50 bg-white rounded-[32px] shadow-xl hover:border-blue-500 transition-colors">
-                        <div className="w-full h-24 mb-4 rounded-xl overflow-hidden bg-slate-100">
-                            <img src={inst.image} className="w-full h-full object-cover" alt="" />
-                        </div>
-                        <strong className="block text-sm text-slate-900 mb-1 font-black uppercase tracking-tighter leading-tight">{inst.name}</strong>
-                        <span className="text-[11px] text-slate-600 leading-tight font-medium">{inst.desc}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-6">
-                  <h3 className="text-xl font-black mb-4 text-slate-900 border-b-4 pb-2 uppercase tracking-tighter">Pesquisas de Impacto</h3>
-                  <div className="grid grid-cols-1 gap-4">
-                    {goiasResearches.map((item, i) => (
-                      <div key={i} className="flex gap-6 p-4 border-2 border-slate-50 rounded-[32px] bg-white shadow-xl group items-center">
-                        <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden shadow-xl">
-                          <img src={item.image} alt={item.imageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
-                        </div>
-                        <div className="flex-1">
-                          <strong className="text-lg font-black text-slate-900 mb-1 uppercase tracking-tighter leading-none block">{item.title}</strong>
-                          <p className="text-slate-600 text-xs font-medium leading-tight">{item.desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* SLIDE 5: Radar de Inovação */}
-            <div className={`w-full shrink-0 px-4 transition-opacity duration-700 ${activeIndex === 4 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-              <SectionHeader title="Radar de Inovação" icon={Target} />
-              <DidacticIntro text="Tecnologias disruptivas validadas por ciência de alto impacto." />
-
-              <div className="grid grid-cols-1 gap-8 overflow-y-auto no-scrollbar pb-24" style={{ maxHeight: 'calc(100vh - 400px)' }}>
-                {featuredInnovations.map((innovation) => (
-                  <div key={innovation.id} className="bg-white border-4 border-slate-50 rounded-[40px] overflow-hidden shadow-2xl flex flex-col md:flex-row group min-h-[400px]">
-                    <div className="md:w-[400px] relative bg-slate-900 overflow-hidden shrink-0">
-                      <img src={innovation.image} alt={innovation.imageAlt} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-[2000ms]" />
-                      <div className="absolute top-8 left-8 bg-white text-slate-900 text-[10px] font-black px-4 py-1.5 rounded-full shadow-2xl uppercase tracking-widest">
-                        {innovation.country}
-                      </div>
-                      <div className="absolute bottom-8 left-8 right-8 bg-blue-600/90 backdrop-blur-2xl text-white text-xs font-black px-6 py-4 rounded-2xl shadow-2xl border border-white/20">
-                        <div className="flex items-center gap-3 mb-2 uppercase opacity-80 tracking-widest text-[9px]"><Building2 className="w-4 h-4" /> INSTITUIÇÃO EXECUTORA</div>
-                        <span className="text-base tracking-tight">{innovation.institution}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="p-12 md:w-3/5 flex flex-col">
-                      <div className="flex items-center gap-4 mb-4">
-                        <span className="text-6xl drop-shadow-2xl">{innovation.icon}</span>
-                        <div>
-                          <h3 className="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-2">{innovation.title}</h3>
-                          <strong className="block text-base text-blue-600 uppercase tracking-widest font-black italic">{innovation.subtitle}</strong>
-                        </div>
-                      </div>
+                    {/* SLIDE 2: Top 10 Mundial */}
+                    <div className={`w-full shrink-0 px-4 transition-opacity duration-700 ${activeIndex === 1 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                      <SectionHeader title="Matriz de Potências Globais" icon="fa-solid fa-earth-americas" />
+                      <DidacticIntro text="Ranking baseado no cruzamento do Índice Global de Inovação (GII), densidade de polos de patentes médicas (WIPO) e capacidade de integração industrial." />
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 my-6 flex-1">
-                        <div>
-                          <h5 className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest mb-4">
-                            <Activity className="w-5 h-5" /> Solução
-                          </h5>
-                          <p className="text-base text-slate-700 leading-relaxed font-medium">
-                            {innovation.solution}
-                          </p>
-                        </div>
-                        <div className="bg-blue-50 p-8 rounded-3xl shadow-inner border border-blue-100">
-                          <h5 className="flex items-center gap-2 text-xs font-black text-blue-600 uppercase tracking-widest mb-4">
-                            <Stethoscope className="w-5 h-5" /> Impacto
-                          </h5>
-                          <p className="text-base text-slate-800 leading-relaxed font-bold italic">
-                            "{innovation.details}"
-                          </p>
+                      <div className="grid md:grid-cols-3 gap-8 mb-12">
+                        <ExecutiveSummaryCard title="Escala & Capital" desc="Domínio bruto em investimentos e ensaios (EUA, China)." icon="🏭" colorClass="border-blue-600" />
+                        <ExecutiveSummaryCard title="Especialização de Valor" desc="Foco em nichos de precisão e medtech (Europa/Japão)." icon="🔬" colorClass="border-indigo-500" />
+                        <ExecutiveSummaryCard title="Integração Digital" desc="Conexão Engenharia e Biomanufatura (Coreia)." icon="🤖" colorClass="border-emerald-500" />
+                      </div>
+
+                      <div className="mb-10 flex flex-col md:flex-row items-center justify-between bg-slate-50 p-6 rounded-[32px] border-4 border-slate-100 shadow-lg gap-6">
+                        <div className="flex items-center gap-4 px-4"><i className="fa-solid fa-location-dot text-3xl text-blue-600"></i><label className="font-black text-slate-800 text-xl uppercase tracking-tighter">Analisar Nação:</label></div>
+                        <div className="relative w-full md:w-[500px]">
+                          <select value={activeCountryId} onChange={(e) => setActiveCountryId(e.target.value)} className="appearance-none w-full bg-white border-4 border-slate-200 text-slate-900 font-black text-2xl rounded-2xl py-5 px-10 cursor-pointer outline-none focus:border-blue-600 shadow-xl">
+                            {allMapCards.map((card) => (<option key={card.id} value={card.id}>{card.rank}º - {card.country}</option>))}
+                          </select>
+                          <i className="fa-solid fa-chevron-down absolute right-6 top-1/2 -translate-y-1/2 text-4xl text-slate-400 pointer-events-none"></i>
                         </div>
                       </div>
-                      <div className="mt-auto">
-                        <SourceTag source={innovation.source} />
+
+                      <InteractiveMap selectedId={activeCountryId} onSelect={setActiveCountryId} />
+
+                      <div className="mt-12">
+                        {allMapCards.filter(item => item.id === activeCountryId).map((selectedData) => (
+                          <div key={selectedData.id} className="flex flex-col lg:flex-row bg-white border-4 border-slate-50 rounded-[50px] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] group">
+                            <div className="bg-slate-900 text-white w-full lg:w-64 p-12 flex flex-col justify-center items-center shrink-0">
+                              <span className="text-9xl font-black leading-none drop-shadow-2xl">#{selectedData.rank}</span>
+                              <span className="text-lg font-black uppercase tracking-[0.3em] text-blue-400 mt-6">{selectedData.country.split(' ')[0]}</span>
+                            </div>
+                            <div className="w-full lg:w-[500px] shrink-0 relative bg-slate-200 border-r-4 border-slate-50">
+                              <img src={selectedData.image} alt={selectedData.imageAlt} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
+                              <div className="absolute bottom-8 left-8 right-8 bg-blue-600/90 backdrop-blur-xl text-white text-sm font-black p-5 rounded-3xl border-2 border-white/20 shadow-2xl uppercase tracking-widest">
+                                DOMÍNIO: {selectedData.specialty}
+                              </div>
+                            </div>
+                            <div className="p-12 flex-1 flex flex-col justify-center">
+                              <div className="flex items-center gap-4 border-b-4 border-slate-100 pb-8 mb-8">
+                                <i className="fa-solid fa-award text-6xl text-yellow-500 drop-shadow-xl"></i> 
+                                <h4 className="text-5xl font-black text-slate-900 uppercase tracking-tighter leading-none">{selectedData.country}</h4>
+                              </div>
+                              <strong className="block text-2xl text-blue-600 mb-4 uppercase tracking-tighter font-black">{selectedData.axis}</strong>
+                              <p className="text-slate-700 text-xl leading-relaxed mb-10 font-medium">{selectedData.detail}</p>
+                              
+                              <div className="bg-blue-50 border-l-[12px] border-blue-500 p-8 rounded-r-[32px] mb-10 shadow-inner">
+                                <p className="text-xl text-slate-800 leading-relaxed font-bold italic">"{selectedData.note}"</p>
+                              </div>
+
+                              <div className="flex flex-wrap gap-4 mt-auto">
+                                {selectedData.stats.map((stat, i) => (
+                                  <div key={i} className="bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3 text-sm font-black text-slate-800 uppercase tracking-tighter shadow-md">{stat}</div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
+
+                    {/* SLIDE 3: Brasil */}
+                    <div className={`w-full shrink-0 px-4 transition-opacity duration-700 ${activeIndex === 2 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                      <SectionHeader title="Recorte Brasil" subtitle="Liderança latino-americana fundamentada na escala do SUS." icon="fa-solid fa-location-dot" />
+
+                      <DidacticIntro text="O Brasil possui ativos raros: um sistema de saúde universal para 212 milhões de pessoas (SUS), institutos respeitados mundialmente e uma indústria farmacêutica nacional robusta." />
+
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                        <StatBadge value="52º" label="GII Global 2025" />
+                        <StatBadge value="49º" label="Cluster WIPO (SP)" />
+                        <StatBadge value="SUS" label="Maior Escala Real" />
+                        <StatBadge value="Vacinas" label="Destaque Tropical" />
+                      </div>
+
+                      <div className="grid lg:grid-cols-2 gap-10">
+                        <div className="space-y-6">
+                          <h3 className="text-2xl font-black mb-4 text-slate-900 border-b-2 pb-2 flex items-center gap-3"><i className="fa-solid fa-building text-4xl text-blue-600"></i> Instituições de Vanguarda</h3>
+                          <div className="grid grid-cols-1 gap-4">
+                            {brazilInstitutions.map((inst, i) => (
+                              <div key={i} className="flex gap-6 p-5 border-4 border-slate-50 rounded-[40px] bg-white shadow-xl group hover:border-emerald-500 transition-all">
+                                <div className="w-32 h-32 shrink-0 rounded-2xl overflow-hidden shadow-md border-4 border-white">
+                                  <img src={inst.image} alt={inst.imageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                </div>
+                                <div className="flex-1">
+                                  <h4 className="font-black text-xl text-slate-900 mb-1 uppercase tracking-tight leading-none">{inst.name}</h4>
+                                  <p className="text-slate-600 text-sm leading-snug mb-2 font-medium">{inst.desc}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div className="bg-slate-900 text-white p-8 rounded-[50px] border-t-8 border-emerald-500 shadow-2xl flex flex-col justify-center">
+                          <h3 className="text-2xl font-black mb-8 flex items-center gap-3 border-b border-slate-700 pb-3 uppercase tracking-tighter"><i className="fa-solid fa-rocket text-4xl text-emerald-400"></i> Eixos de Desenvolvimento</h3>
+                          <ul className="space-y-8">
+                            <li className="flex gap-6 items-start">
+                              <div className="w-16 h-16 bg-blue-600/30 rounded-[20px] flex items-center justify-center shrink-0 border-2 border-blue-500/50 text-4xl shadow-xl">🦠</div>
+                              <div>
+                                <strong className="block text-2xl text-blue-300 font-black mb-1 uppercase tracking-tight">Virologia</strong>
+                                <p className="text-slate-300 text-lg leading-relaxed font-light">Vacinas para Dengue e Zika. Inovação na infraestrutura de diagnóstico do SUS.</p>
+                              </div>
+                            </li>
+                            <li className="flex gap-6 items-start">
+                              <div className="w-16 h-16 bg-emerald-600/30 rounded-[20px] flex items-center justify-center shrink-0 border-2 border-emerald-500/50 text-4xl shadow-xl">💊</div>
+                              <div>
+                                <strong className="block text-2xl text-emerald-300 font-black mb-1 uppercase tracking-tight">Indústria Farma</strong>
+                                <p className="text-slate-300 text-lg leading-relaxed font-light">Adoção da Nova Indústria Brasil (NIB) para produção de biofármacos complexos.</p>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* SLIDE 4: Goiás */}
+                    <div className={`w-full shrink-0 px-4 transition-opacity duration-700 ${activeIndex === 3 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                      <SectionHeader title="Recorte Goiás" subtitle="Descentralização da ciência e inovação médica no Cerrado." icon="fa-solid fa-location-dot" />
+
+                      <DidacticIntro text="Goiás desponta estrategicamente na ciência utilizando a robustez de suas universidades (UFG) para exportar tecnologias médicas focadas em doenças regionais e soluções para o SUS." />
+
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                        <StatBadge value="R$ 21,6M" label="Inv. Ceti-Saúde" />
+                        <StatBadge value="6.000+" label="Pacientes Chagas" />
+                        <StatBadge value="R$ 10M" label="Inv. HC-UFG 2024" />
+                        <StatBadge value="30+" label="Indústrias em Anápolis" />
+                      </div>
+
+                      <div className="grid lg:grid-cols-2 gap-10">
+                        <div className="flex flex-col gap-6">
+                          <div className="bg-slate-900 p-8 rounded-[40px] text-white shadow-2xl relative overflow-hidden group border-b-8 border-indigo-600">
+                            <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=800&q=80" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay group-hover:scale-105 transition-transform duration-1000" alt="" />
+                            <div className="relative z-10 flex flex-col gap-4">
+                              <i className="fa-solid fa-award text-5xl text-yellow-400 drop-shadow-lg"></i>
+                              <div>
+                                <h3 className="text-3xl font-black mb-2 uppercase tracking-tighter">Ceti-Saúde (2025)</h3>
+                                <p className="text-blue-100 text-lg leading-relaxed mb-4 font-medium">Maior investimento histórico em Pesquisa e Desenvolvimento (PD&I) focado no SUS.</p>
+                                <div className="text-xs font-black text-indigo-200 uppercase bg-black/40 w-fit px-4 py-2 rounded-full border border-indigo-400/30 shadow-lg">Órgão Fomentador: Fapeg</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            {goiasInstitutions.map((inst, i) => (
+                              <div key={i} className="p-4 border-4 border-slate-50 bg-white rounded-3xl shadow-lg hover:border-blue-400 transition-colors flex flex-col justify-center">
+                                <strong className="block text-base text-slate-900 mb-1 font-black uppercase tracking-tight">{inst.name}</strong>
+                                <span className="text-sm text-slate-600 leading-tight font-medium">{inst.desc}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="space-y-6">
+                          <h3 className="text-2xl font-black mb-4 text-slate-900 border-b-2 pb-2 uppercase tracking-tighter">Pesquisas de Impacto na Ponta</h3>
+                          <div className="grid grid-cols-1 gap-4">
+                            {goiasResearches.map((item, i) => (
+                              <div key={i} className="flex gap-6 p-4 border-4 border-slate-50 rounded-[40px] bg-white shadow-xl hover:shadow-2xl transition-all group items-center">
+                                <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden bg-slate-100 border-2 border-white shadow-md">
+                                  <img src={item.image} alt={item.imageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                </div>
+                                <div className="flex-1">
+                                  <strong className="text-slate-900 block text-xl font-black mb-1 uppercase tracking-tight leading-none">{item.title}</strong>
+                                  <p className="text-slate-600 text-base leading-snug font-medium">{item.desc}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* SLIDE 5: Radar de Inovação */}
+                    <div className={`w-full shrink-0 px-4 transition-opacity duration-700 ${activeIndex === 4 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                      <SectionHeader title="Radar de Inovação" subtitle="Soluções deep-tech validadas por ciência de alto impacto." icon="fa-solid fa-bullseye" />
+                      <DidacticIntro text="Nesta aba apresentamos inovações disruptivas validadas clinicamente que estão mudando os protocolos de tratamento hospitalar em tempo real." />
+
+                      <div className="grid grid-cols-1 gap-12 overflow-y-auto no-scrollbar pb-32" style={{ maxHeight: 'calc(100vh - 400px)' }}>
+                        {featuredInnovations.map((innovation) => (
+                          <div key={innovation.id} className="bg-white border-4 border-slate-50 rounded-[50px] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.1)] flex flex-col md:flex-row group min-h-[450px]">
+                            <div className="md:w-[450px] relative bg-slate-900 overflow-hidden shrink-0">
+                              <img src={innovation.image} alt={innovation.imageAlt} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-[2000ms]" />
+                              <div className="absolute top-10 left-10 bg-white text-slate-900 text-sm font-black px-6 py-2 rounded-full shadow-2xl uppercase tracking-widest border-2 border-slate-100">
+                                {innovation.country}
+                              </div>
+                              <div className="absolute bottom-10 left-10 right-10 bg-blue-600/90 backdrop-blur-2xl text-white text-sm font-black px-8 py-6 rounded-[32px] shadow-2xl border-2 border-white/20">
+                                <div className="flex items-center gap-3 mb-2 uppercase opacity-80 tracking-widest text-[11px]"><i className="fa-solid fa-building text-lg"></i> INSTITUIÇÃO</div>
+                                <span className="text-lg tracking-tight">{innovation.institution}</span>
+                              </div>
+                            </div>
+                            
+                            <div className="p-16 md:w-3/5 flex flex-col">
+                              <div className="flex items-center gap-6 mb-6">
+                                <span className="text-8xl drop-shadow-2xl">{innovation.icon}</span>
+                                <div>
+                                  <h3 className="text-4xl font-black text-slate-900 uppercase tracking-tighter leading-[0.9] mb-3">{innovation.title}</h3>
+                                  <strong className="block text-xl text-blue-600 uppercase tracking-widest font-black italic">{innovation.subtitle}</strong>
+                                </div>
+                              </div>
+                              
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 my-10 flex-1">
+                                <div>
+                                  <h5 className="flex items-center gap-3 text-sm font-black text-slate-400 uppercase tracking-[0.2em] mb-6">
+                                    <i className="fa-solid fa-heart-pulse text-2xl"></i> Descrição da Solução
+                                  </h5>
+                                  <p className="text-xl text-slate-700 leading-relaxed font-medium">
+                                    {innovation.solution}
+                                  </p>
+                                </div>
+                                <div className="bg-blue-50 p-10 rounded-[40px] shadow-inner border-2 border-blue-100">
+                                  <h5 className="flex items-center gap-3 text-sm font-black text-blue-600 uppercase tracking-[0.2em] mb-6">
+                                    <i className="fa-solid fa-stethoscope text-2xl"></i> Impacto Clínico
+                                  </h5>
+                                  <p className="text-xl text-slate-800 leading-relaxed font-bold italic">
+                                    "{innovation.details}"
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="mt-auto">
+                                <SourceTag source={innovation.source} />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
                   </div>
-                ))}
-              </div>
+                </div>
+              </main>
+
+              <footer className="bg-slate-900 text-slate-400 py-10 px-20 border-t-8 border-blue-600 shrink-0 mt-auto shadow-[0_-20px_50px_rgba(0,0,0,0.3)]">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+                  <div className="text-center md:text-left">
+                    <h5 className="font-black text-white text-xl uppercase tracking-tighter mb-2">Painel de Inteligência Competitiva em Saúde</h5>
+                    <p className="text-base font-medium opacity-60 max-w-3xl">Dados consolidados do GII 2025, WIPO, FREOPP, IQVIA, Deloitte e redes de publicações científicas de alto impacto.</p>
+                  </div>
+                  <div className="flex flex-col items-center md:items-end">
+                    <div className="text-[12px] font-black text-slate-500 uppercase tracking-[0.3em] mb-2">Monitoramento Ativo</div>
+                    <div className="text-3xl font-black text-blue-400 uppercase tracking-tighter leading-none">MAIO / 2026</div>
+                  </div>
+                </div>
+              </footer>
             </div>
+          );
+        }
 
-          </div>
-        </div>
-      </main>
-
-      <footer className="bg-slate-900 text-slate-400 py-6 px-12 border-t-4 border-blue-600 shrink-0 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-center md:text-left">
-            <h5 className="font-black text-white text-sm uppercase tracking-tighter mb-1">Painel de Inteligência Competitiva na Saúde</h5>
-            <p className="text-xs font-medium opacity-60">Dados WIPO, FREOPP, IQVIA e Deloitte.</p>
-          </div>
-          <div className="flex flex-col items-center md:items-end">
-            <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Atualização Permanente</div>
-            <div className="text-base font-black text-blue-400 uppercase tracking-tighter leading-none">MAIO / 2026</div>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-}
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
