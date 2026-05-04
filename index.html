@@ -1,787 +1,515 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dossiê Analítico: Inovação em Saúde (GII 2025)</title>
-  
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- React & ReactDOM -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  
-  <!-- Babel (Compilador de JSX no navegador) -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+import React, { useState, useEffect } from 'react';
+import { 
+  Globe, MapPin, TrendingUp, Activity, 
+  Microscope, Cpu, Pill, Stethoscope, 
+  Smartphone, MonitorHeart, Award, Building2,
+  Syringe, BrainCircuit, Dna, Rocket,
+  Lightbulb, ChevronDown, ChevronUp, Info, BookOpen, Layers,
+  ChevronLeft, ChevronRight, ArrowRight, ArrowLeft, Target, Eye, FlaskConical, Beaker
+} from 'lucide-react';
 
-  <style>
-    body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background-color: #f3f4f6; margin: 0; padding: 0; }
-    @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
-    
-    /* Scrollbar minimalista */
-    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(156, 163, 175, 0.4); border-radius: 10px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background-color: rgba(107, 114, 128, 0.8); }
-    
-    /* Máscara de gradiente para imagens */
-    .mask-image-b-gradient { 
-        mask-image: linear-gradient(to bottom, black 0%, transparent 100%); 
-        -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%); 
-    }
-  </style>
-</head>
-<body class="flex items-center justify-center min-h-screen p-2 sm:p-4 lg:p-6">
-  
-  <div id="root" class="w-full max-w-7xl"></div>
+// --- DATA STRUCTURES ---
 
-  <script type="text/babel">
-    const { useState, useEffect } = React;
+const globalStats = [
+  { label: 'Mercado global de saúde', value: '$9T', color: 'text-blue-900', source: 'Deloitte' },
+  { label: 'Países no GII (Índice de Inovação)', value: '139', color: 'text-slate-800', source: 'WIPO' },
+  { label: 'Mercado HealthTech', value: '$880B', color: 'text-indigo-900', source: 'IQVIA' },
+  { label: 'Brasil no GII 2025', value: '52º', color: 'text-emerald-700', source: 'WIPO' },
+];
 
-    // ==========================================
-    // COMPONENTES DE BASE DE DESIGN
-    // ==========================================
-    const SlideContainer = ({ children, bg = "bg-white" }) => (
-      <div className={`min-w-full h-full overflow-y-auto custom-scrollbar flex flex-col p-5 lg:p-10 box-border ${bg}`}>
-        <div className="flex flex-col min-h-full pb-4">
-          {children}
-        </div>
+const trends = [
+  { icon: '🧬', title: 'Genômica & Precisão', desc: 'Sequenciamento de nova geração (NGS) e terapias CAR-T personalizadas dominam os investimentos para tratamentos oncológicos customizados.', source: 'Nature / IBIS', image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Sequenciamento de DNA]' },
+  { icon: '🤖', title: 'IA & Diagnóstico', desc: 'Aplicações de Inteligência Artificial em diagnóstico por imagem de alta resolução e descoberta acelerada de medicamentos e risco clínico.', source: 'Deloitte 2025', image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Inteligência Artificial]' },
+  { icon: '💊', title: 'Biofármacos & GLP-1', desc: 'Anticorpos monoclonais e análogos de GLP-1 (Ozempic/Mounjaro) redefinem o mercado de doenças crônicas e obesidade.', source: 'IQVIA Trends', image: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Biofármacos]' },
+  { icon: '🔬', title: 'Terapias Avançadas', desc: 'Terapia gênica in vivo, edição via CRISPR e a expansão das plataformas de mRNA para vacinas oncológicas e doenças raras.', source: 'PharmaShots', image: 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Terapias Celulares]' },
+  { icon: '📱', title: 'Saúde Digital', desc: 'Monitoramento remoto, prontuário eletrônico interoperável e wearables de grau médico que redefinem a jornada do paciente.', source: 'HIMSS 2025', image: 'https://images.unsplash.com/photo-1557825835-70d97c4aa567?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Dispositivos Vestíveis]' },
+  { icon: '🏭', title: 'MedTech & Robótica', desc: 'Cirurgia robótica avançada, implantes neurais inteligentes e diagnósticos Point-of-Care para democratização do acesso à saúde.', source: 'MedTech Europe', image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Cirurgia Robótica]' },
+];
+
+const top10 = [
+  { id: 'us', rank: 1, country: 'Estados Unidos 🇺🇸', axis: 'Terapias avançadas, IA médica, Genômica', stats: ['22 Polos WIPO', '35% Ensaios Clínicos', '1º Intensidade SF', 'Biopharma & VC'], detail: 'Liderança absoluta combinando capital de risco (VC) agressivo com NIH, Harvard e MIT. Empresas: Pfizer, Eli Lilly, Merck, Moderna.', source: 'WIPO / IQVIA', image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Laboratório Biotech]', specialty: 'Biotecnologia & Capital', note: 'Maior potência global pela integração massiva de IA e MedTech com o maior orçamento de pesquisa do mundo.' },
+  { id: 'cn', rank: 2, country: 'China 🇨🇳', axis: 'IA hospitalar, Genômica, Biomanufatura', stats: ['24 Polos WIPO', '1º Polo Global', '30% Ensaios', 'Produção em Escala'], detail: 'Academia Chinesa de Ciências, Tsinghua. Empresas líderes como Huawei, BGI, Mindray e WuXi Biologics.', source: 'WIPO / NMPA', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de IA na China]', specialty: 'Escala & Manufatura', note: 'Lidera o maior polo de inovação do mundo (Shenzhen-HK-Guangzhou). Foco em processamento massivo de dados.' },
+  { id: 'de', rank: 3, country: 'Alemanha 🇩🇪', axis: 'MedTech, Equipamentos, Terapias digitais', stats: ['7 Polos WIPO', '€170B Mercado', 'Engenharia Clínica', 'Indústria 4.0'], detail: 'Referência em engenharia e diagnóstico por imagem. Charité Berlin, Fraunhofer. Empresas: Siemens Healthineers, Bayer, BioNTech.', source: 'WIPO / EPO', image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Engenharia Médica]', specialty: 'Engenharia & Diagnóstico', note: 'Força motriz na Indústria 4.0 aplicada à saúde e diagnósticos de alta precisão.' },
+  { id: 'ch', rank: 4, country: 'Suíça 🇨🇭', axis: 'Farma Inovadora, Diagnóstico, Imunologia', stats: ['1º GII 2025', 'Líder Access', 'Polo de Zurique', 'Prop. Intelectual'], detail: 'Potência de alto valor. ETH Zürich. Lar da Roche e Novartis, que detêm juntas mais de 100 mil patentes ativas.', source: 'GII 2025', image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Farma de Precisão]', specialty: 'Pesquisa Farma', note: 'País número 1 no GII. Foco em oncologia e biomanufatura de altíssimo valor agregado.' },
+  { id: 'uk', rank: 5, country: 'Reino Unido 🇬🇧', axis: 'Genômica, Dados do NHS, IA em Saúde', stats: ['4 Polos WIPO', 'Londres (8º)', '100k Genomas', 'Liderança ATS'], detail: 'Aproveita a base de dados do NHS. Oxford, Cambridge. Empresas: AstraZeneca, GSK, Oxford Nanopore.', source: 'NHS Digital', image: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Pesquisa Genômica]', specialty: 'Dados & Genômica', note: 'Destaque na descoberta de fármacos via IA e genômica populacional utilizando dados públicos.' },
+  { id: 'jp', rank: 6, country: 'Japão 🇯🇵', axis: 'Robótica, Endoscopia, Longevidade', stats: ['2º Polo Global', '135k Patentes', 'Regenerativa', 'Imaging'], detail: 'Líder em robótica médica. Univ. Tokyo, RIKEN. Empresas: Takeda, Olympus, Daiichi Sankyo, Fujifilm.', source: 'MHLW', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Robótica Médica]', specialty: 'Robótica & Óptica', note: 'Foco total em células iPSC e digitalização da assistência ao envelhecimento.' },
+  { id: 'fr', rank: 7, country: 'França 🇫🇷', axis: 'Vacinas, Biotecnologia, Saúde Pública', stats: ['12º Polo Global', 'Paris Hub', 'Pesquisa Translacional', 'Infectologia'], detail: 'Institut Pasteur, Inserm. Empresas: Sanofi (líder em vacinas), Servier, bioMérieux, Doctolib.', source: 'WIPO', image: 'https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Biotecnologia]', specialty: 'Saúde & Vacinas', note: 'Paris consolidou-se como polo estratégico combinando rede hospitalar com biotecnologia.' },
+  { id: 'kr', rank: 8, country: 'Coreia do Sul 🇰🇷', axis: 'Hospital Digital, Biossimilares, IA', stats: ['4º GII 2025', '5º Polo Global', '784k Litros CDMO', 'Semicondutores'], detail: 'Eletrônica e biomanufatura. Seoul National Univ. Empresas: Samsung Biologics, Celltrion, Lunit.', source: 'Samsung Data', image: 'https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Biomanufatura]', specialty: 'Eletrônica & Manufatura', note: 'Maior investimento em P&D/PIB do G20. Liderança em biossimilares e IA aplicada.' },
+  { id: 'dk', rank: 9, country: 'Dinamarca 🇩🇰', axis: 'Diabetes, GLP-1, Doenças Metabólicas', stats: ['9º GII 2025', 'Polo Copenhagen', '55% Mkt GLP-1', 'Biológicos'], detail: 'Univ. Copenhagen. Lar da Novo Nordisk (empresa mais valiosa da Europa), Lundbeck.', source: 'Market Data', image: 'https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Tratamento Diabetes]', specialty: 'Endocrinologia Digital', note: 'Novo Nordisk representa mais de 25% do PIB dinamarquês e lidera o mercado de GLP-1.' },
+  { id: 'nl', rank: 10, country: 'Países Baixos 🇳🇱', axis: 'Imagem Médica, IA Clínica, Engenharia', stats: ['8º GII 2025', 'Líder Patentes EPO', 'Polo Amsterdã', 'Conectada'], detail: 'Erasmus MC, TU Delft. Empresas: Philips (líder em patentes de imagem), Galapagos.', source: 'EPO 2024', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Engenharia Médica]', specialty: 'Engenharia Hospitalar', note: 'Potência na transição hospital-casa e monitoramento inteligente conectado.' },
+];
+
+const brazilCard = {
+  id: 'br', rank: '52', country: 'Brasil 🇧🇷', axis: 'Saúde Pública, Vacinas, Doenças Tropicais', stats: ['52º GII 2025', '49º Polo WIPO (SP)', 'Escala SUS', 'Biomanufatura'], detail: 'Destaque para USP (polo #49 global), Fiocruz, Butantan e Unicamp. Indústria: EMS e Eurofarma.', source: 'Min. Saúde', image: 'https://images.unsplash.com/photo-1584467735815-f778f274e296?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Pesquisador Brasileiro]', specialty: 'Potência Emergente', note: 'O Brasil possui o maior sistema universal (SUS). Desafio: transformar ciência acadêmica em patentes.'
+};
+
+const allMapCards = [...top10, brazilCard];
+
+const mapData = [
+  { id: 'us', name: 'Estados Unidos 🇺🇸', rankingNumber: '1', top: '32%', left: '19%', size: 44, color: 'bg-blue-600' },
+  { id: 'br', name: 'Brasil 🇧🇷', rankingNumber: '52', top: '68%', left: '31%', size: 36, color: 'bg-emerald-500' },
+  { id: 'uk', name: 'Reino Unido 🇬🇧', rankingNumber: '5', top: '23%', left: '46%', size: 32, color: 'bg-blue-500' },
+  { id: 'fr', name: 'França 🇫🇷', rankingNumber: '7', top: '29%', left: '47.5%', size: 30, color: 'bg-blue-400' },
+  { id: 'nl', name: 'Países Baixos 🇳🇱', rankingNumber: '10', top: '23%', left: '48.5%', size: 28, color: 'bg-indigo-400' },
+  { id: 'dk', name: 'Dinamarca 🇩🇰', rankingNumber: '9', top: '19%', left: '49%', size: 28, color: 'bg-blue-400' },
+  { id: 'de', name: 'Alemanha 🇩🇪', rankingNumber: '3', top: '25%', left: '50.5%', size: 36, color: 'bg-blue-500' },
+  { id: 'ch', name: 'Suíça 🇨🇭', rankingNumber: '4', top: '29%', left: '49.5%', size: 36, color: 'bg-indigo-600' },
+  { id: 'cn', name: 'China 🇨🇳', rankingNumber: '2', top: '36%', left: '75%', size: 42, color: 'bg-red-500' },
+  { id: 'kr', name: 'Coreia do Sul 🇰🇷', rankingNumber: '8', top: '35%', left: '81%', size: 32, color: 'bg-indigo-500' },
+  { id: 'jp', name: 'Japão 🇯🇵', rankingNumber: '6', top: '34%', left: '86%', size: 34, color: 'bg-blue-500' },
+];
+
+const brazilInstitutions = [
+  { name: 'USP, Unicamp & Unesp', desc: 'Polo #49 do GII. Foco em genômica, biologia celular e medicina regenerativa.', source: 'WIPO', image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Campus]' },
+  { name: 'Fiocruz & Butantan', desc: 'Pilares do SUS. Biomanufatura massiva, vacinas e biossegurança NB4.', source: 'Min. Saúde', image: 'https://images.unsplash.com/photo-1618015359908-7f485c8f1ec1?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Vacinas]' },
+  { name: 'Indústria Farma Nacional', desc: 'EMS, Eurofarma e Aché asseguram o abastecimento interno e iniciam biossimilares.', source: 'Sindusfarma', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Produção]' },
+  { name: 'HealthTechs (Dasa, Hilab)', desc: 'Startups acelerando a transformação digital e telediagnóstico no setor público e privado.', source: 'Distrito', image: 'https://images.unsplash.com/photo-1576091160550-2173ff9e5ee5?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Saúde Digital]' },
+];
+
+const goiasInstitutions = [
+  { name: 'HC-UFG (Hospital)', desc: 'Referência regional em alta complexidade e pesquisa translacional.', source: 'Ebserh', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&q=80' },
+  { name: 'UFG (Universidade)', desc: 'Motor de inovação em IA, telemedicina e odontologia oncológica.', source: 'PRPI', image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=400&q=80' },
+  { name: 'IPTSP / UFG', desc: 'Instituto focado em bioprospecção do Cerrado e arboviroses.', source: 'CNPq', image: 'https://images.unsplash.com/photo-1611078703759-4d7a8686fc6a?auto=format&fit=crop&w=400&q=80' },
+  { name: 'Polo Farma (Anápolis)', desc: '2º maior polo do país, vital para transformar pesquisa em escala industrial.', source: 'IBGE', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=400&q=80' },
+];
+
+const goiasResearches = [
+  { title: 'Chagas & NEDOCH', desc: 'Referência OMS. Mapeamento de biomarcadores e novas terapias.', image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Pesquisa]' },
+  { title: 'Neurocirurgia Robótica', desc: 'Implantes via estereotaxia robótica para epilepsia resistente no SUS.', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Cérebro]' },
+  { title: 'IA Aplicada (SBCAS)', desc: 'Algoritmos para segmentação de microlesões e telemonitoramento.', image: 'https://images.unsplash.com/photo-1516110833967-0b5716ca1387?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de IA]' },
+  { title: 'Biodiversidade Cerrado', desc: 'Mapeamento genético da flora para descoberta de novos princípios bioativos.', image: 'https://images.unsplash.com/photo-1611078703759-4d7a8686fc6a?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Folhas]' },
+];
+
+const featuredInnovations = [
+  { id: 'biosensor-pancreas-usp', title: 'Biossensor Câncer de Pâncreas', subtitle: 'Diagnóstico em 10 minutos', country: 'Brasil 🇧🇷', institution: 'USP', solution: 'Biossensor eletroquímico de baixo custo capaz de detectar a proteína CA19-9 no sangue em estágios iniciais da doença.', details: 'Entrega resultados rápidos por uma fração do custo tradicional. Vital para um câncer assintomático com baixa sobrevida.', source: 'CNN / saaudeeoficial', image: 'https://images.unsplash.com/photo-1579154341098-e4e158cc7f55?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Análise Bioquímica]', icon: '🧪' },
+  { id: 'tecido-cardiaco-espinafre', title: 'Coração de Espinafre', subtitle: 'Regeneração com andaime vegetal', country: 'Estados Unidos 🇺🇸', institution: 'WPI', solution: 'Remoção de células vegetais de uma folha de espinafre para aproveitar sua rede de celulose como suporte vascular para células humanas.', details: 'As células semeadas contraíram-se como músculo real. A rede de veias da folha imitou o fluxo sanguíneo necessário para tecidos.', source: 'autoexplicando / Biomaterials', image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Veias de Folha]', icon: '🍃' },
+  { id: 'eli-lilly-ajax-cancer', title: 'Oncologia Hematológica', subtitle: 'Investimento de US$ 2,3 bilhões', country: 'Estados Unidos 🇺🇸', institution: 'Eli Lilly / Ajax', solution: 'Acordo para reforçar tratamento de cânceres do sangue como a mielofibrose, reprogramando células do corpo contra tumores.', details: 'A Eli Lilly utiliza capital de sucessos como o Mounjaro para impulsionar terapias experimentais e validação clínica de alto risco.', source: 'ofitfeed / Eli Lilly', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Farma]', icon: '💊' },
+  { id: 'microrobo-urease', title: 'Micro-robô para Rins', subtitle: 'Dissolução sem cirurgia', country: 'Canadá 🇨🇦', institution: 'U. Waterloo', solution: 'Filamento magnético de hidrogel com urease navegado via ultrassom. Atua diretamente sobre pedras de ácido úrico no local.', details: 'Elimina endoscopias dolorosas ou laser, dissolvendo cálculos quimicamente em poucos dias com riscos mínimos.', source: 'ACS Nano', image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Precisão]', icon: '🧲' },
+  { id: 'vacina-anti-envelhecimento', title: 'Vacina contra Envelhecimento', subtitle: 'Bloqueio de senescência celular', country: 'Rússia 🇷🇺', institution: 'Min. Ciência Rússia', solution: 'Tratamento inovador baseado em terapia genética focado no bloqueio de receptores específicos das células do envelhecimento.', details: 'Aposta experimental no combate ao envelhecimento celular, descrita como a primeira "vacina" preventiva contra o tempo biológico.', source: 'geolive.br', image: 'https://images.unsplash.com/photo-1614935151651-0bea6508db6b?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Vacina]', icon: '💉' },
+  { id: 'mapeamento-cerebral-realtime', title: 'Mapeamento Cerebral', subtitle: 'Realidade Aumentada Cirúrgica', country: 'Global / EUA 🇺🇸', institution: 'Ciência do Futuro', solution: 'Sistemas que sobrepõem mapas de fibras neurais sobre o cérebro vivo durante a cirurgia, guiando o cirurgião em tempo real.', details: 'Reduz sequelas ao remover tumores complexos, mapeando áreas de fala e movimento enquanto o paciente está na mesa cirúrgica.', source: 'Neurocirurgia Moderna', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Neurocirurgia]', icon: '👁️' },
+  { id: 'implante-cerebral-dot', title: 'Implante Neural (DOT)', subtitle: 'Estimulação para Depressão', country: 'Estados Unidos 🇺🇸', institution: 'Motif Neurotech', solution: 'Microimplante posicionado acima do crânio. Utiliza estimulação programável para modular circuitos neurais sem penetrar o tecido.', details: 'Alternativa precisa para depressão profunda resistente, atuando nos circuitos cerebrais sem os efeitos de drogas sistêmicas.', source: 'Martha Gabriel', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Sinapses]', icon: '🧠' },
+  { id: 'cerume-cancer', title: 'Marcador no Cerume', subtitle: 'Detecção Não Invasiva', country: 'Brasil 🇧🇷', institution: 'Univ. Brasileira', solution: 'Identificação de assinaturas de compostos voláteis na cera de ouvido que sinalizam a presença de biomarcadores oncológicos.', details: 'Método indolor e de baixíssimo custo para triagem preventiva em massa, detectando câncer antes dos sintomas clínicos.', source: 'Jornal Nacional', image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Bioquímica]', icon: '🔬' },
+  { id: 'veneno-marimbondo-alzheimer', title: 'Veneno contra Alzheimer', subtitle: 'Inibição de Placas Neurais', country: 'Brasil 🇧🇷', institution: 'Santa Casa São Carlos', solution: 'Isolamento de peptídeos ativos capazes de quebrar placas beta-amiloides e inibir a neuroinflamação degenerativa.', details: 'Abre uma nova via bioquímica para o tratamento de demências crônicas, protegendo os neurônios do avanço da doença.', source: 'Med Nucleo', image: 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=800&q=80', imageAlt: '[Imagem de Bioquímica]', icon: '🐝' },
+];
+
+const TABS = [
+  { id: 'global', label: 'Tendências', icon: TrendingUp },
+  { id: 'top10', label: 'As Potências', icon: Globe },
+  { id: 'brasil', label: 'Brasil 🇧🇷', icon: MapPin },
+  { id: 'goias', label: 'Goiás 📍', icon: MapPin },
+  { id: 'innovations', label: 'Radar', icon: Target },
+];
+
+// --- COMPONENTS ---
+
+const SectionHeader = ({ title, subtitle, icon: Icon }) => (
+  <div className="mb-4 border-b-2 border-slate-900 pb-2 flex justify-between items-end">
+    <div className="flex items-center gap-3">
+      {Icon && <Icon className="w-8 h-8 text-slate-900" />}
+      <h2 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none">{title}</h2>
+    </div>
+    {subtitle && <p className="text-slate-600 text-[10px] md:text-xs font-black max-w-sm text-right leading-tight hidden md:block uppercase tracking-widest">{subtitle}</p>}
+  </div>
+);
+
+const DidacticIntro = ({ text }) => (
+  <div className="bg-slate-50 border-l-4 border-blue-600 p-3 mb-5 rounded-r-xl text-slate-800 leading-relaxed text-sm md:text-base shadow-sm font-medium italic">
+    "{text}"
+  </div>
+);
+
+const SourceTag = ({ source }) => (
+  <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-slate-100">
+    <Beaker className="w-3 h-3 text-slate-400" />
+    <span className="text-[10px] text-slate-500 uppercase font-black tracking-widest">Fonte: {source}</span>
+  </div>
+);
+
+const StatBadge = ({ value, label }) => (
+  <div className="bg-slate-100 p-3 rounded-2xl border border-slate-200 text-center flex flex-col justify-center shadow-md hover:bg-white transition-all group">
+    <div className="font-black text-slate-900 text-xl leading-none mb-1 group-hover:text-blue-600">{value}</div>
+    <div className="text-[9px] text-slate-500 uppercase font-black tracking-widest leading-tight">{label}</div>
+  </div>
+);
+
+const ExecutiveSummaryCard = ({ title, desc, icon, colorClass }) => (
+  <div className={`border-l-8 ${colorClass} bg-white p-3 rounded-r-2xl shadow-lg flex gap-4 items-center hover:scale-[1.02] transition-transform`}>
+    <span className="text-3xl">{icon}</span>
+    <div>
+      <h4 className="font-black text-slate-900 text-sm uppercase tracking-tighter leading-none mb-1">{title}</h4>
+      <p className="text-[11px] text-slate-600 font-medium leading-tight m-0">{desc}</p>
+    </div>
+  </div>
+);
+
+const InteractiveMap = ({ selectedId, onSelect }) => {
+  const [hovered, setHovered] = useState(null);
+
+  return (
+    <div className="relative w-full aspect-[2/1] md:aspect-[3/1] bg-slate-100 rounded-[32px] overflow-hidden shadow-inner border-4 border-white mb-6 group select-none">
+      <img src="https://i.postimg.cc/Bbm1W0xq/mapa-mundi.jpg" alt="Mapa" className="w-full h-full object-cover opacity-60 saturate-50 group-hover:saturate-100 transition-all duration-1000" />
+      <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-4 py-1.5 rounded-xl shadow-lg border border-slate-200 pointer-events-none z-10">
+        <h3 className="font-black text-slate-900 flex items-center gap-2 text-sm uppercase tracking-tighter"><Globe className="w-4 h-4 text-blue-600"/> Matriz 2025</h3>
       </div>
-    );
-
-    const InteractiveHint = ({ text }) => (
-      <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold rounded-full uppercase tracking-wider mb-3">
-        <i className="fas fa-hand-pointer w-3 h-3 animate-pulse"></i>
-        {text}
-      </div>
-    );
-
-    const SourceBadge = ({ source, dark = false }) => (
-      <div className={`inline-flex items-center gap-1.5 text-[9px] lg:text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded border mt-1 ${dark ? 'text-gray-400 bg-gray-900/50 border-gray-700' : 'text-gray-500 bg-white/50 border-gray-300'}`}>
-        <i className="fas fa-book-open w-3 h-3"></i> {source}
-      </div>
-    );
-
-    const InteractiveStatCard = ({ number, text, iconClass, color, bg, source, insightDetail }) => {
-      const [isHovered, setIsHovered] = useState(false);
-      return (
-        <div 
-          className={`relative p-5 lg:p-6 rounded-2xl ${bg} border-l-4 border-black shadow-sm flex-1 min-h-[220px] overflow-hidden transition-all duration-500 cursor-default group flex flex-col`}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+      {mapData.map((pt) => (
+        <div
+          key={pt.id}
+          className="absolute cursor-pointer transform -translate-x-1/2 -translate-y-1/2 z-20 flex justify-center items-center"
+          style={{ top: pt.top, left: pt.left }}
+          onClick={() => onSelect(pt.id)}
+          onMouseEnter={() => setHovered(pt)}
+          onMouseLeave={() => setHovered(null)}
         >
-          <div className={`transition-all duration-500 ${isHovered ? 'opacity-0 translate-y-4 absolute' : 'opacity-100 translate-y-0 relative'} flex flex-col h-full justify-between flex-1`}>
-            <div>
-              {iconClass && <i className={`${iconClass} text-2xl lg:text-3xl mb-3 ${color}`}></i>}
-              <span className={`text-3xl lg:text-5xl font-black tracking-tighter ${color} block`}>{number}</span>
-              <span className="text-gray-800 mt-1 lg:mt-2 font-bold leading-snug block text-sm lg:text-base">{text}</span>
-            </div>
-            <div className="flex items-center gap-2 mt-4 text-[10px] lg:text-xs font-bold text-gray-500 uppercase bg-white/50 w-max px-2 py-1 rounded-md">
-              <i className="fas fa-eye w-3 h-3"></i> Análise baseada no GII
-            </div>
+          <div className={`absolute rounded-full animate-ping opacity-20 ${pt.color}`} style={{ width: pt.size, height: pt.size }}></div>
+          <div 
+            className={`relative rounded-full shadow-xl border-2 border-white transition-all flex items-center justify-center font-black text-white drop-shadow-lg
+              ${pt.color} ${selectedId === pt.id ? 'scale-125 ring-4 ring-blue-300 ring-opacity-50 z-30' : 'opacity-90 hover:opacity-100'}`}
+            style={{ width: pt.size, height: pt.size }}
+          >
+            <span style={{ fontSize: pt.size > 30 ? '12px' : '9px' }}>{pt.rankingNumber}</span>
           </div>
-
-          <div className={`absolute inset-0 p-5 lg:p-6 bg-gray-900 text-white transition-all duration-500 flex flex-col justify-between ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full z-[-1]'}`}>
-            <div className="overflow-y-auto custom-scrollbar pr-2">
-              <h4 className="text-[10px] lg:text-xs font-bold text-blue-400 uppercase tracking-widest mb-2 border-b border-gray-700 pb-1">Evidência Estratégica</h4>
-              <p className="text-xs lg:text-sm leading-relaxed text-gray-200 mt-2">{insightDetail}</p>
-            </div>
-            <div className="mt-2 shrink-0"><SourceBadge source={source} dark={true} /></div>
-          </div>
+          {(hovered?.id === pt.id || selectedId === pt.id) && (
+            <span className="absolute top-full mt-1 bg-slate-900 text-white text-[9px] uppercase font-black px-2 py-0.5 rounded-full shadow-2xl z-30">{pt.name}</span>
+          )}
         </div>
-      );
-    };
+      ))}
+    </div>
+  );
+};
 
-    // ==========================================
-    // PAINEL 2: GRÁFICO RANKING GII 2025 (TOP 10 + BR)
-    // ==========================================
-    const InteractiveBarChart = () => {
-      const [activeInsight, setActiveInsight] = useState(0);
+export default function App() {
+  const [activeTab, setActiveTab] = useState(TABS[0].id);
+  const [activeCountryId, setActiveCountryId] = useState('us'); 
+
+  const activeIndex = TABS.findIndex(t => t.id === activeTab);
+  
+  const goToNext = () => {
+    if (activeIndex < TABS.length - 1) setActiveTab(TABS[activeIndex + 1].id);
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  };
+  
+  const goToPrev = () => {
+    if (activeIndex > 0) setActiveTab(TABS[activeIndex - 1].id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <div className="min-h-screen bg-white text-slate-900 overflow-x-hidden flex flex-col font-sans" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
       
-      const data = [
-        { 
-          country: 'Suíça', rank: '1º', display: 'Líder', width: '100%', color: 'bg-red-600', axes: ['Farma', 'Medtech', 'Precisão'], 
-          insight: 'No topo pelo 15º ano seguido. O GII mede a capacidade de transformar pesquisa em mercado. A força reside na saúde de alto valor agregado e qualidade regulatória ímpar.', 
-          strategic: 'Hub de Basileia e Zurique. Forte integração entre a academia (ETH Zurich, EPFL) e os colossos industriais.', 
-          caseTitle: 'Gigantes e Spin-offs', 
-          caseDesc: 'Universidades liderando ecossistemas para empresas como Roche, Novartis, Sandoz e Sonova.',
-          source: 'GII 2025 / WIPO', image: 'https://images.unsplash.com/photo-1579165466741-7f35e4755660?auto=format&fit=crop&w=500&q=80', imgCaption: '[Laboratórios em Basileia]' 
-        },
-        { 
-          country: 'Suécia', rank: '2º', display: 'Top 2', width: '95%', color: 'bg-blue-400', axes: ['Saúde Digital', 'Oncologia'], 
-          insight: 'Liderança massiva baseada em registros populacionais históricos, saúde digital conectada e foco em envelhecimento saudável.', 
-          strategic: 'Modelo focado em dados nacionais cruzados com clusters fortes como Stockholm-Uppsala e Lund.', 
-          caseTitle: 'Ecossistema Integrado', 
-          caseDesc: 'O Karolinska Institutet dita a ciência, enquanto empresas como AstraZeneca R&D, Elekta e Sectra transformam dados em soluções clínicas.',
-          source: 'GII 2025', image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=500&q=80', imgCaption: '[Pesquisa Genômica Sueca]' 
-        },
-        { 
-          country: 'EUA', rank: '3º', display: 'Escala', width: '92%', color: 'bg-blue-600', axes: ['IA', 'Biopharma', 'VC'], 
-          insight: 'Jogam no eixo da escala e do capital de risco. Concentram 22 clusters de saúde no Top 100 da WIPO (Boston-Cambridge, San Jose).', 
-          strategic: 'Velocidade assustadora de transformação de pesquisa básica (NIH, Harvard, MIT) em patentes e mercado via Big Pharmas e Big Techs.', 
-          caseTitle: 'Potência Biopharma e IA', 
-          caseDesc: 'Pfizer, Moderna, Illumina e GE HealthCare operando em sinergia com fundos bilionários do Vale do Silício e da Costa Leste.',
-          source: 'GII 2025 / WIPO', image: 'https://i.postimg.cc/vTYHtsjj/EUA.png', imgCaption: '[Pesquisa Genética Avançada]' 
-        },
-        { 
-          country: 'Coreia do Sul', rank: '4º', display: 'Tech', width: '88%', color: 'bg-purple-600', axes: ['Biofabricação', 'Diagnóstico'], 
-          insight: 'Modelo asiático de Estado coordenador com indústria de tecnologia forte, alavancando os hospitais digitais e a engenharia.', 
-          strategic: 'Cluster de Seoul é potência global. Regulação pró-inovação combinada com os Chaebols (megaconglomerados).', 
-          caseTitle: 'Fabricação e IA Médica', 
-          caseDesc: 'Gigantes como Samsung Biologics, Celltrion e a startup de IA Lunit dominando os hardwares médicos e semicondutores.',
-          source: 'GII 2025', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=500&q=80', imgCaption: '[Semicondutores aplicados à Saúde]' 
-        },
-        { 
-          country: 'Singapura', rank: '5º', display: 'Hub', width: '85%', color: 'bg-red-400', axes: ['Ensaios', 'Regulação'], 
-          insight: 'Atua como o grande Hub Biomédico da Ásia. Pontua alto pela regulação extremamente ágil e capacidade de atração de capital.', 
-          strategic: 'Clusters One-north e Biopolis atraem matrizes globais para testes avançados de HealthTech na Ásia.', 
-          caseTitle: 'Gateway Asiático', 
-          caseDesc: 'A*STAR e Duke-NUS alimentando tecnologias para empresas como Biofourmis, MiRXES e BioNTech Asia.',
-          source: 'GII 2025', image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=500&q=80', imgCaption: '[Hub Tecnológico Bio-asiático]' 
-        },
-        { 
-          country: 'Reino Unido', rank: '6º', display: 'Dados', width: '82%', color: 'bg-indigo-600', axes: ['Genômica', 'Dados NHS'], 
-          insight: 'Possui o poder do maior banco de dados público de saúde centralizado (NHS), permitindo treinamento algorítmico sem paralelo.', 
-          strategic: 'Universidades hiper-densas (Cambridge, Oxford) com altíssima intensidade inovadora em pesquisa translacional.', 
-          caseTitle: 'Pesquisa Básica Aplicada', 
-          caseDesc: 'Institutos como Wellcome Sanger ao lado da AstraZeneca e Oxford Nanopore, liderando na leitura de dados biomédicos.',
-          source: 'GII 2025', image: 'https://images.unsplash.com/photo-1532187643603-c76088e5e6e6?auto=format&fit=crop&w=500&q=80', imgCaption: '[Laboratórios do Eixo Oxford-Cambridge]' 
-        },
-        { 
-          country: 'Finlândia', rank: '7º', display: 'Prevenção', width: '80%', color: 'bg-cyan-500', axes: ['Biobancos', 'Prevenção'], 
-          insight: 'Saúde inteiramente baseada em dados populacionais. Foco na conectividade e infraestrutura preventiva de alta eficácia.', 
-          strategic: 'Cluster de Helsinki desponta no GII em comunicação digital aplicada a biobancos e telemetria remota.', 
-          caseTitle: 'Digital Health Conectada', 
-          caseDesc: 'THL, FinnGen e startups como Oura operando na fronteira do monitoramento fisiológico preditivo populacional.',
-          source: 'GII 2025', image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=500&q=80', imgCaption: '[Dispositivos Vestíveis Finlandeses]' 
-        },
-        { 
-          country: 'Países Baixos', rank: '8º', display: 'Integração', width: '78%', color: 'bg-orange-400', axes: ['Medtech', 'Imagem'], 
-          insight: 'Forte presença em logística hospitalar, integração de cuidado e tecnologias de imagem por meio de densos polos universitários.', 
-          strategic: 'Cluster Amsterdam-Rotterdam (biotecnologia) e Eindhoven (tecnologia médica pesada).', 
-          caseTitle: 'Engenharia Clínica', 
-          caseDesc: 'Philips, DSM-Firmenich e hospitais como Erasmus MC e Leiden UMC liderando fluxos integrados e robótica.',
-          source: 'GII 2025', image: 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=500&q=80', imgCaption: '[Engenharia Médica Holandesa]' 
-        },
-        { 
-          country: 'Dinamarca', rank: '9º', display: 'Crônicas', width: '75%', color: 'bg-red-500', axes: ['Diabetes', 'Biomanufatura'], 
-          insight: 'Como um país pequeno domina o mundo farmacêutico em doenças crônicas. Forte alinhamento entre registro nacional e design do cuidado.', 
-          strategic: 'Cluster Medicon Valley (Copenhagen) focado massivamente em obesidade e metabolismo.', 
-          caseTitle: 'O Império Biológico', 
-          caseDesc: 'Novo Nordisk, Zealand Pharma e Coloplast orquestrando inovações que balançam o PIB do próprio país.',
-          source: 'GII 2025', image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=500&q=80', imgCaption: '[Biomanufatura de Injetáveis]' 
-        },
-        { 
-          country: 'China', rank: '10º', display: 'Volume', width: '73%', color: 'bg-red-700', axes: ['IA', 'Escala', 'Patentes'], 
-          insight: 'Entrou pela primeira vez no Top 10 do GII. O eixo chinês joga na escala absurda de patentes, fabricação biopharma e hospitais IA.', 
-          strategic: 'Possui incríveis 24 clusters no Top 100 global (Shenzhen, Beijing, Shanghai). Transformação imediata de pesquisa em linha de produção.', 
-          caseTitle: 'Escala Genômica e IA', 
-          caseDesc: 'BGI/MGI, Mindray e Tencent Health dominando fluxos gigantes de dados biométricos e fabricação massiva.',
-          source: 'GII 2025', image: 'https://i.postimg.cc/3wz3D7ry/China.png', imgCaption: '[Laboratório e Manufatura Chinesa]' 
-        },
-        { 
-          country: 'Brasil', rank: '52º', display: 'Latam 2º', width: '40%', color: 'bg-yellow-500', axes: ['SUS', 'Vacinas', 'Mercado'], 
-          insight: 'O Brasil é a 52ª no GII (2º da Latam atrás do Chile). Sofre com gargalos institucionais, mas lidera em sofisticação de mercado de saúde.', 
-          strategic: 'Tem o SUS, maior comprador do mundo. O cluster de São Paulo ocupa a 49ª posição mundial, destacando-se em tecnologia médica.', 
-          caseTitle: 'Paradoxo de Conversão', 
-          caseDesc: 'Ciência pujante (USP, Fiocruz, Butantan), mas dificuldade crônica em tracionar a pesquisa para o parque industrial farmacêutico local.',
-          source: 'GII 2025 / WIPO', image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=500&q=80', imgCaption: '[Pesquisa Universitária Nacional]' 
-        },
-      ];
-
-      return (
-        <div className="flex flex-col lg:flex-row h-full gap-5 lg:gap-8 flex-1">
-          <div className="w-full lg:w-4/12 flex flex-col gap-2 border-b lg:border-b-0 lg:border-r border-gray-200 pb-4 lg:pb-0 lg:pr-6 shrink-0 h-[280px] lg:h-auto">
-            <div className="mb-2"><InteractiveHint text="Passe o cursor sobre o Top 10 GII e Brasil" /></div>
-            <div className="flex-1 flex flex-col gap-1 overflow-y-auto custom-scrollbar pr-2">
-              {data.map((item, index) => (
-                <div key={item.country} className="group cursor-pointer relative" onMouseEnter={() => setActiveInsight(index)}>
-                  <div className={`p-1.5 lg:p-2 rounded-lg transition-all duration-300 ${activeInsight === index ? 'bg-gray-100 shadow-sm border border-gray-200' : 'hover:bg-gray-50 border border-transparent'}`}>
-                    <div className="flex justify-between items-center mb-1">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-5 h-5 flex items-center justify-center rounded text-[9px] font-black transition-colors ${activeInsight === index ? 'bg-gray-900 text-white' : 'bg-white text-gray-500 border border-gray-200 group-hover:border-gray-300'}`}>{item.rank}</div>
-                        <span className={`text-[11px] lg:text-[13px] font-bold uppercase tracking-wide ${activeInsight === index ? 'text-gray-900' : 'text-gray-600'}`}>{item.country === 'Brasil' && <i className="fas fa-map-marker-alt text-yellow-600 mr-1"></i>}{item.country}</span>
-                      </div>
-                      <span className="text-[10px] lg:text-xs font-black text-gray-800">{item.display}</span>
-                    </div>
-                    <div className="w-full bg-gray-200 h-1.5 lg:h-2 rounded-full overflow-hidden ml-7" style={{ width: 'calc(100% - 28px)' }}>
-                      <div className={`h-full ${item.color} transition-all duration-700 ease-out ${activeInsight === index ? 'opacity-100' : 'opacity-40'}`} style={{ width: item.width }}></div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+      {/* Hero Section - Reduced Padding */}
+      <header className="bg-slate-900 text-white py-8 px-8 lg:px-12 border-b-8 border-blue-600 relative overflow-hidden shrink-0">
+        <Dna className="absolute top-0 right-0 w-80 h-80 -mt-16 -mr-16 text-blue-400 opacity-10 pointer-events-none" />
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+          <div className="md:w-3/5">
+            <div className="inline-block px-4 py-1 bg-blue-600/30 border border-blue-400/50 rounded-full text-blue-200 text-[10px] font-black tracking-widest uppercase mb-4 shadow-xl">
+              PANORAMA ESTRATÉGICO 2025-2026
             </div>
+            <h1 className="text-3xl md:text-5xl font-black tracking-tighter leading-none mb-3">
+              GEOPOLÍTICA <span className="text-blue-400">DA INOVAÇÃO MÉDICA</span>
+            </h1>
+            <p className="text-base md:text-lg text-slate-300 font-light max-w-2xl leading-relaxed">
+              Escala, especialização e excelência científica na corrida tecnológica global.
+            </p>
           </div>
-          
-          <div className="w-full lg:w-8/12 bg-gray-900 rounded-3xl p-5 lg:p-8 text-white flex flex-col shadow-2xl relative overflow-hidden flex-1 border border-gray-800">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-5 shrink-0 border-b border-gray-700 pb-4 gap-4">
-               <div className="flex items-center gap-3">
-                 <i className={`fas fa-chart-line text-2xl lg:text-3xl ${data[activeInsight].country === 'Brasil' ? 'text-yellow-400' : 'text-blue-400'}`}></i>
-                 <div>
-                   <h4 className={`font-black text-2xl lg:text-3xl tracking-tight leading-none ${data[activeInsight].country === 'Brasil' ? 'text-yellow-400' : 'text-white'}`}>{data[activeInsight].country}</h4>
-                   <div className="flex gap-2 mt-2">
-                     {data[activeInsight].axes.map((axis, i) => (<span key={i} className="text-[9px] px-2 py-0.5 rounded font-bold uppercase tracking-widest bg-gray-800 text-gray-300 border border-gray-700">{axis}</span>))}
-                   </div>
-                 </div>
-               </div>
-               <div className="bg-white/10 px-4 py-2 rounded-xl border border-white/20 flex items-center gap-2 shrink-0">
-                 <i className="fas fa-trophy text-amber-400 text-sm"></i>
-                 <span className="font-black text-xs lg:text-sm tracking-widest uppercase text-gray-100">GII Ranking: {data[activeInsight].rank}</span>
-               </div>
+          <div className="md:w-2/5 flex flex-col items-end gap-6 w-full">
+            <div className="bg-white px-4 py-2 rounded-2xl shadow-xl border-2 border-slate-100">
+              <img src="https://i.postimg.cc/L6vCnk9g/gtidet.png" alt="Logo GTIDET" className="h-8 md:h-12 object-contain" />
             </div>
-
-            <div className="flex flex-col lg:flex-row gap-6 flex-1 overflow-y-auto custom-scrollbar pr-2">
-              <div className="flex flex-col gap-4 flex-1">
-                
-                <p className="text-gray-300 text-xs lg:text-sm leading-relaxed font-medium">
-                  <strong className="text-gray-400 block mb-1 uppercase text-[9px] tracking-widest border-b border-gray-700 pb-1">Fundamento do GII 2025:</strong>
-                  {data[activeInsight].insight} <span className="italic text-gray-400">{data[activeInsight].strategic}</span>
-                </p>
-                
-                <div className="bg-gradient-to-r from-blue-900/40 to-transparent p-4 lg:p-5 rounded-xl border-l-4 border-amber-400 mt-auto shadow-sm">
-                  <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block mb-2 flex items-center gap-1.5"><i className="fas fa-building"></i> Ecossistema e Âncoras</span>
-                  <h5 className="text-white font-black text-sm lg:text-base mb-1.5">{data[activeInsight].caseTitle}</h5>
-                  <p className="text-gray-300 text-[11px] lg:text-xs leading-relaxed font-medium">{data[activeInsight].caseDesc}</p>
-                </div>
-
-              </div>
-              
-              <div className="flex flex-col w-full lg:w-5/12 shrink-0">
-                <div className="w-full h-40 lg:h-48 bg-black rounded-2xl overflow-hidden mb-3 border border-gray-700 shadow-md">
-                  <img src={data[activeInsight].image} alt={data[activeInsight].imgCaption} className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-500" />
-                </div>
-                <span className="text-[9px] text-gray-500 italic mb-2 leading-tight text-center bg-black/40 py-1.5 rounded">{data[activeInsight].imgCaption}</span>
-                <div className="mt-auto"><SourceBadge source={data[activeInsight].source} dark={true} /></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    // ==========================================
-    // PAINEL 3: MATRIZ DE CLUSTERS GLOBAIS (Substitui Indústria/Hospitais)
-    // ==========================================
-    const ClusterMatrix = () => {
-      const [selectedRank, setSelectedRank] = useState(1);
-      
-      const clusters = [
-        { id: 1, name: 'Shenzhen–Hong Kong', location: 'China', type: 'TRL 7-9', iconClass: "fas fa-microchip", insight: 'É o 1º cluster global absoluto. A força não está apenas na biologia pura, mas na capacidade vertiginosa de transformar eletrônica de ponta, telecom (5G), IA embarcada e manufatura em soluções de saúde em volume continental.', note: 'Cluster focado em escalar soluções de saúde digital e dispositivos conectados em massa.', source: 'WIPO / GII 2025', image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=500&q=80', imgCaption: '[Tecnologia de Saúde Conectada]', anchor: 'Huawei, Sun Yat-sen Univ., Shenzhen Univ.' },
-        { id: 2, name: 'San Jose–San Francisco', location: 'EUA', type: 'TRL 6-9', iconClass: "fas fa-cloud", insight: '3º cluster global, mas o 1º em intensidade inovadora no mundo. É o polo da convergência entre Big Techs e Saúde, onde algoritmos de software viram produtos clínicos rigorosamente regulados e infraestrutura de cuidado personalizado.', note: 'Onde o Vale do Silício cria Digital Therapeutics e IA Generativa Médica.', source: 'WIPO / GII 2025', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=500&q=80', imgCaption: '[Integração Big Tech e Medicina]', anchor: 'Stanford, UCSF, Google, Apple' },
-        { id: 3, name: 'Boston–Cambridge', location: 'EUA', type: 'TRL 4-9', iconClass: "fas fa-dna", insight: 'Provavelmente o modelo mais completo do mundo para transformar pesquisa biomédica pesada de bancada em startups e Big Pharmas. Foco insano em terapias celulares, gênicas (CRISPR), oncologia avançada e descoberta algorítmica de moléculas.', note: 'A maior densidade global em pesquisa translacional em Biotecnologia.', source: 'WIPO / GII 2025', image: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=500&q=80', imgCaption: '[Pesquisa Genômica e Biotech]', anchor: 'Harvard, MIT, Mass General Hospital' },
-        { id: 4, name: 'London', location: 'Reino Unido', type: 'TRL 5-9', iconClass: "fas fa-database", insight: 'Londres é formidável pois une o colossal sistema público de dados (NHS) às academias de ponta e capital de risco profundo. O modelo britânico domina a Avaliação de Tecnologias em Saúde (ATS), genômica populacional e pesquisa clínica massiva.', note: 'Exemplo mundial de como unir dados públicos de saúde à Inovação.', source: 'WIPO / GII 2025', image: 'https://images.unsplash.com/photo-1532187643603-c76088e5e6e6?auto=format&fit=crop&w=500&q=80', imgCaption: '[Análise de Dados Populacionais]', anchor: 'UCL, Imperial College, King’s College' },
-        { id: 5, name: 'Copenhagen', location: 'Dinamarca', type: 'TRL 7-9', iconClass: "fas fa-pills", insight: 'Cluster hiper-focado ("Medicon Valley"). Mostra como uma nação pequena domina mercados mundiais gigantescos. É a força motriz irrefutável por trás dos tratamentos biológicos globais para doenças crônicas, notadamente diabetes e obesidade.', note: 'Um cluster voltado quase inteiramente para biomanufatura e doenças crônicas.', source: 'WIPO / GII 2025', image: 'https://images.unsplash.com/photo-1584362917165-526a968579e8?auto=format&fit=crop&w=500&q=80', imgCaption: '[Biomanufatura de Imunobiológicos]', anchor: 'Univ. of Copenhagen, Novo Nordisk' },
-        { id: 6, name: 'Zürich', location: 'Suíça', type: 'TRL 5-9', iconClass: "fas fa-microscope", insight: 'Menos voltado ao lado "farmacêutico" clássico e profundamente focado na engenharia de precisão europeia. Referência inquestionável no design de materiais biocompatíveis, sensores vitais acoplados, robótica assistencial e dispositivos médicos ultra-sofisticados.', note: 'O benchmark global para engenharia clínica e manufatura médica de precisão.', source: 'WIPO / GII 2025', image: 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=500&q=80', imgCaption: '[Engenharia Médica de Precisão]', anchor: 'ETH Zürich, Univ. of Zürich, IBM' },
-        { id: 7, name: 'Seoul', location: 'Coreia do Sul', type: 'TRL 7-9', iconClass: "fas fa-hospital", insight: 'Cluster fulminante que une um governo centralizador, megaindústrias tecnológicas e redes hospitalares de vanguarda. Lideram em biofabricação escalável e diagnósticos super-rápidos integrados por IA, amparados pelos vastos pólos eletrônicos.', note: 'Velocidade industrial extrema convertendo semicondutores em equipamentos de saúde.', source: 'WIPO / GII 2025', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=500&q=80', imgCaption: '[Hospitais Inteligentes Asiáticos]', anchor: 'Seoul National Univ., Samsung, LG' },
-        { id: 8, name: 'São Paulo', location: 'Brasil', type: 'TRL 4-9', iconClass: "fas fa-shield-virus", insight: 'Único representante da América Latina no Top 100 de clusters do GII (49ª posição). Ancorado de forma pesada em vacinas, combate a arboviroses/doenças infectocontagiosas e pesquisa de saúde pública, amparado pela densidade do SUS e biodiversidade.', note: 'Potência global em doenças tropicais, vacinação e pesquisa acadêmica.', source: 'WIPO / GII 2025', image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=500&q=80', imgCaption: '[Laboratório de Doenças Tropicais e SUS]', anchor: 'USP, Unicamp, Fiocruz, Butantan' },
-      ];
-      return (
-        <div className="flex flex-col h-full flex-1">
-           <div className="mb-4 shrink-0"><InteractiveHint text="Selecione os clusters mundiais que ditam onde a inovação é gerada" /></div>
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 flex-1 overflow-hidden">
             
-            {/* Menu Lateral de Clusters */}
-            <div className="w-full lg:w-4/12 flex flex-col gap-2 overflow-y-auto custom-scrollbar pb-2 pr-2">
-              {clusters.map((cluster) => (
-                <button 
-                  key={cluster.id} onClick={() => setSelectedRank(cluster.id)} 
-                  className={`p-3 lg:p-4 rounded-2xl border-2 transition-all flex items-center gap-3 shrink-0 text-left group ${selectedRank === cluster.id ? 'border-blue-600 bg-blue-50/50 shadow-md lg:translate-x-1' : 'border-gray-200 bg-white hover:border-gray-400 hover:bg-gray-50'}`}
-                >
-                  <div className={`w-12 h-12 lg:w-14 lg:h-14 rounded-xl flex items-center justify-center shrink-0 shadow-inner border transition-colors ${selectedRank === cluster.id ? 'bg-blue-600 text-white border-blue-700' : 'bg-gray-100 text-gray-600 border-gray-300 group-hover:bg-white'}`}>
-                    <i className={`${cluster.iconClass} text-xl lg:text-2xl`}></i>
-                  </div>
-                  <div className="flex-1 overflow-hidden">
-                    <h3 className={`font-black text-sm lg:text-base leading-tight truncate mb-1 ${selectedRank === cluster.id ? 'text-blue-900' : 'text-gray-900'}`}>{cluster.name}</h3>
-                    <p className="text-[9px] lg:text-[10px] font-bold uppercase tracking-wider text-gray-500 truncate flex items-center gap-1.5 mb-1"><i className="fas fa-map-marker-alt"></i> {cluster.location}</p>
-                    <span className={`inline-block text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded border ${selectedRank === cluster.id ? 'bg-blue-100 border-blue-200 text-blue-700' : 'bg-gray-100 border-gray-200 text-gray-500'}`}>{cluster.type}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            {/* Deep Dive do Cluster */}
-            <div className="w-full lg:w-8/12 bg-white border border-gray-200 p-6 lg:p-8 rounded-3xl flex flex-col relative overflow-hidden min-h-[400px] shadow-lg">
-              {clusters.filter(c => c.id === selectedRank).map(active => (
-                <div key={active.id} className="relative z-10 flex flex-col h-full overflow-y-auto custom-scrollbar pr-2 animate-fade-in">
-                  <div className="flex justify-between items-start mb-6 shrink-0 border-b border-gray-100 pb-5">
-                    <div>
-                      <div className="text-[10px] lg:text-xs font-black text-blue-600 uppercase tracking-widest mb-2 flex items-center gap-2"><i className={active.iconClass}></i> Matriz de Cluster Global</div>
-                      <h2 className="text-2xl lg:text-4xl font-black text-gray-900 leading-tight">{active.name}</h2>
-                    </div>
-                    <div className="w-24 h-16 lg:w-32 lg:h-20 rounded-xl overflow-hidden border border-gray-200 shadow-md shrink-0 hidden sm:block">
-                       <img src={active.image} alt={active.imgCaption} className="w-full h-full object-cover" />
-                    </div>
-                  </div>
-                  <div className="flex-grow flex flex-col justify-center">
-                    <p className="text-gray-700 leading-relaxed font-medium mb-6 text-sm lg:text-base border-l-4 border-blue-600 pl-4 lg:pl-6 bg-gray-50 p-5 rounded-r-2xl text-justify shadow-sm">
-                      {active.insight}
-                    </p>
-                    <div className="bg-blue-50/70 p-5 lg:p-6 rounded-2xl border border-blue-100 mb-2 shadow-inner">
-                      <h4 className="text-[10px] lg:text-xs font-black text-blue-500 uppercase tracking-widest mb-3 border-b border-blue-200 pb-2 flex items-center gap-2"><i className="fas fa-university text-blue-600"></i> Instituições Âncoras do Cluster</h4>
-                      <p className="text-xs lg:text-sm text-blue-900 font-bold leading-relaxed mb-3">{active.anchor}</p>
-                      <span className="block text-[10px] text-gray-500 bg-white px-3 py-1.5 rounded-lg border border-blue-100 w-max"><i className="fas fa-gem text-amber-500 mr-1"></i> {active.note}</span>
-                    </div>
-                  </div>
-                  <div className="shrink-0 mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <span className="text-[9px] text-gray-400 italic block">{active.imgCaption}</span>
-                    <SourceBadge source={active.source} />
-                  </div>
+            <div className="grid grid-cols-2 gap-3 w-full">
+              {globalStats.map((stat, i) => (
+                <div key={i} className="bg-white/10 p-3 rounded-2xl border border-white/20 backdrop-blur-md shadow-lg">
+                  <div className="text-xl font-black text-white leading-none mb-1">{stat.value}</div>
+                  <div className="text-[9px] text-blue-200 font-black uppercase tracking-tight">{stat.label}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      );
-    };
+      </header>
 
-    // --- PAINEL 4: INOVAÇÕES DISRUPTIVAS ---
-    const DisruptiveInnovations = () => {
-      const [activeInv, setActiveInv] = useState(0);
-
-      const innovations = [
-        { id: 1, title: "Mapeamento Fluorescente de Veias", shortDesc: "O fim da agulha na veia errada", iconClass: "fas fa-qrcode", category: "Procedimento Guiado", country: "EUA/Global", description: "Uma tecnologia revolucionária de realidade aumentada (AR) baseada em espectroscopia projeta um mapa exato, luminoso e em tempo real das veias diretamente na pele do paciente. Utilizando luz infravermelha próxima inofensiva, o sistema detecta a hemoglobina com altíssima precisão térmica, criando um contraste visual instantâneo para exames e acessos intravenosos difíceis.", institution: "StartSe Health / Hospitais Globais", source: "Demonstração Tecnológica Médica Aplicada", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80", imgCaption: "[Mapeamento vascular com fluorescência na pele]" },
-        { id: 2, title: "Implante Cerebral Wireless (DOT)", shortDesc: "Modulação neural via app para depressão", iconClass: "fas fa-brain", category: "Neurotecnologia", country: "EUA", description: "Recentemente aprovado para testes clínicos restritos pelo FDA americano, o dispositivo DOT é um implante cibernético sem fio e cirurgicamente minimamente invasivo posicionado delicadamente acima do crânio. Ele modula a atividade elétrica dos circuitos cerebrais por Bluetooth (via app programável) para o tratamento da depressão crônica aguda e Parkinson severo, eliminando efeitos colaterais químicos.", institution: "FDA Approval Board / Empresas de Neurotech", source: "Revista Wired / Interesting Engineering", image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=800&q=80", imgCaption: "[Representação de chip e implante cerebral conectado]" },
-        { id: 3, title: "Coração Funcional de Espinafre", shortDesc: "Plantas atuando como scaffolds humanos", iconClass: "fas fa-leaf", category: "Engenharia de Tecidos", country: "EUA", description: "O maior gargalo para fabricar órgãos 3D é vascularizar o tecido sem que ele morra. Uma equipe transdisciplinar encontrou a resposta descelularizando folhas comuns de espinafre, deixando intacta a estrutura robusta de celulose orgânica. Os cientistas povoaram então os capilares vegetais da folha com células de tecido cardíaco humano vivo, que passaram a bater ritmicamente e transportar sangue.", institution: "Worcester Polytechnic Institute (WPI)", source: "Autoexplicando / J. Biomaterials", image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=800&q=80", imgCaption: "[Folha vegetal translúcida vermelha bombeando fluido]" },
-        { id: 4, title: "Gel Biológico para Cartilagem", shortDesc: "O fim das dolorosas próteses metálicas", iconClass: "fas fa-bone", category: "Medicina Regenerativa", country: "Alemanha", description: "A dor crônica nos joelhos por atrito ósseo tem nova perspectiva clínica. Pesquisadores farmacêuticos alemães formularam hidrogéis bioativos sofisticados e minimamente invasivos (via injeção rápida). Este material líquido imita perfeitamente a cartilagem original, enganando o corpo, promovendo adesão celular massiva e induzindo as células do próprio indivíduo a recriar tecido cartilaginoso natural extinto.", institution: "Fraunhofer-Gesellschaft Institutes", source: "Revista Científica Nature Materials", image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=80", imgCaption: "[Simulação de injeção de gel biológico na articulação do joelho]" },
-        { id: 5, title: "Micro-robô Magnético Renal", shortDesc: "Dissolução fulminante e sem cirurgia", iconClass: "fas fa-robot", category: "Micro-robótica", country: "Japão/Global", description: "Chega de cirurgias a laser exaustivas ou semanas dolorosas ingerindo água. Um micro-robô de polímero flexível (com menos de 1 centímetro) viaja pela uretra guiado milimetricamente por ímãs externos por médicos. Na ponta deste 'robô', uma carga agressiva da enzima urease ataca e corrói apenas e instantaneamente a pedra nos rins, dissolvendo-a em minutos.", institution: "Bioengenharia de Microrobótica Japonesa", source: "Estudos Avançados de Robótica Magnética", image: "https://images.unsplash.com/photo-1614064016629-9e735e0766a5?auto=format&fit=crop&w=800&q=80", imgCaption: "[Animação de um robô microscópico operando um cálculo renal]" },
-        { id: 6, title: "Nanobots Limpadores Arteriais", shortDesc: "Rasgadores de placas de gordura (Infarto)", iconClass: "fas fa-heartbeat", category: "Nanotecnologia", country: "Global", description: "Como desentupir canos entupidos antes que eles estoquem e causem morte súbita cardíaca? Nano-submarinos biomiméticos munidos de micro hélices e raspadores viajam pelo sangue até artérias bloqueadas pelo colesterol ruim (aterosclerose). O mecanismo literalmente fura ou dissolve clinicamente o lixo biológico das veias de forma não-tóxica, substituindo cirurgias delicadíssimas de inserção de stents (molas) cardíacos.", institution: "Pesquisas Universitárias em Nanomedicina", source: "Inovação Médica Futura / NanoTech", image: "https://images.unsplash.com/photo-1583912265922-83ef0a221fbc?auto=format&fit=crop&w=800&q=80", imgCaption: "[Nanobots vermelhos viajando por vasos sanguíneos bloqueados]" },
-        { id: 7, title: "Rastreio Oncológico via Cerúmen", shortDesc: "A cera de ouvido acusando o Câncer", iconClass: "fas fa-ear-listen", category: "Oncologia Translacional", country: "Brasil", description: "Tumores corporais mudam secretamente o metabolismo orgânico liberando gases específicos no sangue, muito antes de aparecerem em tomografias normais. Pesquisadores brilhantes em biologia brasileira descobriram que a cera do ouvido atua como uma 'esponja' capturando meses de histórico desses gases (VOCs). A mera raspagem da cera tornou-se, assim, um teste barato, 100% indolor e altamente sensível para antecipar tratamentos de câncer para a população do SUS.", institution: "Universidades Públicas Federais", source: "Jornal Nacional Globo / Pesquisa Fapesp", image: "https://images.unsplash.com/photo-1579684453423-f84349ef60b0?auto=format&fit=crop&w=800&q=80", imgCaption: "[Médico Otorrinolaringologista usando luz para coleta laboratorial]" },
-        { id: 8, title: "Veneno de Marimbondo (Paulista)", shortDesc: "Inibição do pesadelo chamado Alzheimer", iconClass: "fas fa-bug", category: "Farmacologia Florestal", country: "Brasil", description: "O maior calcanhar de Aquiles global da neurologia hoje é a Doença de Alzheimer e Parkinson, desencadeados por proteínas que formam placas 'tóxicas' matando os neurônios sadios. Extraído meticulosamente do perigoso marimbondo nativo 'Polybia paulista', químicos brasileiros isolaram peptídeos ativos da peçonha do inseto capazes de barrar vigorosamente a formação desta agregação neuronal na fase microscópica.", institution: "Santa Casa / CIDI / MedNucleo Brasil", source: "Neurologia Brasileira de Biodiversidade", image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80", imgCaption: "[Marimbondo tropical ao lado de substância biomédica e luvas]" }
-      ];
-
-      return (
-        <div className="flex flex-col h-full flex-1">
-          <div className="mb-4 shrink-0">
-            <InteractiveHint text="Selecione um caso científico na lista para explorar a matriz da Inovação" />
+      {/* Main Content Area */}
+      <main className="max-w-7xl mx-auto px-6 py-6 w-full flex-1 flex flex-col bg-white">
+        
+        {/* Navigation Control Bar - Compacted */}
+        <div className="flex items-center gap-3 mb-8 shrink-0">
+          <button onClick={goToPrev} disabled={activeIndex === 0} className="p-3 rounded-xl bg-slate-100 border border-slate-200 hover:bg-blue-600 hover:text-white disabled:opacity-20 shadow-md transition-all"><ChevronLeft className="w-6 h-6" /></button>
+          <div className="flex-1 flex gap-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-inner overflow-x-auto no-scrollbar">
+            {TABS.map((tab, idx) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-1 min-w-[130px] flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black transition-all ${activeTab === tab.id ? 'bg-white text-slate-900 shadow-lg scale-[1.02]' : 'text-slate-500 hover:bg-slate-200'}`}
+              >
+                <tab.icon className={`w-4 h-4 shrink-0 ${activeTab === tab.id ? 'text-blue-600' : ''}`} /> <span className="uppercase tracking-tight whitespace-nowrap">{tab.label}</span>
+              </button>
+            ))}
           </div>
-          
-          <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 flex-1 overflow-hidden">
-            <div className="w-full lg:w-4/12 flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto custom-scrollbar pb-2 lg:pr-3">
-              {innovations.map((inv, index) => (
-                <button 
-                  key={inv.id} onClick={() => setActiveInv(index)}
-                  className={`p-3 lg:p-4 rounded-xl border transition-all flex items-center gap-3 text-left min-w-[260px] lg:min-w-full shrink-0 group ${activeInv === index ? 'border-amber-500 bg-gray-900 shadow-xl lg:translate-x-2' : 'border-gray-300 bg-white hover:bg-gray-100 hover:border-gray-400'}`}
-                >
-                  <div className={`w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center rounded-lg shadow-inner border shrink-0 transition-colors ${activeInv === index ? 'bg-gray-800 border-gray-700 text-amber-400' : 'bg-gray-100 border-gray-200 text-gray-500 group-hover:bg-white'}`}>
-                    <i className={`${inv.iconClass} text-lg lg:text-xl`}></i>
-                  </div>
-                  <div className="truncate flex-1">
-                    <span className={`block text-[9px] lg:text-[10px] font-black uppercase tracking-widest mb-1 ${activeInv === index ? 'text-amber-400' : 'text-blue-600'}`}>{inv.category}</span>
-                    <span className={`font-black text-xs lg:text-[15px] leading-tight truncate block ${activeInv === index ? 'text-white' : 'text-gray-900'}`}>{inv.title}</span>
-                    <span className={`text-[9px] lg:text-[10px] mt-1 font-bold uppercase tracking-wider block truncate ${activeInv === index ? 'text-gray-400' : 'text-gray-500'}`}>{inv.shortDesc}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
+          <button onClick={goToNext} disabled={activeIndex === TABS.length - 1} className="p-3 rounded-xl bg-slate-100 border border-slate-200 hover:bg-blue-600 hover:text-white disabled:opacity-20 shadow-md transition-all"><ChevronRight className="w-6 h-6" /></button>
+        </div>
 
-            <div className="w-full lg:w-8/12 bg-black rounded-3xl overflow-hidden flex flex-col shadow-2xl min-h-[450px] relative border border-gray-800">
-              <div className="absolute inset-0 z-0">
-                 <img src={innovations[activeInv].image} alt={innovations[activeInv].imgCaption} className="w-full h-2/3 lg:h-full object-cover opacity-30 lg:opacity-50 animate-fade-in mask-image-b-gradient" key={`img-${activeInv}`} />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent"></div>
-              </div>
-
-              <div className="relative z-10 p-6 lg:p-10 flex flex-col h-full justify-end text-white overflow-y-auto custom-scrollbar animate-fade-in" key={`content-${activeInv}`}>
-                <div className="mb-auto hidden lg:flex justify-between items-start">
-                  <span className="bg-amber-500 text-black font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded flex items-center gap-2 shadow-lg">
-                    <i className="fas fa-bolt"></i> Caso Disruptivo (TRL Alto)
-                  </span>
-                  <span className="flex items-center gap-2 text-xs font-bold text-gray-300 uppercase tracking-widest bg-black/60 px-4 py-2 rounded-full border border-gray-700 backdrop-blur-md shadow-inner">
-                    <i className="fas fa-map-marker-alt text-amber-500"></i> {innovations[activeInv].country}
-                  </span>
-                </div>
-
-                <div className="mt-12 lg:mt-0">
-                  <h2 className="text-3xl lg:text-5xl font-black mb-3 leading-tight text-white drop-shadow-md">{innovations[activeInv].title}</h2>
-                  <h4 className="text-amber-400 text-sm lg:text-lg font-bold mb-6 tracking-wide drop-shadow-sm uppercase">"{innovations[activeInv].shortDesc}"</h4>
-                  
-                  <div className="bg-gray-900/80 backdrop-blur-xl border border-gray-700 p-6 rounded-3xl mb-6 shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
-                    <span className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-3 border-b border-gray-700 pb-2"><i className="fas fa-microscope text-gray-400"></i> Desdobramento Técnico</span>
-                    <p className="text-gray-200 text-sm lg:text-base leading-relaxed text-justify">{innovations[activeInv].description}</p>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 bg-black/50 p-4 rounded-2xl border border-gray-800">
-                    <div>
-                      <span className="block text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-1.5">Mapeado Por / Fonte</span>
-                      <span className="flex items-center gap-2 font-black text-sm text-gray-100">
-                        <i className="fas fa-building text-blue-500"></i> {innovations[activeInv].institution}
-                      </span>
-                      <div className="mt-2"><SourceBadge source={innovations[activeInv].source} dark={true} /></div>
+        {/* Sliding Viewport */}
+        <div className="relative overflow-hidden w-full flex-1">
+          <div className="flex transition-transform duration-700 ease-in-out items-start w-full" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
+            
+            {/* SLIDE 1: Global Trends */}
+            <div className={`w-full shrink-0 px-2 transition-opacity duration-700 ${activeIndex === 0 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+              <SectionHeader title="Tendências Globais" icon={Activity} />
+              <DidacticIntro text="Convergência radical: IA prevendo o design proteico e wearables acelerando terapias genéticas de ponta." />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {trends.map((trend, i) => (
+                  <div key={i} className="flex flex-col border-2 border-slate-50 rounded-[32px] bg-white overflow-hidden shadow-xl group">
+                    <div className="h-44 w-full relative overflow-hidden bg-slate-100">
+                      <img src={trend.image} alt={trend.imageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+                      <div className="absolute bottom-4 left-6 text-3xl bg-white w-12 h-12 rounded-2xl flex items-center justify-center shadow-xl border-2 border-slate-50">{trend.icon}</div>
                     </div>
-                    
-                    <a href={`https://www.google.com/search?q=${encodeURIComponent(innovations[activeInv].title + ' ' + innovations[activeInv].institution)}`} 
-                       target="_blank" rel="noopener noreferrer"
-                       className="flex items-center justify-center gap-2 bg-white text-black px-6 py-3 lg:py-4 rounded-xl font-black text-[10px] lg:text-xs uppercase tracking-widest hover:bg-amber-400 transition-all duration-300 shadow-xl group shrink-0 no-underline hover:scale-105">
-                      <i className="fas fa-external-link-alt text-gray-500 group-hover:text-black transition-colors"></i> Validar Artigo Original
-                    </a>
-                  </div>
-                  
-                  <span className="block text-[9px] text-gray-600 italic mt-5 text-right font-medium tracking-wide">
-                    {innovations[activeInv].imgCaption}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    // --- PAINEL 5: BRASIL NO GII 2025 ---
-    const BrazilianPatentsParadox = () => {
-      const [hoverArea, setHoverArea] = useState('foreign');
-      const data = {
-        foreign: { title: "O Abismo da Dependência", statsNumber: "52º", statsLabel: "Posição Global no GII 2025", text: "O Brasil é o 52º no mundo (2º na Latam). O país tem ativos gigantes como o SUS e o cluster de São Paulo (49º do mundo), mas os pontos mais frágeis aparecem em infraestrutura e na transformação de pesquisa de bancada em mercado industrial, gerando dependência externa brutal de insumos.", origins: [{ c: "São Paulo (Cluster 49º)", flag: "📍" }, { c: "Rio de Janeiro", flag: "📍" }, { c: "Minas Gerais", flag: "📍" }, { c: "Goiás", flag: "📍" }], action: "A estratégia Macro precisa fortalecer a ponte crítica entre a Universidade (onde a ciência morre engavetada), a Indústria (que precisa de produtos) e o Financiamento de Risco (Venture Capital).", source: "GII 2025 / WIPO", image: "https://images.unsplash.com/photo-1587370560942-ad2a04eabb6d?auto=format&fit=crop&w=500&q=80", imgCaption: "[Indústria médica no Brasil]" },
-        domestic: { title: "O Oásis Científico Nacional", statsNumber: "4 a 9", statsLabel: "Escala TRL de Atuação", text: "Apesar da fuga de patentes, o Brasil opera milagres na base científica. Instituições públicas lideram na América Latina a pesquisa de vacinas, biotecnologia tropical e vigilância molecular. Universidades federais ditam as publicações, enquanto os complexos privados (como o Albert Einstein) incubam startups.", origins: [{ c: "USP (SP)", flag: "📍" }, { c: "Unicamp", flag: "📍" }, { c: "Fiocruz (RJ)", flag: "📍" }, { c: "Butantan", flag: "📍" }], action: "O país precisa parar de ser apenas um formador brilhante de papers científicos para ser um produtor de soluções escaláveis no SUS e Saúde Suplementar.", source: "GII 2025 / WIPO Data", image: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=500&q=80", imgCaption: "[Pesquisa de alto impacto na universidade]" }
-      };
-      const activeData = hoverArea === 'foreign' ? data.foreign : data.domestic;
-
-      return (
-        <div className="h-full flex flex-col flex-1">
-          <div className="mb-4 shrink-0"><InteractiveHint text="Deslize sobre os blocos para debater o paradoxo do GII Brasil" /></div>
-          
-          <div className="flex flex-col sm:flex-row gap-3 lg:gap-5 mb-4 lg:mb-6 shrink-0">
-            <button onMouseEnter={() => setHoverArea('foreign')} className={`flex-1 p-4 lg:p-6 rounded-2xl border-l-[6px] transition-all text-left flex items-center justify-between ${hoverArea === 'foreign' ? 'border-red-600 bg-red-50 shadow-lg scale-[1.01]' : 'border-gray-200 bg-white hover:bg-gray-50'}`}>
-              <div>
-                <div className="flex items-baseline gap-2"><div className="text-3xl lg:text-5xl font-black text-red-600 mb-1 tracking-tighter leading-none">Gap</div></div>
-                <div className="font-bold text-gray-800 uppercase tracking-widest text-[10px] lg:text-xs mt-1">Institucional & Mercado</div>
-                <div className="text-[10px] text-gray-500 mt-1 font-medium bg-red-100 w-max px-2 py-0.5 rounded text-red-800">52º Posição Global</div>
-              </div>
-              <i className={`fas fa-exclamation-triangle text-4xl lg:text-6xl ${hoverArea === 'foreign' ? 'text-red-300' : 'text-gray-200'}`}></i>
-            </button>
-            
-            <button onMouseEnter={() => setHoverArea('domestic')} className={`flex-1 p-4 lg:p-6 rounded-2xl border-l-[6px] transition-all text-left flex items-center justify-between ${hoverArea === 'domestic' ? 'border-blue-600 bg-blue-50 shadow-lg scale-[1.01]' : 'border-gray-200 bg-white hover:bg-gray-50'}`}>
-              <div>
-                <div className="flex items-baseline gap-2"><div className="text-3xl lg:text-5xl font-black text-blue-600 mb-1 tracking-tighter leading-none">Base</div></div>
-                <div className="font-bold text-gray-800 uppercase tracking-widest text-[10px] lg:text-xs mt-1">Capital Humano & Ciência</div>
-                <div className="text-[10px] text-gray-500 mt-1 font-medium bg-blue-100 w-max px-2 py-0.5 rounded text-blue-800">Cluster #49 SP</div>
-              </div>
-              <i className={`fas fa-university text-4xl lg:text-6xl ${hoverArea === 'domestic' ? 'text-blue-300' : 'text-gray-200'}`}></i>
-            </button>
-          </div>
-          
-          <div className="flex-1 bg-gray-900 rounded-3xl p-6 lg:p-10 text-white flex flex-col lg:flex-row gap-8 overflow-hidden shadow-2xl min-h-[400px] border border-gray-800 relative">
-            <div className="flex-1 flex flex-col justify-between overflow-y-auto custom-scrollbar pr-3 z-10">
-              <div key={activeData.title} className="animate-fade-in">
-                <h3 className={`text-2xl lg:text-4xl font-black mb-6 leading-tight tracking-tight ${hoverArea === 'foreign' ? 'text-red-400' : 'text-blue-400'}`}>{activeData.title}</h3>
-                
-                <div className="flex flex-col gap-2 mb-6 bg-gray-800 p-5 rounded-2xl border border-gray-700 shadow-inner">
-                  <div className="flex items-center gap-3">
-                     <span className={`text-3xl lg:text-4xl font-black ${hoverArea === 'foreign' ? 'text-red-300' : 'text-blue-300'}`}>{activeData.statsNumber}</span>
-                     <span className="text-[10px] lg:text-xs text-gray-400 font-black uppercase tracking-widest leading-tight w-32 border-l border-gray-600 pl-3">{activeData.statsLabel}</span>
-                  </div>
-                  <p className="text-gray-200 leading-relaxed text-sm lg:text-base mt-4 font-medium">{activeData.text}</p>
-                </div>
-
-                <div className="mb-6">
-                  <span className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3"><i className="fas fa-flag text-gray-600"></i> Polos Científicos Relevantes no GII</span>
-                  <div className="flex flex-wrap gap-2">
-                    {activeData.origins.map((orig, i) => (<span key={i} className="bg-black border border-gray-700 text-gray-300 text-[10px] lg:text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 font-bold shadow-md">{orig.flag} {orig.c}</span>))}
-                  </div>
-                </div>
-
-                <div className={`p-5 rounded-2xl border-l-4 bg-black/50 backdrop-blur-sm ${hoverArea === 'foreign' ? 'border-red-500' : 'border-blue-500'}`}>
-                  <span className="block text-[10px] font-black uppercase tracking-widest mb-2 text-gray-400"><i className="fas fa-lightbulb mr-1 text-amber-400"></i> Diagnóstico Pelo GII</span>
-                  <p className="text-sm lg:text-base text-white font-medium leading-relaxed">{activeData.action}</p>
-                </div>
-              </div>
-              <div className="mt-5 shrink-0"><SourceBadge source={activeData.source} dark={true} /></div>
-            </div>
-            
-            <div className="w-full lg:w-1/3 hidden sm:flex flex-col z-10 h-40 lg:h-auto shrink-0 mt-2">
-               <div className="flex-1 rounded-2xl overflow-hidden border border-gray-700 bg-black shadow-lg">
-                  <img src={activeData.image} alt={activeData.imgCaption} className="w-full h-full object-cover opacity-50 hover:opacity-100 transition-opacity duration-700 ease-in-out" />
-               </div>
-               <span className="text-[9px] text-gray-500 italic mt-3 text-center block bg-gray-800 p-2 rounded-lg font-medium">{activeData.imgCaption}</span>
-            </div>
-            
-            <i className={`fas fa-chart-pie absolute -bottom-16 -right-16 text-[300px] opacity-[0.03] pointer-events-none z-0 ${hoverArea === 'foreign' ? 'text-red-500' : 'text-blue-500'}`}></i>
-          </div>
-        </div>
-      );
-    };
-
-    // --- PAINEL 6: EIXOS DE GOIÁS ---
-    const GoiasAxes = () => {
-      const [activeStep, setActiveStep] = useState(0);
-      const timeline = [
-        { id: '1', title: 'Complexo Industrial', metric: 'DAIA / Anápolis', desc: 'Goiás posiciona-se como centro da reindustrialização em saúde. Foco intenso em injetáveis, colírios, biossimilares e automação (Indústria 4.0), alavancado pelas matrizes do DAIA, como a gigante Brainfarma (120 mil m²).', strategic: 'Oportunidade para o SENAI entrar de forma pesada em validação, automação, metrologia e qualificação técnica para as farmacêuticas locais.', source: 'Panorama Indústria / DAIA', image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=500&q=80', imgCaption: '[Produção de fármacos no DAIA]' },
-        { id: '2', title: 'Avaliação de Tecnologias', metric: 'CETI-Saúde / ATS', desc: 'Com um aporte central de R$ 21,6 milhões, o CETI-Saúde atua na Avaliação de Tecnologias em Saúde (ATS). Antes do SUS comprar ou escalar uma tecnologia do mercado, Goiás a testa clinicamente, afere o custo-efetividade e apoia a decisão.', strategic: 'Goiás atua como a barreira regulatória científica do Centro-Oeste: testa em ambiente real, prova valor clínico e escala.', source: 'CETI-Saúde / UFG', image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=500&q=80', imgCaption: '[Pesquisa de avaliação em saúde]' },
-        { id: '3', title: 'IA e Dados no SUS', metric: 'SES-GO / Saúde Digital', desc: 'Uma infraestrutura massiva de dados permitindo regulação inteligente de filas, previsão estatística de demandas e vigilância epidemiológica automatizada. Envolve prontuário inteligente e interoperabilidade brutal na base de dados estatal.', strategic: 'Gerar governança digital severa. Cruzar IA preditiva com a LGPD em uma gestão hospitalar pública pautada por algoritmos limpos.', source: 'SES-GO / Datasus', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=500&q=80', imgCaption: '[Dashboards e Dados Populacionais]' },
-        { id: '4', title: 'Biossegurança & Vacinas', metric: 'UFG / CMBiotecs', desc: 'Criação de redes de vigilância com o Laboratório Público NB3 (CMBiotecs) no centro do país. Foco profundo no combate a arboviroses, zoonoses de ponta e pesquisa celular em imunobiológicos essenciais.', strategic: 'Reduzir a dependência extrema de importações de IFAs. Posicionar a ciência goiana na vigilância biológica avançada latino-americana.', source: 'CMBiotecs UFG', image: 'https://images.unsplash.com/photo-1584362917165-526a968579e8?auto=format&fit=crop&w=500&q=80', imgCaption: '[Pesquisa virológica e biológica]' },
-        { id: '5', title: 'Startups e Scale-ups', metric: 'PPSUS / Compras Gov', desc: 'Resolver o gargalo fatal das Healthtechs do país: vender para o governo. O PPSUS injeta R$ 4M para projetos escaláveis, permitindo validação em sandbox clínico direto na rede estadual, fomentando compras públicas inovadoras.', strategic: 'Em vez de apenas gerar startups perdidas, o Estado atua como comprador ágil provendo as "dores" reais do mercado e escalando os protótipos goianos.', source: 'FAPEG / Hub Goiás', image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32b7?auto=format&fit=crop&w=500&q=80', imgCaption: '[Encontro de scale-ups e healthtechs]' }
-      ];
-
-      return (
-        <div className="h-full flex flex-col flex-1 justify-center">
-          <div className="mb-6 lg:mb-10 shrink-0"><InteractiveHint text="Navegue pelos 5 eixos que consolidam Goiás no cenário GII" /></div>
-          
-          <div className="relative mb-8 lg:mb-10 px-2 lg:px-6 shrink-0">
-            <div className="absolute top-1/2 left-2 right-2 lg:left-6 lg:right-6 h-1.5 bg-gray-200 -translate-y-1/2 z-0 rounded-full"></div>
-            <div className="absolute top-1/2 left-2 lg:left-6 h-1.5 bg-blue-600 -translate-y-1/2 z-0 transition-all duration-[800ms] rounded-full" style={{ width: `${(activeStep / (timeline.length - 1)) * 100}%` }}></div>
-            <div className="relative z-10 flex justify-between">
-              {timeline.map((item, index) => (
-                <button key={index} onClick={() => setActiveStep(index)} className="flex flex-col items-center focus:outline-none relative w-16 lg:w-28 group">
-                  <div className={`w-8 h-8 lg:w-12 lg:h-12 rounded-full border-[4px] lg:border-[6px] flex items-center justify-center transition-all duration-500 z-10 shadow-md ${activeStep >= index ? 'border-blue-600 bg-white scale-110' : 'border-gray-300 bg-gray-100 group-hover:border-blue-300 group-hover:bg-white'}`}>
-                    {activeStep === index && <div className="w-2.5 h-2.5 lg:w-4 lg:h-4 bg-blue-600 rounded-full animate-pulse shadow-inner" />}
-                  </div>
-                  <div className={`mt-3 lg:mt-4 text-center text-[9px] lg:text-[10px] uppercase font-black transition-colors duration-300 bg-white/90 px-1.5 py-1 rounded backdrop-blur-sm ${activeStep === index ? 'text-blue-800 shadow-sm' : 'text-gray-400'}`}>Eixo {item.id}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-          
-          <div className="bg-white border border-gray-200 rounded-3xl flex-1 flex flex-col sm:flex-row overflow-hidden shadow-2xl min-h-[300px]">
-            <div className="flex-1 p-6 lg:p-10 flex flex-col justify-between overflow-y-auto custom-scrollbar relative">
-              <i className="fas fa-bullseye absolute top-5 right-5 text-gray-100 text-6xl z-0"></i>
-              <div className="relative z-10">
-                <div className="flex items-center gap-4 mb-5">
-                   <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white px-5 py-2 rounded-xl font-black text-sm lg:text-lg shadow-lg border border-blue-500 flex items-center">{timeline[activeStep].metric}</div>
-                   <span className="text-[9px] lg:text-[10px] font-black text-gray-500 uppercase tracking-widest bg-gray-100 px-3 py-1.5 rounded-full border border-gray-200 shadow-sm"><i className="fas fa-flag text-blue-500 mr-1.5"></i> Foco de Domínio</span>
-                </div>
-                <h3 className="text-2xl lg:text-3xl font-black text-gray-900 mb-4 tracking-tight leading-none">{timeline[activeStep].title}</h3>
-                <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6 font-medium text-justify">{timeline[activeStep].desc}</p>
-                
-                <div className="bg-blue-50/80 border-l-4 border-blue-600 p-4 lg:p-5 rounded-r-2xl mb-4 shadow-inner">
-                   <span className="block text-[9px] lg:text-[10px] font-black uppercase tracking-widest text-blue-500 mb-2.5 flex items-center gap-2"><i className="fas fa-chess-knight"></i> Aplicação e Parcerias (SENAI / FAPEG)</span>
-                   <p className="text-[11px] lg:text-xs text-blue-900 font-bold leading-relaxed">{timeline[activeStep].strategic}</p>
-                </div>
-              </div>
-              <div className="shrink-0 mt-4 relative z-10"><SourceBadge source={timeline[activeStep].source} /></div>
-            </div>
-            
-            <div className="w-full sm:w-2/5 h-40 sm:h-auto bg-gray-100 hidden sm:flex flex-col shrink-0 relative border-l border-gray-100">
-               <img src={timeline[activeStep].image} alt={timeline[activeStep].imgCaption} className="w-full h-full object-cover animate-fade-in filter contrast-110" key={timeline[activeStep].image} />
-               <div className="absolute bottom-4 left-4 right-4">
-                 <div className="bg-black/80 backdrop-blur-md text-gray-200 text-[9px] lg:text-[10px] p-2 text-center italic rounded-lg border border-gray-700 shadow-xl font-medium tracking-wide">
-                   {timeline[activeStep].imgCaption}
-                 </div>
-               </div>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    // ==========================================
-    // APP PRINCIPAL (CONTROLE DE ROTA)
-    // ==========================================
-    function App() {
-      const [currentSlide, setCurrentSlide] = useState(0);
-
-      const slides = [
-        {
-          id: "capa",
-          render: () => (
-            <SlideContainer>
-              <div className="flex flex-col justify-center h-full max-w-4xl relative z-10 py-10 lg:py-16">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="bg-blue-100 p-3 rounded-2xl shadow-sm border border-blue-200"><i className="fas fa-chart-line text-blue-600 text-3xl lg:text-4xl"></i></div>
-                  <span className="text-blue-700 font-black tracking-widest uppercase text-xs lg:text-sm border border-blue-300 px-4 py-1.5 rounded-full bg-blue-50/50 shadow-sm">Índice Global de Inovação (GII 2025)</span>
-                </div>
-                <h1 className="text-5xl md:text-6xl lg:text-8xl font-black text-gray-900 leading-[1.05] mb-6 tracking-tighter">
-                  A Leitura Estratégica <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-700 to-teal-500 block sm:inline mt-2 drop-shadow-sm">Para a Saúde</span>
-                </h1>
-                <p className="text-lg md:text-xl lg:text-2xl text-gray-600 font-medium max-w-3xl leading-relaxed mb-12">
-                  O ecossistema global mapeado sob os dados do GII 2025: das Big Pharmas aos gigantescos <strong>clusters de inovação do mundo</strong>, revelando como o estado de <strong>Goiás</strong> se conecta nessa jornada rumo ao futuro da saúde digital e aplicada.
-                </p>
-                <div className="flex items-center gap-4 text-xs font-black text-gray-500 uppercase tracking-widest mt-auto shrink-0 bg-gray-100/80 backdrop-blur-sm w-max px-5 py-2.5 rounded-xl border border-gray-200 shadow-sm">
-                  <div className="flex gap-2">
-                     <kbd className="px-2.5 py-1 bg-white border border-gray-300 rounded-md text-gray-800 shadow-sm">←</kbd>
-                     <kbd className="px-2.5 py-1 bg-white border border-gray-300 rounded-md text-gray-800 shadow-sm">→</kbd>
-                  </div>
-                  Navegue com seu teclado para avançar
-                </div>
-              </div>
-              <i className="fas fa-globe-americas absolute top-10 right-10 text-[400px] text-gray-100 opacity-40 pointer-events-none -rotate-12 z-0"></i>
-            </SlideContainer>
-          )
-        },
-        {
-          id: "contexto-global",
-          render: () => (
-            <SlideContainer>
-              <div className="flex justify-between items-end mb-6 shrink-0 border-b border-gray-200 pb-4">
-                <h2 className="text-3xl lg:text-5xl font-black text-gray-900 flex items-center gap-4 tracking-tight"><span className="bg-gradient-to-br from-blue-600 to-blue-800 text-white w-10 h-10 lg:w-14 lg:h-14 flex items-center justify-center rounded-xl shadow-lg text-xl lg:text-3xl border border-blue-500">1</span> O GII 2025 e as Tendências</h2>
-                <i className="fas fa-brain text-5xl lg:text-6xl text-gray-200 hidden sm:block drop-shadow-sm"></i>
-              </div>
-              <p className="text-base lg:text-lg text-gray-600 mb-8 max-w-4xl border-l-4 border-gray-300 pl-5 shrink-0 font-medium leading-relaxed bg-gray-50 p-4 rounded-r-xl">
-                O GII avaliou 139 economias apontando que inovação requer ecossistema. Não basta hospital bom; o país precisa integrar ciência, regulação, indústria, patentes e tecnologia. Três vetores guiam o ano de 2025 na área da saúde:
-              </p>
-              <div className="flex flex-col md:flex-row gap-5 lg:gap-8 flex-1">
-                <InteractiveStatCard iconClass="fas fa-robot" color="text-blue-600" bg="bg-blue-50" number="Infra IA" text="A Era da IA como Base" insightDetail="A IA sai do status de 'projeto piloto' para infraestrutura vital em diagnóstico assistido, pesquisa clínica e gestão. A OMS dita que requer governança, dados e setor privado integrado." source="Tendências Globais em Inovação" />
-                <InteractiveStatCard iconClass="fas fa-industry" color="text-emerald-600" bg="bg-emerald-50" number="US$ 584 Bi" text="MedTech & Reindustrialização" insightDetail="O risco estratégico de importar insumos forçou a reindustrialização. O mercado de MedTech, focado em robótica e dispositivos conectados, sustenta altas massivas." source="Panorama da Indústria Global" />
-                <div className="p-6 lg:p-8 rounded-3xl bg-gray-900 text-white flex flex-col justify-between border border-gray-800 flex-1 min-h-[220px] shadow-2xl relative overflow-hidden group">
-                  <div className="relative z-10">
-                    <div className="inline-block bg-amber-400 text-gray-900 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded mb-4 shadow-sm">Tendência de Valor</div>
-                    <h3 className="text-xl lg:text-2xl font-black mb-3 text-white flex items-center gap-2"><i className="fas fa-check-double text-amber-400"></i> Comprovação Clínica</h3>
-                    <p className="text-gray-300 text-xs lg:text-sm leading-relaxed mb-3 font-medium">Não basta apenas "ter o app". Ferramentas de saúde digital, telessaúde e terapias avançadas (celulares/gênicas) estão sendo pressionadas a provar sua eficácia no mundo real e custo-efetividade integrados às jornadas de cuidado.</p>
-                  </div>
-                  <div className="mt-auto relative z-10 pt-4 border-t border-gray-700"><SourceBadge source="Análise de Valor e Saúde Digital" dark={true} /></div>
-                  <i className="fas fa-microchip absolute -bottom-5 -right-5 text-gray-700 opacity-20 text-[120px] group-hover:scale-110 transition-transform duration-500"></i>
-                </div>
-              </div>
-            </SlideContainer>
-          )
-        },
-        { id: "grafico-patentes", headerTitle: "Top 10 Global no Índice de Inovação", headerIcon: "fas fa-chart-column", render: () => <SlideContainer><InteractiveBarChart /></SlideContainer> },
-        { id: "grafico-clusters", headerTitle: "Matriz Global de Clusters de Saúde", headerIcon: "fas fa-city", render: () => <SlideContainer><ClusterMatrix /></SlideContainer> },
-        { id: "grafico-disruptivas", headerTitle: "Fronteiras da Ciência (Provas de TRL Alto)", headerIcon: "fas fa-vial-virus", render: () => <SlideContainer bg="bg-gray-900"><DisruptiveInnovations /></SlideContainer> },
-        { id: "grafico-brasil", headerTitle: "Raio-X: O Paradoxo Brasileiro no GII", headerIcon: "fas fa-chart-pie", render: () => <SlideContainer><BrazilianPatentsParadox /></SlideContainer> },
-        {
-          id: "contexto-goias-1",
-          render: () => (
-            <SlideContainer>
-              <div className="flex justify-between items-end mb-6 shrink-0 border-b border-gray-200 pb-4">
-                <h2 className="text-3xl lg:text-5xl font-black text-gray-900 flex items-center gap-4 tracking-tight"><span className="bg-gradient-to-br from-blue-600 to-blue-800 text-white w-10 h-10 lg:w-14 lg:h-14 flex items-center justify-center rounded-xl shadow-lg text-xl lg:text-3xl border border-blue-500">7</span> Os Ativos Estratégicos de Goiás</h2>
-                <i className="fas fa-lightbulb text-5xl lg:text-6xl text-gray-200 hidden sm:block drop-shadow-sm"></i>
-              </div>
-              <p className="text-base lg:text-lg text-gray-600 mb-8 max-w-4xl border-l-4 border-gray-300 pl-5 shrink-0 font-medium leading-relaxed bg-gray-50 p-4 rounded-r-xl">
-                Goiás não concorre no mesmo volume absoluto de Boston ou Shenzhen no GII. Porém, possui uma janela perfeita e tangível para atuar como o maior **hub aplicado em validação de tecnologias de saúde do Centro-Oeste**, reunindo academia, indústria e SUS.
-              </p>
-              <div className="flex flex-col md:flex-row gap-5 lg:gap-8 flex-1">
-                <InteractiveStatCard iconClass="fas fa-vials" color="text-gray-900" bg="bg-white border-2 border-black" number="CETI-Saúde" text="Validação Clínica & SUS" insightDetail="Lançado em 2025 (R$ 21,6M), orquestrado por UFG, SES-GO e FAPEG. O CETI-Saúde foca na Avaliação de Tecnologias em Saúde (ATS), provando a viabilidade da ciência local antes de entrar no SUS." source="Iniciativas FAPEG / UFG" />
-                <InteractiveStatCard iconClass="fas fa-university" color="text-white" bg="bg-blue-600 border-2 border-black" number="UFG & NB3" text="Ciência Acadêmica Base" insightDetail="A Universidade Federal de Goiás é a âncora intelectual. Possui laboratórios formidáveis como o CMBiotecs (NB3), essencial em biossegurança e pesquisa avançada de imunobiológicos na região central do país." source="UFG Pesquisas" />
-                
-                <div className="bg-emerald-50 border-2 border-emerald-600 rounded-3xl p-6 lg:p-8 flex flex-col justify-between flex-1 min-h-[220px] shadow-lg relative overflow-hidden group">
-                  <div className="relative z-10">
-                    <div className="inline-block px-3 py-1 bg-emerald-600 text-white rounded font-black uppercase text-[10px] tracking-widest mb-4 shadow-md"><i className="fas fa-industry mr-1"></i> Força Industrial</div>
-                    <h4 className="text-2xl lg:text-3xl font-black mb-3 text-emerald-900 leading-tight">O Polo de Anápolis (DAIA)</h4>
-                    <p className="text-emerald-800 text-xs lg:text-sm leading-relaxed mb-4 font-medium">É o 2º maior polo farmoquímico do Brasil. Uma verdadeira cidade fabril, abrigando mais de 20 empresas. Exemplo é a planta da Brainfarma, com R$ 416M em expansão de injetáveis operando centenas de portfólios vitais de P&D local.</p>
-                  </div>
-                  <div className="mt-auto relative z-10 pt-4 border-t border-emerald-200/50"><SourceBadge source="Panorama Indústria / DAIA" /></div>
-                  <i className="fas fa-boxes-packing absolute -bottom-5 -right-5 text-emerald-600 opacity-[0.08] text-[150px] group-hover:scale-110 transition-transform duration-500"></i>
-                </div>
-              </div>
-            </SlideContainer>
-          )
-        },
-        { id: "grafico-goias-timeline", headerTitle: "Onde Goiás Joga Para Vencer (Os 5 Eixos)", headerIcon: "fas fa-bullseye", render: () => <SlideContainer><GoiasAxes /></SlideContainer> },
-        {
-          id: "contexto-goias-2",
-          render: () => (
-            <SlideContainer>
-              <div className="flex justify-between items-end mb-6 shrink-0 border-b border-gray-200 pb-4">
-                 <h2 className="text-3xl lg:text-5xl font-black text-gray-900 flex items-center gap-4 tracking-tight"><span className="bg-gradient-to-br from-blue-600 to-blue-800 text-white w-10 h-10 lg:w-14 lg:h-14 flex items-center justify-center rounded-xl shadow-lg text-xl lg:text-3xl border border-blue-500">9</span> Diagnóstico e Posicionamento Final</h2>
-                 <i className="fas fa-flag-checkered text-5xl lg:text-6xl text-gray-200 hidden sm:block drop-shadow-sm"></i>
-              </div>
-              <p className="text-base lg:text-lg text-gray-600 mb-8 border-l-4 border-gray-300 pl-5 shrink-0 font-medium leading-relaxed bg-gray-50 p-4 rounded-r-xl">
-                O GII 2025 decreta: os líderes em saúde detêm uma combinação raríssima: ciência rigorosa, indústria pujante, governo inteligente e patentes protegidas. O Brasil possui o SUS, mercado enorme e excelência intelectual (USP, Fiocruz), mas trava na translação técnica para o mercado industrial.
-              </p>
-
-              <div className="flex flex-col md:flex-row gap-6 lg:gap-10 flex-1">
-                <div className="flex-1 flex flex-col gap-4 lg:gap-6">
-                  <div className="text-gray-700 font-black uppercase text-[10px] lg:text-xs bg-gray-100 px-5 py-2.5 w-max rounded-xl flex items-center gap-2 border border-gray-300 shadow-sm tracking-widest"><i className="fas fa-brain text-blue-600 text-sm"></i> A Visão Pós-GII</div>
-                  
-                  <div className="p-6 lg:p-8 bg-gray-900 text-white rounded-3xl shadow-2xl border-l-4 border-blue-500 relative overflow-hidden group">
-                    <h4 className="font-black text-xl lg:text-2xl mb-3 text-blue-400 relative z-10 tracking-tight">O Que Sinaliza para Goiás?</h4>
-                    <p className="text-gray-300 text-sm lg:text-base mb-4 relative z-10 font-medium leading-relaxed">A inteligência reside em não tentar "copiar São Paulo ou Boston" de uma só vez, mas fundir de forma definitiva as capacidades existentes: UFG + CETI-Saúde + FAPEG + SES-GO + DAIA + Hospitais + Startups.</p>
-                    <SourceBadge source="Síntese Executiva GII 2025" dark={true} />
-                    <i className="fas fa-project-diagram absolute -bottom-5 -right-5 text-[100px] text-gray-700 opacity-20 group-hover:scale-110 transition-transform duration-500"></i>
-                  </div>
-                  
-                  <div className="p-6 lg:p-8 bg-white border border-gray-200 rounded-3xl shadow-lg flex-1 group relative overflow-hidden flex flex-col justify-center">
-                    <h4 className="font-black text-xl lg:text-2xl mb-3 text-gray-900 relative z-10 tracking-tight">O Papel do Sistema S (SENAI)</h4>
-                    <p className="text-gray-600 text-sm lg:text-base font-medium leading-relaxed relative z-10 flex-1">A oportunidade ímpar repousa na engenharia clínica. Liderar a qualificação técnica de metrologia, calibração robótica, automação hospitalar 4.0, boas práticas limpas de biomanufatura e qualificação da força farmacêutica bruta.</p>
-                  </div>
-                </div>
-
-                <div className="flex-1 bg-gradient-to-br from-blue-600 to-blue-900 rounded-3xl p-6 lg:p-10 border border-blue-800 flex flex-col relative overflow-hidden shadow-2xl text-white">
-                   <div className="text-blue-100 font-black uppercase text-[10px] lg:text-xs bg-blue-900/50 px-5 py-2.5 w-max rounded-xl flex items-center gap-2 mb-6 lg:mb-8 relative z-10 shadow-sm border border-blue-700 tracking-widest"><i className="fas fa-quote-left text-blue-300 text-sm"></i> O Posicionamento Estratégico</div>
-                  
-                  <div className="flex-1 flex flex-col justify-center items-center text-center relative z-10 px-4">
-                    <i className="fas fa-quote-right text-4xl text-blue-400 mb-6 opacity-50"></i>
-                    <h2 className="text-2xl lg:text-4xl font-black leading-tight tracking-tight mb-6">
-                      "Goiás deve consolidar-se inquestionavelmente como o maior território contínuo de <span className="text-amber-400">validação técnica, industrialização e escala aplicada</span> de soluções em saúde para o SUS e para a base farmacêutica de todo o Centro-Oeste."
-                    </h2>
-                    <p className="text-blue-200 text-sm lg:text-base font-medium">O encontro letal e perfeito entre a academia que cria, o laboratório de avaliação que atesta, e o polo industrial que manufatura a saúde da população.</p>
-                  </div>
-                  
-                  <i className="fas fa-map-marked-alt absolute -bottom-16 -right-16 text-blue-400 opacity-[0.05] text-[350px] z-0 pointer-events-none"></i>
-                </div>
-              </div>
-            </SlideContainer>
-          )
-        }
-      ];
-
-      const nextSlide = () => setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-      const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-
-      useEffect(() => {
-        const handleKeyDown = (e) => {
-          if (e.key === 'ArrowRight') nextSlide();
-          if (e.key === 'ArrowLeft') prevSlide();
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-      }, []);
-
-      return (
-        <div className="relative w-full max-w-[1500px] h-[95vh] min-h-[650px] bg-white shadow-2xl rounded-2xl sm:rounded-3xl flex flex-col overflow-hidden border border-gray-300">
-          
-          {/* HEADER FIXO SUPERIOR */}
-          <div className={`px-5 lg:px-10 py-4 lg:py-6 border-b border-gray-100 flex justify-between items-center bg-white z-20 shadow-sm shrink-0 transition-all duration-300 ${slides[currentSlide].headerTitle ? 'h-auto opacity-100' : 'h-0 opacity-0 overflow-hidden py-0 border-transparent'}`}>
-             {slides[currentSlide].headerTitle && (
-               <>
-                 <div className="flex items-center gap-4 lg:gap-5">
-                    <div className="p-2.5 lg:p-3 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl shadow-inner flex items-center justify-center">
-                      <i className={`${slides[currentSlide].headerIcon} text-blue-700 text-xl lg:text-3xl`}></i>
+                    <div className="p-5 flex-1 flex flex-col">
+                      <h3 className="text-lg font-black text-slate-900 leading-tight mb-2 uppercase tracking-tighter">{trend.title}</h3>
+                      <p className="text-slate-600 text-sm leading-snug flex-1 font-medium">{trend.desc}</p>
+                      <SourceTag source={trend.source} />
                     </div>
-                    <h2 className="text-xl sm:text-2xl lg:text-4xl font-black text-gray-900 tracking-tighter uppercase truncate leading-none mt-1">{slides[currentSlide].headerTitle}</h2>
-                 </div>
-                 <div className="text-[10px] lg:text-xs font-black text-gray-500 bg-gray-50 px-4 py-2 rounded-full uppercase tracking-widest hidden sm:flex items-center gap-2 shrink-0 border border-gray-200 shadow-inner">
-                    <i className="fas fa-folder-open text-blue-400"></i> Painel de Análise {currentSlide + 1} de {slides.length}
-                 </div>
-               </>
-             )}
-          </div>
-
-          {/* ÁREA DE SLIDER CENTRAL */}
-          <div className="flex-1 relative bg-white overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full flex transition-transform duration-[700ms] ease-[cubic-bezier(0.87,0,0.13,1)]" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-              {slides.map((slide) => (
-                <div key={slide.id} className="min-w-full h-full bg-white">
-                  {slide.render()}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* RODAPÉ E NAVEGAÇÃO */}
-          <div className="bg-gray-50 border-t border-gray-200 p-4 lg:p-6 flex justify-between items-center px-5 lg:px-10 z-20 shrink-0">
-            <div className="flex items-center gap-5 lg:gap-8">
-              <div className="bg-amber-100 p-2 rounded-lg border border-amber-200 shadow-inner hidden sm:block"><i className="fas fa-bolt text-amber-500 text-xl drop-shadow-sm"></i></div>
-              <div className="flex gap-2 lg:gap-2.5">
-                {slides.map((_, i) => (
-                  <button 
-                    key={i} onClick={() => setCurrentSlide(i)} aria-label={`Ir para Painel ${i + 1}`}
-                    className={`h-2 lg:h-2.5 transition-all duration-300 rounded-full ${currentSlide === i ? 'w-8 lg:w-12 bg-blue-600 shadow-md' : 'w-2 lg:w-2.5 bg-gray-300 hover:bg-gray-400'}`}
-                  ></button>
+                  </div>
                 ))}
               </div>
             </div>
-            
-            <div className="flex gap-3 lg:gap-4">
-              <button onClick={prevSlide} className="px-4 lg:px-6 py-2.5 lg:py-3 flex items-center gap-2 rounded-xl font-bold text-xs lg:text-sm bg-white border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm focus:ring-4 focus:ring-gray-100">
-                <i className="fas fa-arrow-left"></i> <span className="hidden sm:inline uppercase tracking-widest text-[10px] lg:text-xs">Anterior</span>
-              </button>
-              <button onClick={nextSlide} className="px-4 lg:px-6 py-2.5 lg:py-3 flex items-center gap-2 rounded-xl font-black text-xs lg:text-sm bg-black border-2 border-black text-white hover:bg-gray-800 transition-all shadow-xl hover:shadow-black/20 focus:ring-4 focus:ring-gray-300">
-                <span className="hidden sm:inline uppercase tracking-widest text-[10px] lg:text-xs">Avançar Estudo</span> <i className="fas fa-arrow-right"></i>
-              </button>
+
+            {/* SLIDE 2: Top 10 Mundial */}
+            <div className={`w-full shrink-0 px-2 transition-opacity duration-700 ${activeIndex === 1 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+              <SectionHeader title="Matriz de Potências" icon={Globe} />
+              <div className="grid md:grid-cols-3 gap-4 mb-8">
+                <ExecutiveSummaryCard title="Escala & Capital" desc="Domínio em investimentos (EUA, China)." icon="🏭" colorClass="border-blue-600" />
+                <ExecutiveSummaryCard title="Especialização" desc="Nichos de precisão (Europa/Japão)." icon="🔬" colorClass="border-indigo-500" />
+                <ExecutiveSummaryCard title="Integração" desc="Engenharia e Manufatura (Coreia)." icon="🤖" colorClass="border-emerald-500" />
+              </div>
+
+              <div className="mb-6 flex flex-col md:flex-row items-center justify-between bg-slate-50 p-3 rounded-2xl border-2 border-slate-100 shadow-sm gap-3">
+                <div className="flex items-center gap-3 px-3"><MapPin className="w-5 h-5 text-blue-600" /><label className="font-black text-slate-800 text-sm uppercase tracking-tighter">Analisar Nação:</label></div>
+                <div className="relative w-full md:w-80">
+                  <select value={activeCountryId} onChange={(e) => setActiveCountryId(e.target.value)} className="appearance-none w-full bg-white border border-slate-200 text-slate-900 font-black text-base rounded-xl py-2 px-4 cursor-pointer outline-none focus:border-blue-600 shadow-md">
+                    {allMapCards.map((card) => (<option key={card.id} value={card.id}>{card.rank}º - {card.country}</option>))}
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+                </div>
+              </div>
+
+              <InteractiveMap selectedId={activeCountryId} onSelect={setActiveCountryId} />
+
+              <div className="mt-8">
+                {allMapCards.filter(item => item.id === activeCountryId).map((selectedData) => (
+                  <div key={selectedData.id} className="flex flex-col lg:flex-row bg-white border-2 border-slate-50 rounded-[32px] overflow-hidden shadow-2xl group">
+                    <div className="bg-slate-900 text-white w-full lg:w-40 p-6 flex flex-col justify-center items-center shrink-0">
+                      <span className="text-6xl font-black leading-none drop-shadow-xl">#{selectedData.rank}</span>
+                      <span className="text-xs font-black uppercase tracking-[0.2em] text-blue-400 mt-4">{selectedData.country.split(' ')[0]}</span>
+                    </div>
+                    <div className="w-full lg:w-[400px] shrink-0 relative bg-slate-200 border-r border-slate-50">
+                      <img src={selectedData.image} alt={selectedData.imageAlt} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
+                      <div className="absolute bottom-4 left-4 right-4 bg-blue-600/90 backdrop-blur-xl text-white text-[10px] font-black p-3 rounded-xl border border-white/20 shadow-2xl uppercase tracking-widest text-center">
+                        DOMÍNIO: {selectedData.specialty}
+                      </div>
+                    </div>
+                    <div className="p-8 flex-1 flex flex-col justify-center">
+                      <div className="flex items-center gap-3 border-b-2 border-slate-100 pb-4 mb-4">
+                        <Award className="w-8 h-8 text-yellow-500" /> 
+                        <h4 className="text-2xl font-black text-slate-900 uppercase tracking-tighter leading-none">{selectedData.country}</h4>
+                      </div>
+                      <strong className="block text-base text-blue-600 mb-2 uppercase tracking-tighter font-black">{selectedData.axis}</strong>
+                      <p className="text-slate-700 text-base leading-snug mb-6 font-medium">{selectedData.detail}</p>
+                      
+                      <div className="bg-blue-50 border-l-[8px] border-blue-500 p-4 rounded-r-2xl mb-6 shadow-inner">
+                        <p className="text-base text-slate-800 leading-relaxed font-bold italic">"{selectedData.note}"</p>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2 mt-auto">
+                        {selectedData.stats.map((stat, i) => (
+                          <div key={i} className="bg-slate-50 border border-slate-100 rounded-lg px-3 py-1.5 text-[10px] font-black text-slate-800 uppercase tracking-tighter shadow-sm">{stat}</div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* SLIDE 3: Brasil */}
+            <div className={`w-full shrink-0 px-4 transition-opacity duration-700 ${activeIndex === 2 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+              <SectionHeader title="Recorte Brasil" icon={MapPin} />
+              <DidacticIntro text="Ativos raros: SUS universal, institutos mundiais e indústria nacional farmacêutica." />
+
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <StatBadge value="52º" label="GII Global 2025" />
+                <StatBadge value="49º" label="Cluster WIPO (SP)" />
+                <StatBadge value="SUS" label="Maior Escala Real" />
+                <StatBadge value="Vacinas" label="Destaque Tropical" />
+              </div>
+
+              <div className="grid lg:grid-cols-2 gap-10">
+                <div className="space-y-6">
+                  <h3 className="text-xl font-black mb-4 text-slate-900 border-b-4 pb-2 flex items-center gap-3"><Building2 className="w-8 h-8 text-blue-600"/> Instituições de Vanguarda</h3>
+                  <div className="grid grid-cols-1 gap-4">
+                    {brazilInstitutions.map((inst, i) => (
+                      <div key={i} className="flex gap-6 p-6 border-2 border-slate-50 rounded-[32px] bg-white shadow-xl group hover:border-emerald-500 transition-all">
+                        <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden shadow-xl border-2 border-white">
+                          <img src={inst.image} alt={inst.imageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-black text-base text-slate-900 mb-1 uppercase tracking-tighter leading-none">{inst.name}</h4>
+                          <p className="text-slate-600 text-xs leading-tight mb-2 font-medium">{inst.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="bg-slate-900 text-white p-8 rounded-[40px] border-t-[12px] border-emerald-500 shadow-2xl flex flex-col justify-center">
+                  <h3 className="text-xl font-black mb-8 flex items-center gap-4 border-b border-slate-700 pb-4 uppercase tracking-tighter"><Rocket className="w-8 h-8 text-emerald-400"/> Eixos Chave</h3>
+                  <ul className="space-y-8">
+                    <li className="flex gap-8 items-start">
+                      <div className="w-16 h-16 bg-blue-600/30 rounded-2xl flex items-center justify-center shrink-0 border-2 border-blue-500/50 text-4xl shadow-xl">🦠</div>
+                      <div>
+                        <strong className="block text-xl text-blue-300 font-black mb-1 uppercase tracking-tighter">Virologia</strong>
+                        <p className="text-slate-300 text-base leading-tight font-light">Vacinas para Dengue e Zika. Inovação no SUS.</p>
+                      </div>
+                    </li>
+                    <li className="flex gap-8 items-start">
+                      <div className="w-16 h-16 bg-emerald-600/30 rounded-2xl flex items-center justify-center shrink-0 border-2 border-emerald-500/50 text-4xl shadow-xl">💊</div>
+                      <div>
+                        <strong className="block text-xl text-emerald-300 font-black mb-1 uppercase tracking-tighter">Indústria Farma</strong>
+                        <p className="text-slate-300 text-base leading-tight font-light">Nova Indústria Brasil (NIB) e Biofármacos.</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* SLIDE 4: Goiás */}
+            <div className={`w-full shrink-0 px-4 transition-opacity duration-700 ${activeIndex === 3 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+              <SectionHeader title="Recorte Goiás" icon={MapPin} />
+              <DidacticIntro text="Hub tecnológico do Centro-Oeste focado em doenças negligenciadas." />
+
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <StatBadge value="R$ 21,6M" label="Inv. Ceti-Saúde" />
+                <StatBadge value="6.000+" label="Pacientes Chagas" />
+                <StatBadge value="R$ 10M" label="Inv. HC-UFG" />
+                <StatBadge value="30+" label="Indústrias" />
+              </div>
+
+              <div className="grid lg:grid-cols-2 gap-10">
+                <div className="flex flex-col gap-6">
+                  <div className="bg-slate-900 p-8 rounded-[40px] text-white shadow-2xl relative overflow-hidden group border-b-[12px] border-indigo-600">
+                    <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=800&q=80" className="absolute inset-0 w-full h-full object-cover opacity-20" alt="" />
+                    <div className="relative z-10 flex flex-col gap-4">
+                      <Award className="w-12 h-12 text-yellow-400 drop-shadow-2xl" />
+                      <div>
+                        <h3 className="text-2xl font-black mb-2 uppercase tracking-tighter leading-none">Ceti-Saúde (2025)</h3>
+                        <p className="text-blue-100 text-lg leading-snug font-light">Maior investimento histórico integrando rigor acadêmico com incorporação tecnológica no SUS.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    {goiasInstitutions.map((inst, i) => (
+                      <div key={i} className="p-6 border-2 border-slate-50 bg-white rounded-[32px] shadow-xl hover:border-blue-500 transition-colors">
+                        <div className="w-full h-24 mb-4 rounded-xl overflow-hidden bg-slate-100">
+                            <img src={inst.image} className="w-full h-full object-cover" alt="" />
+                        </div>
+                        <strong className="block text-sm text-slate-900 mb-1 font-black uppercase tracking-tighter leading-tight">{inst.name}</strong>
+                        <span className="text-[11px] text-slate-600 leading-tight font-medium">{inst.desc}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <h3 className="text-xl font-black mb-4 text-slate-900 border-b-4 pb-2 uppercase tracking-tighter">Pesquisas de Impacto</h3>
+                  <div className="grid grid-cols-1 gap-4">
+                    {goiasResearches.map((item, i) => (
+                      <div key={i} className="flex gap-6 p-4 border-2 border-slate-50 rounded-[32px] bg-white shadow-xl group items-center">
+                        <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden shadow-xl">
+                          <img src={item.image} alt={item.imageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                        </div>
+                        <div className="flex-1">
+                          <strong className="text-lg font-black text-slate-900 mb-1 uppercase tracking-tighter leading-none block">{item.title}</strong>
+                          <p className="text-slate-600 text-xs font-medium leading-tight">{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* SLIDE 5: Radar de Inovação */}
+            <div className={`w-full shrink-0 px-4 transition-opacity duration-700 ${activeIndex === 4 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+              <SectionHeader title="Radar de Inovação" icon={Target} />
+              <DidacticIntro text="Tecnologias disruptivas validadas por ciência de alto impacto." />
+
+              <div className="grid grid-cols-1 gap-8 overflow-y-auto no-scrollbar pb-24" style={{ maxHeight: 'calc(100vh - 400px)' }}>
+                {featuredInnovations.map((innovation) => (
+                  <div key={innovation.id} className="bg-white border-4 border-slate-50 rounded-[40px] overflow-hidden shadow-2xl flex flex-col md:flex-row group min-h-[400px]">
+                    <div className="md:w-[400px] relative bg-slate-900 overflow-hidden shrink-0">
+                      <img src={innovation.image} alt={innovation.imageAlt} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-[2000ms]" />
+                      <div className="absolute top-8 left-8 bg-white text-slate-900 text-[10px] font-black px-4 py-1.5 rounded-full shadow-2xl uppercase tracking-widest">
+                        {innovation.country}
+                      </div>
+                      <div className="absolute bottom-8 left-8 right-8 bg-blue-600/90 backdrop-blur-2xl text-white text-xs font-black px-6 py-4 rounded-2xl shadow-2xl border border-white/20">
+                        <div className="flex items-center gap-3 mb-2 uppercase opacity-80 tracking-widest text-[9px]"><Building2 className="w-4 h-4" /> INSTITUIÇÃO EXECUTORA</div>
+                        <span className="text-base tracking-tight">{innovation.institution}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="p-12 md:w-3/5 flex flex-col">
+                      <div className="flex items-center gap-4 mb-4">
+                        <span className="text-6xl drop-shadow-2xl">{innovation.icon}</span>
+                        <div>
+                          <h3 className="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-2">{innovation.title}</h3>
+                          <strong className="block text-base text-blue-600 uppercase tracking-widest font-black italic">{innovation.subtitle}</strong>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 my-6 flex-1">
+                        <div>
+                          <h5 className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest mb-4">
+                            <Activity className="w-5 h-5" /> Solução
+                          </h5>
+                          <p className="text-base text-slate-700 leading-relaxed font-medium">
+                            {innovation.solution}
+                          </p>
+                        </div>
+                        <div className="bg-blue-50 p-8 rounded-3xl shadow-inner border border-blue-100">
+                          <h5 className="flex items-center gap-2 text-xs font-black text-blue-600 uppercase tracking-widest mb-4">
+                            <Stethoscope className="w-5 h-5" /> Impacto
+                          </h5>
+                          <p className="text-base text-slate-800 leading-relaxed font-bold italic">
+                            "{innovation.details}"
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-auto">
+                        <SourceTag source={innovation.source} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
-
         </div>
-      );
-    }
+      </main>
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-  </script>
-</body>
-</html>
+      <footer className="bg-slate-900 text-slate-400 py-6 px-12 border-t-4 border-blue-600 shrink-0 mt-auto">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="text-center md:text-left">
+            <h5 className="font-black text-white text-sm uppercase tracking-tighter mb-1">Painel de Inteligência Competitiva na Saúde</h5>
+            <p className="text-xs font-medium opacity-60">Dados WIPO, FREOPP, IQVIA e Deloitte.</p>
+          </div>
+          <div className="flex flex-col items-center md:items-end">
+            <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Atualização Permanente</div>
+            <div className="text-base font-black text-blue-400 uppercase tracking-tighter leading-none">MAIO / 2026</div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
