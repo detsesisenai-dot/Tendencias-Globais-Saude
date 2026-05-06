@@ -38,18 +38,18 @@
         // --- DATA STRUCTURES ---
 
         const globalStats = [
-          { label: 'Mercado global de saúde', value: '$9T', color: 'text-blue-900', source: 'Deloitte' },
-          { label: 'Índice Liderança Saúde', value: '100 pts', color: 'text-slate-800', source: 'Compósito' },
-          { label: 'Invest. em HealthTech (Tecnologia em Saúde)', value: '$880B', color: 'text-indigo-900', source: 'IQVIA' },
-          { label: 'Cobertura SUS (Sistema Único de Saúde) - UHC SCI', value: '84/100', color: 'text-emerald-700', source: 'OMS (Org. Mundial da Saúde) / Banco Mundial' },
+          { label: 'Mercado Global de Saúde', value: '$9T', source: 'Deloitte' },
+          { label: 'Gasto com Medicamentos (Projetado 2028)', value: 'US$ 2,3 Tri', source: 'Deloitte' },
+          { label: 'Doses Diárias Previstas (2028)', value: '3,7 Tri', source: 'Deloitte' },
+          { label: 'Terapias Gênicas, Celulares e RNA (2025)', value: '~3.200', source: 'Deloitte' },
         ];
 
-        // TENDÊNCIAS CONTEXTUALIZADAS COM OS NOVOS DADOS E INSIGHTS ESTRATÉGICOS
+        // TENDÊNCIAS CONTEXTUALIZADAS
         const trends = [
           { 
             icon: '🤖', 
             title: 'IA Clínica Regulada', 
-            desc: 'Avanços reais em diagnóstico por imagem, suporte à decisão e descoberta de fármacos. A FDA (Administração de Alimentos e Medicamentos dos EUA) consolida a regulação de dispositivos médicos com IA (Inteligência Artificial), enquanto a OMS foca em governança global.', 
+            desc: 'Avanços reais em diagnóstico por imagem, suporte à decisão e descoberta de fármacos. A FDA (Administração de Alimentos e Medicamentos dos EUA) consolida a regulação de dispositivos médicos com IA, enquanto a OMS foca em governança global.', 
             insight: 'Os EUA dominam a criação e regulação da IA Médica (Score 94), mas polos integrados como Israel, Singapura e Coreia do Sul são os laboratórios mais ágeis na adoção hospitalar diária.',
             leaders: ['EUA 🇺🇸', 'Israel 🇮🇱', 'Coreia 🇰🇷'],
             source: 'FDA / OMS', 
@@ -59,8 +59,8 @@
           { 
             icon: '🧬', 
             title: 'Genômica & Precisão', 
-            desc: 'Sequenciamento genético saindo da pesquisa básica para a rotina clínica. Isso muda o paradigma de tentativa-e-erro para diagnósticos ultra-precisos, terapias CAR-T (Células T com Receptores Quiméricos de Antígenos) e prevenção oncológica.', 
-            insight: 'O Reino Unido, via NHS (Serviço Nacional de Saúde), dita as regras globais integrando genômica na política pública. Simultaneamente, Singapura escala a maior base de dados genômicos asiáticos para medicina populacional.',
+            desc: 'Sequenciamento genético saindo da pesquisa básica para a rotina clínica. Isso muda o paradigma de tentativa-e-erro para diagnósticos ultra-precisos, terapias CAR-T (Células T com Receptores Quiméricos) e prevenção oncológica.', 
+            insight: 'O Reino Unido, via NHS (Serviço Nacional de Saúde), dita as regras globais integrando genômica na política pública. Simultaneamente, Singapura escala a maior base de dados genômicos asiáticos.',
             leaders: ['Reino Unido 🇬🇧', 'Singapura 🇸🇬', 'EUA 🇺🇸'],
             source: 'Nature / NHS', 
             image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=600&q=80', 
@@ -70,16 +70,16 @@
             icon: '🏭', 
             title: 'Dados Interoperáveis', 
             desc: 'Identificação digital única, portal cidadão e comunicação eletrônica fluida entre níveis de atenção. O "saneamento básico" da saúde: sem dado integrado, a Inteligência Artificial torna-se apenas um enfeite.', 
-            insight: 'Sistemas europeus provam que a eficiência (Sustentabilidade Fiscal avaliada pelo WIHI - Índice Mundial de Inovação em Saúde) nasce aqui. A Dinamarca lidera o mundo com seu portal Sundhed.dk e registros compartilhados de ponta a ponta.',
+            insight: 'Sistemas europeus provam que a eficiência (Sustentabilidade Fiscal avaliada pelo WIHI) nasce aqui. A Dinamarca lidera o mundo com seu portal Sundhed.dk e registros compartilhados de ponta a ponta.',
             leaders: ['Dinamarca 🇩🇰', 'Holanda 🇳🇱', 'Estônia 🇪🇪'],
-            source: 'Sundhed.dk / FREOPP (Fundação para Pesq. sobre Oportunidades Iguais)', 
+            source: 'Sundhed.dk / FREOPP', 
             image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80', 
             imageAlt: '[Imagem de Dados em Saúde]' 
           },
           { 
             icon: '🔬', 
             title: 'Biotech & Terapias', 
-            desc: 'A fronteira da farmacologia: edição genética viva via CRISPR (Repetições Palindrômicas Curtas Agrupadas), domínio tecnológico do mRNA (RNA mensageiro) e biomanufatura de anticorpos. Competição ferrenha em doenças raras e oncologia.', 
+            desc: 'A fronteira da farmacologia: edição genética via CRISPR (Repetições Palindrômicas Curtas Agrupadas), domínio do mRNA (RNA mensageiro) e biomanufatura de anticorpos. Competição ferrenha em doenças raras.', 
             insight: 'A Suíça (Novartis/Roche) domina o valor agregado no topo do GII (Índice Global de Inovação). Paralelamente, a China explode no Nature Index liderando a produção científica biomédica em escala.',
             leaders: ['Suíça 🇨🇭', 'China 🇨🇳', 'Alemanha 🇩🇪'],
             source: 'PharmaShots / WIPO', 
@@ -90,9 +90,9 @@
             icon: '📱', 
             title: 'Hospitais Inteligentes', 
             desc: 'O hospital físico torna-se uma plataforma digital. A expansão abrange monitoramento remoto contínuo, telessaúde pesada, automação logística de leitos e o conceito irreversível de "hospital-em-casa".', 
-            insight: 'Hospitais de excelência (Toronto General, Singapore General Hospital) conectam suas alas de alta complexidade à nuvem, permitindo gestão preditiva de demanda e atenção coordenada e sem barreiras.',
+            insight: 'Hospitais de excelência (Toronto General, Singapore General Hospital) conectam suas alas de alta complexidade à nuvem, permitindo gestão preditiva de demanda e atenção coordenada.',
             leaders: ['Canadá 🇨🇦', 'Singapura 🇸🇬', 'Austrália 🇦🇺'],
-            source: 'Newsweek / HIMSS (Soc. de Gestão de Informação em Saúde)', 
+            source: 'Newsweek / HIMSS', 
             image: 'https://images.unsplash.com/photo-1557825835-70d97c4aa567?auto=format&fit=crop&w=600&q=80', 
             imageAlt: '[Imagem de Dispositivos Vestíveis]' 
           },
@@ -102,202 +102,237 @@
             desc: 'Soluções de engenharia para um planeta que envelhece. Adoção de dados fisiológicos em tempo real, exoesqueletos e robôs assistivos para suprir a grave escassez global de mão de obra qualificada em saúde.', 
             insight: 'O Japão é o laboratório definitivo desta tendência. Com sua "Society 5.0", o país une medicina regenerativa de longo prazo à robótica para sustentar um sistema sob pressão demográfica.',
             leaders: ['Japão 🇯🇵', 'Suécia 🇸🇪', 'Coreia 🇰🇷'],
-            source: 'MHLW Japan (Min. da Saúde, Trabalho e Bem-Estar) / GII', 
+            source: 'MHLW Japan / GII', 
             image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=600&q=80', 
             imageAlt: '[Imagem de Cirurgia Robótica]' 
           },
         ];
 
-        // PILARES DA MATRIZ (NOVO)
+        // PILARES DA MATRIZ GLOBAL
         const matrixPillars = [
-          { name: 'Sistema de Saúde', weight: '25%', icon: 'fa-solid fa-heart-pulse', color: 'bg-emerald-500', desc: 'WIHI 2024, OMS e Banco Mundial.' },
-          { name: 'Hospitais de Elite', weight: '20%', icon: 'fa-solid fa-hospital-user', color: "bg-blue-500", desc: 'Newsweek/Statista World’s Best 2025.' },
-          { name: 'Universidades', weight: '20%', icon: 'fa-solid fa-graduation-cap', color: "bg-indigo-500", desc: 'QS (Quacquarelli Symonds) Medicine e THE (Times Higher Education) Medical 2026.' },
-          { name: 'Pesquisa Científica', weight: '20%', icon: 'fa-solid fa-flask', color: "bg-purple-500", desc: 'Nature Index Research Leaders 2025.' },
-          { name: 'Inovação & Biotech', weight: '15%', icon: 'fa-solid fa-dna', color: "bg-pink-500", desc: 'WIPO (Org. Mundial da Propriedade Intelectual) GII 2025.' }
+          { name: 'Sistema de Saúde', weight: '25%', icon: 'fa-solid fa-heart-pulse', color: 'bg-emerald-500', desc: 'WIHI 2024, OMS e Banco Mundial.', justification: 'Mede acesso universal, sustentabilidade financeira e eficiência geral.' },
+          { name: 'Hospitais de Elite', weight: '20%', icon: 'fa-solid fa-hospital-user', color: "bg-blue-500", desc: 'Newsweek/Statista World’s Best 2025.', justification: 'Avalia a aplicação de tecnologia de ponta no cuidado direto ao paciente.' },
+          { name: 'Universidades', weight: '20%', icon: 'fa-solid fa-graduation-cap', color: "bg-indigo-500", desc: 'QS Medicine e THE Medical 2026.', justification: 'Garante a formação contínua de talentos e a base do conhecimento médico.' },
+          { name: 'Pesquisa Científica', weight: '20%', icon: 'fa-solid fa-flask', color: "bg-purple-500", desc: 'Nature Index Research Leaders 2025.', justification: 'Mede o volume e o impacto real das descobertas na fronteira global.' },
+          { name: 'Inovação & Biotech', weight: '15%', icon: 'fa-solid fa-dna', color: "bg-pink-500", desc: 'WIPO GII 2025.', justification: 'Avalia a conversão da ciência em patentes, startups e indústria competitiva.' }
         ];
 
-        // NOVO RANKING COMPÓSITO
+        // RANKING GLOBAL
         const top10 = [
-          { id: 'us', rank: 1, country: 'Estados Unidos 🇺🇸', axis: 'Fronteira Científica & Elite Hospitalar', stats: ['Score: 94/100', '13 Hospitais no Top 50', '2º Nature Index', 'Líder em Biotech e IA'], detail: 'O maior motor global de inovação. Concentra hospitais de elite (Mayo Clinic, Cleveland, Johns Hopkins) e domina a pesquisa biomédica, IA médica e VC (Capital de Risco).', source: 'Nature Index / Newsweek', image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Laboratório EUA]', specialty: 'Pesquisa Médica & IA', note: 'Apesar de ser o mais desigual no acesso, possui 13 dos 50 melhores hospitais do mundo e as 4 principais instituições do Nature Index.' },
-          { id: 'ch', rank: 2, country: 'Suíça 🇨🇭', axis: 'O Sistema Mais Equilibrado', stats: ['Score: 89/100', '1º WIHI 2024', '1º GII 2025', 'Pharma Premium'], detail: 'O país mais redondo em saúde, pesquisa e sustentabilidade. Lar da Roche (líder corporativa do Nature Index) e Novartis, além de hospitais como o USZ (Hospital Universitário de Zurique).', source: 'WIHI 2024 / WIPO', image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Laboratório Suíço]', specialty: 'Ecossistema Premium', note: 'Combina alta qualidade assistencial, regulação sanitária sofisticada, financiamento estável e a mais forte indústria farmacêutica per capita.' },
-          { id: 'de', rank: 3, country: 'Alemanha 🇩🇪', axis: 'Integração Hospital-Indústria', stats: ['Score: 86/100', '3º Nature Index', 'Polo Charité Berlin', 'Engenharia Clínica'], detail: 'Combina um sistema forte, hospitais universitários de excelência (Charité, Heidelberg) e pesquisa pesada (Max Planck, Fraunhofer).', source: 'Nature Index / Statista', image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Engenharia Alemã]', specialty: 'MedTech (Tecnologia Médica) & Pesquisa', note: 'O melhor modelo para estudar a translação entre universidade, hospital e indústria. Destaque em engenharia biomédica e diagnóstico molecular.' },
-          { id: 'uk', rank: 4, country: 'Reino Unido 🇬🇧', axis: 'Genômica & Formação Acadêmica', stats: ['Score: 84/100', '1º/2º em Medicina (THE/QS)', '4º Nature Index', 'NHS & Dados'], detail: 'Potência absoluta na formação médica (Oxford, Cambridge, Imperial, UCL - University College London). Aproveita a base de dados do NHS para transformar ciência em política pública.', source: 'QS 2026 / Nature Index', image: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Pesquisa UK]', specialty: 'Dados Populacionais & Genômica', note: 'Destaque mundial na descoberta de fármacos, avaliação de tecnologias em saúde pelo NICE (Instituto Nac. de Excelência em Saúde) e implementação de genômica clínica.' },
-          { id: 'cn', rank: 5, country: 'China 🇨🇳', axis: 'Volume Científico e Escala de IA', stats: ['Score: 82/100', '1º Nature Index Global', 'Explosão Biotech', '10º GII 2025'], detail: 'Superpotência em ascensão rápida. Ultrapassou os EUA em share no Nature Index 2025, impulsionada pela CAS (Academia Chinesa de Ciências) e Tsinghua.', source: 'Nature Index 2025', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem Hospital China]', specialty: 'Escala & Produção Científica', note: 'Ainda em construção de sistema universal, mas assumiu a liderança incontestável em volume de produção científica de alto impacto e biomanufatura.' },
-          { id: 'se', rank: 6, country: 'Suécia 🇸🇪', axis: 'Qualidade Assistencial & Registros', stats: ['Score: 79/100', '5º Hospital do Mundo', '2º GII 2025', 'Pesquisa Clínica Integrada'], detail: 'Pacote raro de qualidade, dados populacionais e saúde pública. Lar do Karolinska Institutet e Karolinska University Hospital.', source: 'WIHI 2024 / Newsweek', image: 'https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem Suécia]', specialty: 'Saúde Pública & Biobancos', note: 'Apesar de pequeno, o país possui densidade científica altíssima, liderando em epidemiologia, prevenção e medicina personalizada.' },
-          { id: 'nl', rank: 7, country: 'Holanda 🇳🇱', axis: 'Eficiência e Cuidado Coordenado', stats: ['Score: 76/100', '4º WIHI 2024', '14º Nature Index', 'Atenção Integrada'], detail: 'Referência global em sistema eficiente e cuidado centrado no paciente. Destaque para os centros universitários Amsterdam UMC e Erasmus MC.', source: 'WIHI / Commonwealth', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem Holandesa]', specialty: 'Valor em Saúde & Governança', note: 'Um dos melhores países para estudar gestão eficiente, com forte atuação em pesquisa translacional financiada por colaboração europeia.' },
-          { id: 'sg', rank: 8, country: 'Singapura 🇸🇬', axis: 'Hospitais Inteligentes e Precisão', stats: ['Score: 75/100', '9º Hospital do Mundo', '5º GII 2025', 'Genômica Asiática'], detail: 'Pequena, porém veloz e estratégica. O Singapore General Hospital desponta no top 10 mundial. A*STAR (Agência para Ciência e Tecnologia) e NUS (Univ. Nacional) lideram pesquisa.', source: 'Newsweek / WIPO', image: 'https://images.unsplash.com/photo-1557825835-70d97c4aa567?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem Singapura]', specialty: 'Digitalização & Saúde Preditiva', note: 'Verdadeiro laboratório do futuro. Extremamente integrada e orientada por dados, lidera programas de genômica populacional asiática.' },
-          { id: 'ca', rank: 9, country: 'Canadá 🇨🇦', axis: 'Hospitais Acadêmicos e IA', stats: ['Score: 74/100', '3º Hospital do Mundo', '8º Nature Index', 'Ciência de Dados'], detail: 'Potência acadêmica e clínica. O Toronto General via UHN (Rede Universitária de Saúde) figura como o 3º melhor hospital do planeta. Liderança de pesquisa da Univ. de Toronto.', source: 'Statista / Nature Index', image: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem Canadá]', specialty: 'Oncologia & IA Médica', note: 'Toronto consolidou-se como um dos polos mais pujantes do mundo em medicina acadêmica, neurociência e saúde populacional.' },
-          { id: 'jp', rank: 10, country: 'Japão 🇯🇵', axis: 'Longevidade e Robótica', stats: ['Score: 72/100', '5º Nature Index', 'Regenerativa (Células iPSC)', 'Cuidado ao Idoso'], detail: 'Dita a inovação focada no envelhecimento. Univ. of Tokyo Hospital (16º do mundo) e forte produção científica no RIKEN (Inst. de Pesquisa Física e Química).', source: 'Nature Index / Newsweek', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem Japão]', specialty: 'Society 5.0 & Robótica Assistiva', note: 'A maior referência global para saúde em sociedades envelhecidas, combinando robótica, medicina regenerativa via iPSC (Células-tronco Pluripotentes Induzidas) e engenharia biomédica.' },
+          { 
+            id: 'us', rank: 1, country: 'Estados Unidos 🇺🇸', axis: 'Ciência, hospitais, IA, biotech e universidades', 
+            stats: ['Score: 94/100', '13 Hospitais no Top 50', '2º Nature Index', 'Líder Ciência WIHI'], 
+            keyInstitutions: 'NIH, FDA, CDC, Mayo Clinic, Cleveland Clinic, Johns Hopkins, Mass General, MD Anderson, Harvard, Stanford, MIT, UCSF, Penn.',
+            strongAdvances: 'IA médica, medicina de precisão, terapias gênicas e celulares, mRNA, oncologia, dispositivos médicos, ensaios clínicos, drug discovery com IA.',
+            note: 'É o país mais desigual no acesso entre os líderes, mas é o maior motor global de inovação em saúde.',
+            source: 'Nature Index / Newsweek / WIHI', image: 'https://i.postimg.cc/VNgzcnDW/eua-clevelan.jpg', specialty: 'Fronteira Científica & IA'
+          },
+          { 
+            id: 'ch', rank: 2, country: 'Suíça 🇨🇭', axis: 'Sistema equilibrado, pharma e inovação', 
+            stats: ['Score: 89/100', '1º WIHI 2024', '1º GII 2025', 'Roche (1º Corp Nature)'], 
+            keyInstitutions: 'Roche, Novartis, Swissmedic, ETH Zurich, EPFL, University Hospital Zurich, University of Basel, CHUV Lausanne.',
+            strongAdvances: 'Pharma, biotecnologia, medicina personalizada, oncologia, neurologia, medtech, regulação sanitária sofisticada.',
+            note: 'Se eu tivesse que escolher o país mais "redondo" em saúde, pesquisa, indústria e sustentabilidade, seria a Suíça.',
+            source: 'WIHI / WIPO / Nature', image: 'https://i.postimg.cc/sXcxw1B4/swiss.webp', specialty: 'Pharma Premium & Sustentabilidade'
+          },
+          { 
+            id: 'de', rank: 3, country: 'Alemanha 🇩🇪', axis: 'Pesquisa aplicada, hospitais univ. e medtech', 
+            stats: ['Score: 86/100', '3º Nature Index', '3º WIHI 2024', 'Charité (7º Mundo)'], 
+            keyInstitutions: 'Charité Berlin, Max Planck Society, Helmholtz, Fraunhofer, DKFZ Heidelberg, Robert Koch Institute, Siemens Healthineers, Bayer, BioNTech.',
+            strongAdvances: 'Engenharia biomédica, diagnóstico molecular, oncologia, medtech, vacinas, saúde digital regulada, pesquisa translacional.',
+            note: 'É um dos melhores modelos para estudar integração entre universidade, hospital, indústria e pesquisa aplicada.',
+            source: 'Nature Index / WIHI', image: 'https://i.postimg.cc/Kzrff7r0/Alemanha.jpg', specialty: 'Engenharia Clínica & Integração'
+          },
+          { 
+            id: 'uk', rank: 4, country: 'Reino Unido 🇬🇧', axis: 'Genômica, universidades, NHS e aval. tecnológica', 
+            stats: ['Score: 84/100', '4º Nature Index', 'Oxford (1º THE Medical)', 'UK Biobank'], 
+            keyInstitutions: 'NHS, NICE, MHRA, Genomics England, UK Biobank, Oxford, Cambridge, Imperial College London, UCL, King’s College London, Francis Crick Institute.',
+            strongAdvances: 'Genômica populacional, avaliação de tecnologias em saúde, saúde pública, biobancos, ensaios clínicos, medicina baseada em evidências.',
+            note: 'É um dos países mais importantes para aprender como transformar ciência em política pública de saúde.',
+            source: 'THE / QS / Nature Index', image: 'https://i.postimg.cc/LhdssPGM/Inglaterra.jpg', specialty: 'Genômica & Dados Públicos'
+          },
+          { 
+            id: 'cn', rank: 5, country: 'China 🇨🇳', axis: 'Produção científica, IA e biotech em escala', 
+            stats: ['Score: 82/100', '1º Nature Index Global', 'CAS (1º Inst. Mundo)', '10º GII 2025'], 
+            keyInstitutions: 'Chinese Academy of Sciences, Peking Union Medical College, West China Hospital, Tsinghua, Peking University, Fudan, Zhejiang, Shanghai Jiao Tong.',
+            strongAdvances: 'IA para diagnóstico, imagem médica, biotecnologia, ensaios clínicos, descoberta de fármacos, manufatura biomédica, medicina de precisão.',
+            note: 'A China ainda não é o melhor modelo de sistema de saúde para copiar, mas virou uma superpotência em pesquisa e tecnologia médica.',
+            source: 'Nature Index / GII', image: 'https://i.postimg.cc/sXDmnQ6y/china-ia.jpg', specialty: 'Volume Científico & Biomanufatura'
+          },
+          { 
+            id: 'se', rank: 6, country: 'Suécia 🇸🇪', axis: 'Qualidade, registros de saúde e pesquisa clínica', 
+            stats: ['Score: 79/100', '1º Qualidade WIHI', 'Karolinska (5º Mundo)', '2º GII 2025'], 
+            keyInstitutions: 'Karolinska Institutet, Karolinska University Hospital, SciLifeLab, Uppsala University, Lund University.',
+            strongAdvances: 'Registros populacionais, epidemiologia, oncologia, medicina personalizada, saúde pública, biobancos, pesquisa clínica.',
+            note: 'País pequeno, mas com densidade científica e institucional altíssima.',
+            source: 'WIHI 2024 / Newsweek', image: 'https://i.postimg.cc/4xWQYN40/suecia.jpg', specialty: 'Registros Nacionais & Qualidade'
+          },
+          { 
+            id: 'nl', rank: 7, country: 'Holanda 🇳🇱', axis: 'Sistema eficiente e valor em saúde', 
+            stats: ['Score: 76/100', '4º WIHI 2024', '14º Nature Index', 'Atenção Coordenada'], 
+            keyInstitutions: 'Amsterdam UMC, Erasmus MC, UMC Utrecht, Leiden University Medical Center, Radboudumc, RIVM.',
+            strongAdvances: 'Valor em saúde, atenção integrada, dados clínicos, pesquisa translacional, oncologia, saúde pública.',
+            note: 'Talvez seja um dos melhores países para estudar eficiência, governança e cuidado centrado no paciente.',
+            source: 'WIHI / Commonwealth', image: 'https://i.postimg.cc/2yTV0yKP/Holanda.png', specialty: 'Eficiência & Atenção Primária'
+          },
+          { 
+            id: 'sg', rank: 8, country: 'Singapura 🇸🇬', axis: 'Saúde digital, genômica e hospital inteligente', 
+            stats: ['Score: 75/100', '5º GII 2025', 'SGH (9º Mundo)', '16º Nature Index'], 
+            keyInstitutions: 'Singapore General Hospital, SingHealth, National University Health System, NUS, Duke-NUS, A*STAR, PRECISE.',
+            strongAdvances: 'Medicina de precisão, IA clínica, genômica asiática, hospital inteligente, saúde digital, gestão preditiva.',
+            note: 'É um laboratório de futuro. Pequeno, rápido, integrado e orientado por dados.',
+            source: 'Newsweek / WIPO', image: 'https://i.postimg.cc/V6K8Ttz7/Singapura.jpg', specialty: 'Gestão Preditiva & IA'
+          },
+          { 
+            id: 'ca', rank: 9, country: 'Canadá 🇨🇦', axis: 'Hospitais acadêmicos, IA e pesquisa clínica', 
+            stats: ['Score: 74/100', 'Toronto Gen. (3º Mundo)', '8º Nature Index', 'U. Toronto (5º Saúde)'], 
+            keyInstitutions: 'University Health Network, Toronto General, SickKids, Sunnybrook, CIHR, University of Toronto, McGill, UBC, McMaster.',
+            strongAdvances: 'IA médica, transplantes, oncologia, saúde populacional, neurociência, pesquisa clínica.',
+            note: 'Toronto consolidou-se como um dos polos mais fortes do mundo em medicina acadêmica.',
+            source: 'Newsweek / Nature Index', image: 'https://i.postimg.cc/bY0CzPnC/Canada.jpg', specialty: 'Medicina Acadêmica & IA'
+          },
+          { 
+            id: 'jp', rank: 10, country: 'Japão 🇯🇵', axis: 'Longevidade, robótica e medicina regenerativa', 
+            stats: ['Score: 72/100', '5º Nature Index', 'U. Tokyo (16º Mundo)', '12º GII 2025'], 
+            keyInstitutions: 'University of Tokyo, Kyoto University, Osaka University, RIKEN, AMED, National Cancer Center Japan.',
+            strongAdvances: 'Longevidade, robótica assistiva, medicina regenerativa, cuidado ao idoso, diagnóstico, engenharia biomédica.',
+            note: 'É uma das maiores referências mundiais para saúde em sociedade envelhecida.',
+            source: 'Nature Index / GII', image: 'https://i.postimg.cc/cCqfYv8b/japao-robot.jpg', specialty: 'Envelhecimento & Robótica'
+          },
         ];
 
-        const brazilCard = {
-          id: 'br', rank: '-', country: 'Brasil 🇧🇷', axis: 'SUS e Base Científica em Expansão', stats: ['Score: 43/100', '84/100 (UHC SCI)', '22º Hospital do Mundo', 'US$ 2.070 (PPP)'], detail: 'O Brasil não entra no Top 10, mas possui peso por escala continental. O Hospital Israelita Albert Einstein é o 22º do mundo. Boa posição no Nature Index (23º).', source: 'Newsweek / Banco Mundial', image: 'https://images.unsplash.com/photo-1584467735815-f778f274e296?auto=format&fit=crop&w=600&q=80', imageAlt: '[Imagem de Pesquisador Brasileiro]', specialty: 'Potência Emergente & Escala', note: 'O paradoxo: o Brasil tem boa cobertura (SUS) e pesquisa (USP, Fiocruz), mas o investimento per capita de US$ 2 mil PPP (Paridade do Poder de Compra) restringe a inovação comparado aos líderes.'
+        // MAPA MUNDI COORDENADAS
+        const mapDataGlobal = [
+          { id: 'us', name: 'EUA 🇺🇸', top: '32%', left: '19%', size: 50, color: 'bg-red-500' },
+          { id: 'ca', name: 'Canadá 🇨🇦', top: '22%', left: '20%', size: 36, color: 'bg-indigo-400' },
+          { id: 'uk', name: 'Reino Unido 🇬🇧', top: '23%', left: '46%', size: 40, color: 'bg-blue-500' },
+          { id: 'se', name: 'Suécia 🇸🇪', top: '16%', left: '51%', size: 38, color: 'bg-blue-400' },
+          { id: 'nl', name: 'Holanda 🇳🇱', top: '23%', left: '48.5%', size: 36, color: 'bg-indigo-400' },
+          { id: 'de', name: 'Alemanha 🇩🇪', top: '25%', left: '50.5%', size: 44, color: 'bg-blue-600' },
+          { id: 'ch', name: 'Suíça 🇨🇭', top: '29%', left: '49.5%', size: 46, color: 'bg-indigo-600' },
+          { id: 'cn', name: 'China 🇨🇳', top: '36%', left: '75%', size: 40, color: 'bg-red-500' },
+          { id: 'sg', name: 'Singapura 🇸🇬', top: '48%', left: '78%', size: 36, color: 'bg-blue-400' },
+          { id: 'jp', name: 'Japão 🇯🇵', top: '34%', left: '86%', size: 34, color: 'bg-emerald-600' },
+        ];
+
+        // PILARES DA MATRIZ BRASIL
+        const brazilPillars = [
+          { name: 'Pesquisa (Nature)', weight: 'Alta', icon: 'fa-solid fa-flask', color: 'bg-emerald-500', desc: 'Nature Index 2025 (Health Sciences).', justification: 'Foco na geração de ciência de fronteira.' },
+          { name: 'Hospitais (Newsweek)', weight: 'Alta', icon: 'fa-solid fa-hospital', color: "bg-blue-500", desc: 'Newsweek World’s Best Hospitals BR 2025.', justification: 'Qualidade da assistência e adoção tecnológica.' },
+          { name: 'Universidades (MEC)', weight: 'Média', icon: 'fa-solid fa-graduation-cap', color: "bg-indigo-500", desc: 'Centros formadores: USP, UFMG, UFRGS, UFG.', justification: 'Celeiros de talentos e inovação.' },
+          { name: 'Soluções SUS', weight: 'Crítico', icon: 'fa-solid fa-briefcase-medical', color: "bg-purple-500", desc: 'Vacinas, Biofármacos, IA e Telessaúde.', justification: 'Capacidade de impacto em escala populacional.' },
+          { name: 'Inovação & FAPs', weight: 'Média', icon: 'fa-solid fa-lightbulb', color: "bg-pink-500", desc: 'INPI, Fundações de Amparo e Parques Tech.', justification: 'Conversão da pesquisa em ativos e patentes.' }
+        ];
+
+        // RANKING BRASIL (ESTADOS)
+        const brazilStates = [
+          { 
+            id: 'sp', rank: 1, country: 'São Paulo', axis: 'Medicina translacional e terapias avançadas', 
+            stats: ['USP (1º Nature BR)', 'Einstein (1º BR)', 'CAR-T Cell', 'Vacina Dengue'], 
+            keyInstitutions: 'USP, Unicamp, Unifesp, Butantan, Einstein, Sírio-Libanês, HC-USP, A.C.Camargo.',
+            strongAdvances: 'Dengue Butantan, Terapia CAR-T nacional, hospital inteligente (HC-USP), oncologia de precisão, IA hospitalar.',
+            note: 'Maior ecossistema do país. Lidera a fronteira tecnológica com grandes hospitais, ensaios clínicos e a maior massa crítica em inovação.',
+            source: 'Nature Index / Newsweek', image: 'https://images.unsplash.com/photo-1543083477-4f785aeafaa9?auto=format&fit=crop&w=800&q=80', specialty: 'Terapias & Elite Hospitalar'
+          },
+          { 
+            id: 'mg', rank: 2, country: 'Minas Gerais', axis: 'Biotecnologia pública para o SUS', 
+            stats: ['UFMG (3º Nature BR)', '10 Hospitais Top 50', 'CTVacinas', 'Soros Funed'], 
+            keyInstitutions: 'UFMG, CTVacinas, Fiocruz Minas, Funed, Mater Dei, Santa Casa BH.',
+            strongAdvances: 'Vacinas 100% brasileiras (CTVacinas), soros antipeçonhentos, diagnósticos, doenças infecciosas e negligenciadas.',
+            note: 'Referência em vacinas, imunobiológicos, saúde pública, vigilância laboratorial e biotecnologia aplicada ao SUS.',
+            source: 'Nature Index / Newsweek', image: 'https://images.unsplash.com/photo-1599839619722-39751411ea63?auto=format&fit=crop&w=800&q=80', specialty: 'Vacinas & Imunobiológicos'
+          },
+          { 
+            id: 'rj', rank: 3, country: 'Rio de Janeiro', axis: 'Complexo científico da saúde pública', 
+            stats: ['Fiocruz (2º Nature BR)', 'Plataforma mRNA', 'Bio-Manguinhos', 'Rede D’Or'], 
+            keyInstitutions: 'Fiocruz, Bio-Manguinhos, Farmanguinhos, INCA, UFRJ, IDOR, Rede D’Or.',
+            strongAdvances: 'Plataforma nacional de mRNA, vacinas do PNI, biofármacos, combate ao câncer, preparação para epidemias.',
+            note: 'Indispensável pela força da Fiocruz. Sustenta a base pública do país em fármacos estratégicos e vacinas.',
+            source: 'Nature Index / Fiocruz', image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=800&q=80', specialty: 'Fármacos & Saúde Pública'
+          },
+          { 
+            id: 'rs', rank: 4, country: 'Rio Grande do Sul', axis: 'Evidência, dados e cuidado conectado', 
+            stats: ['UFRGS (5º Nature BR)', 'Moinhos (4º BR)', 'HCPA', 'Telemedicina SUS'], 
+            keyInstitutions: 'UFRGS, HCPA, Hospital Moinhos de Vento, UFCSPA, PUCRS.',
+            strongAdvances: 'Telemedicina em UTIs pediátricas do SUS, terapia gênica experimental, pesquisa clínica, avaliação de desfechos.',
+            note: 'Referência para pesquisa clínica aplicada ao SUS, gestão hospitalar e medicina translacional.',
+            source: 'Nature Index / Newsweek', image: 'https://images.unsplash.com/photo-1616853685412-2592a829e1eb?auto=format&fit=crop&w=800&q=80', specialty: 'Pesquisa Clínica & Telessaúde'
+          },
+          { 
+            id: 'pr', rank: 5, country: 'Paraná', axis: 'Saúde de precisão e genômica clínica', 
+            stats: ['Genoma SUS', 'NAPI Saúde Precisão', 'Pequeno Príncipe', 'Fiocruz PR'], 
+            keyInstitutions: 'UFPR, UEL, UEM, Fiocruz Paraná, Hospital Pequeno Príncipe, Hospital Erasto Gaertner.',
+            strongAdvances: 'Genoma SUS, sequenciamento em UTIs neonatais, oncologia regionalizada, pediatria de alta complexidade.',
+            note: 'Agenda muito clara de saúde pública de precisão e inovação integrada entre governo, ciência e setor produtivo.',
+            source: 'Nature Index / Fundação Araucária', image: 'https://images.unsplash.com/photo-1629897140417-38670ab3bd17?auto=format&fit=crop&w=800&q=80', specialty: 'Genômica & Pediatria'
+          },
+          { 
+            id: 'go', rank: 9, country: 'Goiás', axis: 'Saúde digital, doenças tropicais e IA no SUS', 
+            stats: ['9º Ecossistema BR', 'UFG (9º Nature BR)', 'R$ 21,6M Ceti-Saúde', '30+ Ind. Anápolis'], 
+            keyInstitutions: 'UFG (NEDOCH, CGDB), HC-UFG, Ceti-Saúde, FAPEG, SES-GO, Polo Farmoquímico de Anápolis.',
+            strongAdvances: 'Neurocirurgia robótica avançada no SUS, IA para telemonitoramento, odontologia oncológica digital e tratamento de Chagas.',
+            note: 'Ocupa a 9ª posição ancorado no salto científico da UFG. Destaca-se por validar deep-tech diretamente no SUS e pelo 2º maior polo farmacêutico do Brasil.',
+            source: 'Nature Index / FAPEG', image: 'https://images.unsplash.com/photo-1592658826554-1fa2207b1981?auto=format&fit=crop&w=800&q=80', specialty: '9º Polo Nacional (Emergente)'
+          },
+        ];
+
+        // MAPA BRASIL COORDENADAS
+        const mapDataBrazil = [
+          { id: 'sp', name: 'São Paulo', top: '70%', left: '60%', size: 45, color: 'bg-blue-600' },
+          { id: 'mg', name: 'Minas Gerais', top: '60%', left: '65%', size: 40, color: 'bg-indigo-500' },
+          { id: 'rj', name: 'Rio de Janeiro', top: '65%', left: '68%', size: 38, color: 'bg-emerald-500' },
+          { id: 'rs', name: 'Rio G. do Sul', top: '85%', left: '50%', size: 36, color: 'bg-blue-400' },
+          { id: 'pr', name: 'Paraná', top: '75%', left: '55%', size: 36, color: 'bg-indigo-400' },
+          { id: 'go', name: 'Goiás', top: '55%', left: '55%', size: 42, color: 'bg-yellow-500' },
+        ];
+
+
+        // DADOS DA MATRIZ DE INOVAÇÃO (TRL)
+        const RADAR_AXES = [
+          'Saúde Digital & IA',
+          'Genômica & Precisão',
+          'Biotecnologia & Terapias',
+          'MedTech & Dispositivos',
+          'Saúde Pública & Vacinas',
+          'Robótica & Regenerativa'
+        ];
+
+        const axisColors = {
+          'Saúde Digital & IA': '#3b82f6', // blue-500
+          'Genômica & Precisão': '#8b5cf6', // violet-500
+          'Biotecnologia & Terapias': '#ec4899', // pink-500
+          'MedTech & Dispositivos': '#f59e0b', // amber-500
+          'Saúde Pública & Vacinas': '#10b981', // emerald-500
+          'Robótica & Regenerativa': '#14b8a6' // teal-500
         };
 
-        const allMapCards = [...top10, brazilCard];
-
-        const mapData = [
-          { id: 'us', name: 'Estados Unidos 🇺🇸', rankingNumber: '1', top: '32%', left: '19%', size: 50, color: 'bg-blue-600' },
-          { id: 'ca', name: 'Canadá 🇨🇦', rankingNumber: '9', top: '22%', left: '20%', size: 36, color: 'bg-indigo-400' },
-          { id: 'br', name: 'Brasil 🇧🇷', rankingNumber: 'BR', top: '68%', left: '31%', size: 36, color: 'bg-emerald-500' },
-          { id: 'uk', name: 'Reino Unido 🇬🇧', rankingNumber: '4', top: '23%', left: '46%', size: 40, color: 'bg-blue-500' },
-          { id: 'se', name: 'Suécia 🇸🇪', rankingNumber: '6', top: '16%', left: '51%', size: 38, color: 'bg-blue-400' },
-          { id: 'nl', name: 'Holanda 🇳🇱', rankingNumber: '7', top: '23%', left: '48.5%', size: 36, color: 'bg-indigo-400' },
-          { id: 'de', name: 'Alemanha 🇩🇪', rankingNumber: '3', top: '25%', left: '50.5%', size: 44, color: 'bg-blue-600' },
-          { id: 'ch', name: 'Suíça 🇨🇭', rankingNumber: '2', top: '29%', left: '49.5%', size: 46, color: 'bg-indigo-600' },
-          { id: 'cn', name: 'China 🇨🇳', rankingNumber: '5', top: '36%', left: '75%', size: 40, color: 'bg-red-500' },
-          { id: 'sg', name: 'Singapura 🇸🇬', rankingNumber: '8', top: '48%', left: '78%', size: 36, color: 'bg-blue-400' },
-          { id: 'jp', name: 'Japão 🇯🇵', rankingNumber: '10', top: '34%', left: '86%', size: 34, color: 'bg-emerald-600' },
-        ];
-
-        const brazilInstitutions = [
-          { name: 'USP, Unicamp & UFRJ', desc: 'Sustentam a base científica. USP (Univ. de São Paulo) é a melhor universidade da AL (América Latina), puxando biologia celular e medicina.', note: 'A pesquisa básica é fortíssima, mas o gargalo estratégico é a translação ágil de artigos em patentes comerciais escaláveis.', source: 'THE / QS', image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Campus Universitário]' },
-          { name: 'Einstein & Sírio-Libanês', desc: 'Centros de elite mundiais. O Albert Einstein (22º global) conduz ensaios clínicos robustos com a FDA e inova com IA.', note: 'Atuam como pontes privadas de excelência, acelerando validações clínicas e parcerias de alto nível com Big Techs globais.', source: 'Newsweek', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem Hospital]' },
-          { name: 'Fiocruz & Butantan', desc: 'Pilares históricos da saúde pública, virologia e biomanufatura massiva, vitais para autonomia nacional.', note: 'Garantem a soberania sanitária, assegurando que o país não dependa totalmente de importações em eventuais crises globais.', source: 'Min. Saúde', image: 'https://images.unsplash.com/photo-1618015359908-7f485c8f1ec1?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Vacinas]' },
-          { name: 'Indústria Farma (NIB)', desc: 'EMS, Eurofarma e programas da NIB (Nova Indústria Brasil) focados em superar a produção apenas de genéricos.', note: 'A meta governamental é financiar a complexidade: produção local de IFAs (Insumos Farmacêuticos Ativos) e biossimilares de ponta.', source: 'Sindusfarma', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Produção]' },
-        ];
-
-        const goiasInstitutions = [
-          { name: 'HC-UFG', desc: 'O Hospital das Clínicas da UFG é referência regional em alta complexidade. Atende milhares de pacientes pelo NEDOCH.', note: 'Fundamental para descentralizar a pesquisa clínica de excelência, tirando o monopólio do eixo Rio-São Paulo.', source: 'Ebserh', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&q=80' },
-          { name: 'UFG (Universidade Federal)', desc: 'Motor de inovação em IA, telemedicina e odontologia oncológica digital através da PRPI (Pró-Reitoria de Pesquisa e Inovação).', note: 'Polo formador de talentos que alimenta simultaneamente o SUS regional e as novas startups do Centro-Oeste.', source: 'PRPI / UFG', image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=400&q=80' },
-          { name: 'IPTSP / UFG', desc: 'O Instituto de Patologia Tropical e Saúde Pública é focado na prospecção do Cerrado e no controle de doenças tropicais.', note: 'Comprova que a biodiversidade do bioma é um ativo inexplorado de altíssimo valor para a farmacologia global.', source: 'CNPq', image: 'https://images.unsplash.com/photo-1611078703759-4d7a8686fc6a?auto=format&fit=crop&w=400&q=80' },
-          { name: 'Polo Farma (Anápolis)', desc: '2º maior polo farmoquímico do país, vital para a escala industrial regional apoiada pelo IBGE (Inst. Bras. de Geografia e Estatística).', note: 'Com infraestrutura logística madura, está preparado para saltar da produção de genéricos para biológicos avançados.', source: 'IBGE', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=400&q=80' },
-        ];
-
-        const goiasResearches = [
-          { title: 'Chagas & NEDOCH', desc: 'Referência da OMS. Mapeamento de biomarcadores cardíacos pelo Núcleo de Estudos da Doença de Chagas.', note: 'Foco em uma doença altamente negligenciada por grandes laboratórios mundiais, exigindo protagonismo regional.', image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Pesquisa]' },
-          { title: 'Neurocirurgia Robótica', desc: 'Implantes via estereotaxia robótica para epilepsia resistente no SUS.', note: 'Marco na democratização do acesso: procedimentos de alto custo sendo viabilizados no sistema público de saúde.', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Cérebro]' },
-          { title: 'IA Aplicada (SBCAS)', desc: 'Algoritmos premiados no Simpósio Brasileiro de Computação Aplicada à Saúde para segmentação de lesões e monitoramento.', note: 'Soluções de Inteligência Artificial desenhadas especificamente para o perfil tropical, sem viés de dados europeus.', image: 'https://images.unsplash.com/photo-1516110833967-0b5716ca1387?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de IA]' },
-          { title: 'Biodiversidade Cerrado', desc: 'Genômica da flora para a descoberta de princípios bioativos naturais.', note: 'Bioprospecção sustentável com potencial direto para gerar royalties milionários em patentes farmacêuticas inéditas.', image: 'https://images.unsplash.com/photo-1611078703759-4d7a8686fc6a?auto=format&fit=crop&w=400&q=80', imageAlt: '[Imagem de Folhas]' },
-        ];
-
-        const featuredInnovations = [
-          {
-            id: 'biosensor-pancreas-usp',
-            title: 'Biossensor Câncer de Pâncreas',
-            subtitle: 'Diagnóstico precoce via biomarcadores em 10 minutos',
-            country: 'Brasil 🇧🇷',
-            institution: 'USP (Univ. de São Paulo)',
-            solution: 'Biossensor eletroquímico para detectar quantidades ínfimas da proteína CA19-9 no sangue. Identifica o tumor precocemente de forma simples.',
-            details: 'Entrega resultados em 10 minutos por uma fração do custo tradicional. Fundamental para um câncer assintomático com baixa sobrevida.',
-            note: 'Exemplo prático de ciência nacional gerando tecnologia de baixo custo com impacto global imediato de sobrevida.',
-            source: 'CNN Brasil',
-            image: 'https://images.unsplash.com/photo-1579154341098-e4e158cc7f55?auto=format&fit=crop&w=800&q=80',
-            icon: 'fa-solid fa-flask-vial'
-          },
-          {
-            id: 'tecido-cardiaco-espinafre',
-            title: 'Coração de Espinafre',
-            subtitle: 'Regeneração cardíaca usando andaime vegetal',
-            country: 'Estados Unidos 🇺🇸',
-            institution: 'WPI (Instituto Politécnico de Worcester)',
-            solution: 'Remoção de células vegetais de uma folha de espinafre para aproveitar sua rede de celulose. Serve como suporte vascular para células humanas.',
-            details: 'A rede de veias natural transportou fluidos. Após semeadura, o tecido vegetal começou a se contrair como um músculo real.',
-            note: 'A bioengenharia vegetal reduz barreiras éticas e de rejeição imunológica, barateando a criação futura de órgãos artificiais.',
-            source: 'Biomaterials',
-            image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80',
-            icon: 'fa-solid fa-leaf'
-          },
-          {
-            id: 'eli-lilly-ajax-cancer',
-            title: 'Aposta Oncológica',
-            subtitle: 'Aquisição da Ajax Therapeutics pela Eli Lilly',
-            country: 'Estados Unidos 🇺🇸',
-            institution: 'Eli Lilly',
-            solution: 'Acordo de US$ 2,3 bilhões para reforçar o tratamento de cânceres do sangue, focando na mielofibrose.',
-            details: 'Medicamento experimental reprograma células contra tumores. A indústria usa o lucro de drogas anti-obesidade (Mounjaro) para financiar inovações em oncologia.',
-            note: 'Demonstra a lógica da "Big Pharma": usar o capital massivo de remédios metabólicos para comprar terapias genéticas de altíssimo risco.',
-            source: 'Eli Lilly',
-            image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=800&q=80',
-            icon: 'fa-solid fa-pills'
-          },
-          {
-            id: 'microrobo-urease',
-            title: 'Micro-robô Magnético',
-            subtitle: 'Dissolução de pedras nos rins sem cirurgia',
-            country: 'Canadá 🇨🇦',
-            institution: 'University of Waterloo',
-            solution: 'Filamento magnético de hidrogel com a enzima urease, navegado por braço robótico sob ultrassom até o rim.',
-            details: 'Atua sobre pedras de ácido úrico, dissolvendo-as quimicamente no local e eliminando a dor e os riscos do laser ou endoscopia.',
-            note: 'Representa a transição disruptiva da cirurgia mecânica agressiva para a "micro-intervenção química" assistida por robótica.',
-            source: 'ACS Nano',
-            image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=800&q=80',
-            icon: 'fa-solid fa-magnet'
-          },
-          {
-            id: 'vacina-anti-envelhecimento',
-            title: 'Vacina contra Envelhecimento',
-            subtitle: 'Bloqueio de senescência celular',
-            country: 'Rússia 🇷🇺',
-            institution: 'Min. Ciência da Rússia',
-            solution: 'Tratamento inovador baseado em terapia genética que foca no bloqueio de receptores celulares do envelhecimento.',
-            details: 'Projeto experimental que busca o bloqueio molecular do envelhecimento celular, sendo descrito como "vacina preventiva" contra o tempo biológico.',
-            note: 'Ainda vista com ceticismo pelo Ocidente, marca uma nova "Corrida Espacial" biológica entre potências pelo retardo do envelhecimento.',
-            source: 'The Moscow Times',
-            image: 'https://images.unsplash.com/photo-1614935151651-0bea6508db6b?auto=format&fit=crop&w=800&q=80',
-            icon: 'fa-solid fa-syringe'
-          },
-          {
-            id: 'mapeamento-cerebral-realtime',
-            title: 'Mapeamento Cerebral 3D',
-            subtitle: 'Neuro-navegação com Realidade Aumentada',
-            country: 'Global / EUA 🇺🇸',
-            institution: 'Neurocirurgia Moderna',
-            solution: 'Sobreposição de mapas de fibras neurais DTI (Imagem por Tensor de Difusão) e ressonância funcional sobre o cérebro do paciente durante a cirurgia.',
-            details: 'O cirurgião visualiza áreas de fala e movimento antes de fazer cortes, reduzindo o risco de sequelas ao remover tumores complexos.',
-            note: 'A AR (Realidade Aumentada) deixa de ser ficção para se tornar ferramenta obrigatória em neurocirurgias de alta complexidade.',
-            source: 'Ciência do Futuro',
-            image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=800&q=80',
-            icon: 'fa-solid fa-eye'
-          },
-          {
-            id: 'implante-cerebral-dot',
-            title: 'Implante Neural DOT',
-            subtitle: 'Estimulação elétrica para depressão resistente',
-            country: 'Estados Unidos 🇺🇸',
-            institution: 'Motif Neurotech / FDA',
-            solution: 'Microimplante sem fio posicionado acima do crânio. Modula circuitos cerebrais ligados à depressão sem penetrar o tecido.',
-            details: 'Alternativa direta e de precisão que não depende de medicamentos sistêmicos tradicionais, atuando nos circuitos que não respondem à terapia.',
-            note: 'Inaugura a era dos "eletroceuticals" (tratamentos neuromoduladores) em forte competição com os fármacos químicos tradicionais.',
-            source: 'FDA / Motif Neurotech',
-            image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80',
-            icon: 'fa-solid fa-brain'
-          },
-          {
-            id: 'cerume-cancer',
-            title: 'Biomarcador no Cerume',
-            subtitle: 'Cera de ouvido como detecção não invasiva',
-            country: 'Brasil 🇧🇷',
-            institution: 'Universidade Brasileira',
-            solution: 'Assinaturas metabólicas de compostos voláteis retidos na cera de ouvido sinalizam a presença de tumores no organismo.',
-            details: 'Método indolor e de baixíssimo custo para triagem populacional em massa, permitindo detecção precoce anos antes dos sintomas clínicos.',
-            note: 'O uso inovador de secreções corporais simples democratiza o diagnóstico oncológico preventivo em populações de baixa renda.',
-            source: 'Pesquisa Acadêmica',
-            image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=800&q=80',
-            icon: 'fa-solid fa-microscope'
-          },
-          {
-            id: 'veneno-marimbondo-alzheimer',
-            title: 'Peptídeos contra Alzheimer',
-            subtitle: 'Veneno de marimbondo quebrando placas neurais',
-            country: 'Brasil 🇧🇷',
-            institution: 'Santa Casa São Carlos / CIDI',
-            solution: 'Isolamento de peptídeos do veneno que demonstram capacidade de quebrar placas beta-amiloides e inibir neuroinflamação.',
-            details: 'Abre uma nova rota bioquímica para tratamento de demências crônicas, protegendo neurônios do avanço degenerativo da doença.',
-            note: 'Valida economicamente a urgência da conservação ambiental: a fauna silvestre como o maior banco de moléculas ativas da Terra.',
-            source: 'Med Nucleo / CIDI (Centro Int. de Diagnóstico)',
-            image: 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=800&q=80',
-            icon: 'fa-solid fa-bug'
-          }
+        const innovationsData = [
+          { id: 'inv1', title: 'Discovery Accelerator Quantum', country: 'Estados Unidos 🇺🇸', institution: 'Cleveland Clinic + IBM', axis: 'Saúde Digital & IA', trl: 6, desc: 'Computação quântica e IA aplicadas à descoberta biomédica acelerada.', image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80', source: 'Cleveland Clinic' },
+          { id: 'inv2', title: 'Mayo Clinic Platform', country: 'Estados Unidos 🇺🇸', institution: 'Mayo Clinic', axis: 'Saúde Digital & IA', trl: 8, desc: 'Ecossistema de dados clínicos e validação de IA em saúde com dados reais.', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80', source: 'Mayo Clinic' },
+          { id: 'inv3', title: 'FoundationOne® Liquid CDx', country: 'Suíça 🇨🇭', institution: 'Roche', axis: 'Genômica & Precisão', trl: 9, desc: 'Biópsia líquida pan-tumoral para detectar alterações e apoiar terapias-alvo.', image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=80', source: 'Roche / FDA' },
+          { id: 'inv4', title: 'Biossensor Câncer de Pâncreas', country: 'Brasil 🇧🇷', institution: 'USP', axis: 'MedTech & Dispositivos', trl: 5, desc: 'Biossensor eletroquímico para detectar proteína CA19-9 no sangue em 10 min.', image: 'https://images.unsplash.com/photo-1579154341098-e4e158cc7f55?auto=format&fit=crop&w=800&q=80', source: 'USP' },
+          { id: 'inv5', title: 'Terapia Celular CAR-T', country: 'Brasil 🇧🇷', institution: 'Butantan / Hemocentro', axis: 'Biotecnologia & Terapias', trl: 7, desc: 'Terapia CAR-T produzida no Brasil para tratamento oncológico.', image: 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=800&q=80', source: 'Anvisa' },
+          { id: 'inv6', title: 'Vacina contra Dengue', country: 'Brasil 🇧🇷', institution: 'Instituto Butantan', axis: 'Saúde Pública & Vacinas', trl: 9, desc: 'Vacina nacional de dose única atenuada aprovada para comercialização e SUS.', image: 'https://images.unsplash.com/photo-1614935151651-0bea6508db6b?auto=format&fit=crop&w=800&q=80', source: 'Butantan' },
+          { id: 'inv7', title: 'Plataforma Nacional mRNA', country: 'Brasil 🇧🇷', institution: 'Fiocruz', axis: 'Biotecnologia & Terapias', trl: 6, desc: 'Primeira plataforma nacional de RNA mensageiro para vacinas e terapias.', image: 'https://images.unsplash.com/photo-1618015359908-7f485c8f1ec1?auto=format&fit=crop&w=800&q=80', source: 'Fiocruz' },
+          { id: 'inv8', title: 'Micro-robô Magnético', country: 'Canadá 🇨🇦', institution: 'Univ. of Waterloo', axis: 'Robótica & Regenerativa', trl: 4, desc: 'Filamento magnético com urease navegado por ultrassom para dissolver pedras nos rins.', image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=800&q=80', source: 'ACS Nano' },
+          { id: 'inv9', title: 'Mapeamento Cerebral AR', country: 'Estados Unidos 🇺🇸', institution: 'Neurocirurgia Moderna', axis: 'MedTech & Dispositivos', trl: 8, desc: 'Neuro-navegação com realidade aumentada em tempo real durante cirurgias.', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=800&q=80', source: 'Ciência do Futuro' },
+          { id: 'inv10', title: 'Implante Neural DOT', country: 'Estados Unidos 🇺🇸', institution: 'Motif Neurotech', axis: 'MedTech & Dispositivos', trl: 5, desc: 'Microimplante sem fio para estimulação elétrica contra depressão resistente.', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80', source: 'FDA' },
+          { id: 'inv11', title: 'Telemedicina UTI', country: 'Brasil 🇧🇷', institution: 'Moinhos de Vento', axis: 'Saúde Digital & IA', trl: 9, desc: 'Projeto PROADI-SUS reduzindo mortalidade via telessaúde avançada em UTIs.', image: 'https://images.unsplash.com/photo-1557825835-70d97c4aa567?auto=format&fit=crop&w=800&q=80', source: 'PROADI-SUS' },
+          { id: 'inv12', title: 'Aposta Oncológica Ajax', country: 'Estados Unidos 🇺🇸', institution: 'Eli Lilly', axis: 'Biotecnologia & Terapias', trl: 3, desc: 'Aquisição para tratamento de cânceres do sangue em fase inicial.', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=800&q=80', source: 'Eli Lilly' },
+          { id: 'inv13', title: 'Coração de Espinafre', country: 'Estados Unidos 🇺🇸', institution: 'WPI', axis: 'Robótica & Regenerativa', trl: 2, desc: 'Andaime vegetal para regeneração de tecido cardíaco usando celulose.', image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80', source: 'Biomaterials' },
+          { id: 'inv14', title: 'Genoma SUS', country: 'Brasil 🇧🇷', institution: 'Fiocruz PR', axis: 'Genômica & Precisão', trl: 6, desc: 'Banco de genomas da população brasileira e sequenciamento em UTIs neonatais.', image: 'https://images.unsplash.com/photo-1629897140417-38670ab3bd17?auto=format&fit=crop&w=800&q=80', source: 'Fiocruz PR' },
+          { id: 'inv15', title: 'Hospital Inteligente SUS', country: 'Brasil 🇧🇷', institution: 'HC-USP', axis: 'Saúde Digital & IA', trl: 7, desc: 'Instituto tecnológico de emergência com IA e Big Data totalmente integrados.', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80', source: 'Min. Saúde' },
+          { id: 'inv16', title: 'Soros Antipeçonhentos', country: 'Brasil 🇧🇷', institution: 'Funed', axis: 'Saúde Pública & Vacinas', trl: 9, desc: 'Retomada da produção de soros essenciais para abastecimento nacional via SUS.', image: 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=800&q=80', source: 'Funed' },
+          { id: 'inv17', title: 'Biomarcador no Cerume', country: 'Brasil 🇧🇷', institution: 'Univ. Brasileira', axis: 'MedTech & Dispositivos', trl: 4, desc: 'Detecção não invasiva de tumores via compostos voláteis na cera de ouvido.', image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=800&q=80', source: 'Pesquisa Acadêmica' },
+          { id: 'inv18', title: 'Neurocirurgia Robótica', country: 'Brasil 🇧🇷', institution: 'HC-UFG', axis: 'Robótica & Regenerativa', trl: 8, desc: 'Implantes via estereotaxia robótica para epilepsia resistente ofertada no SUS.', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=800&q=80', source: 'UFG' },
         ];
 
         const TABS = [
           { id: 'global', label: 'Eixos e Tendências', icon: 'fa-solid fa-arrow-trend-up' },
           { id: 'top10', label: 'Matriz Geopolítica', icon: 'fa-solid fa-earth-americas' },
-          { id: 'brasil', label: 'Brasil 🇧🇷', icon: 'fa-solid fa-location-dot' },
-          { id: 'goias', label: 'Goiás 📍', icon: 'fa-solid fa-location-dot' },
-          { id: 'innovations', label: 'Radar de Inovação', icon: 'fa-solid fa-bullseye' },
+          { id: 'brasil', label: 'Ecossistema Brasil', icon: 'fa-solid fa-location-dot' },
+          { id: 'goias', label: 'Destaque Goiás', icon: 'fa-solid fa-bullseye' },
+          { id: 'innovations', label: 'Radar de Inovação', icon: 'fa-solid fa-microchip' },
         ];
 
         // --- COMPONENTS ---
@@ -313,7 +348,7 @@
         );
 
         const DidacticIntro = ({ text }) => (
-          <div className="bg-slate-50 border-l-[6px] border-blue-600 p-4 mb-6 rounded-r-xl text-slate-800 leading-relaxed text-sm md:text-base shadow-sm font-medium italic">
+          <div className="bg-slate-50 border-l-[6px] border-blue-600 p-4 mb-8 rounded-r-xl text-slate-800 leading-relaxed text-sm md:text-base shadow-sm font-medium italic">
             <div className="flex gap-3 items-center">
               <i className="fa-solid fa-info-circle text-blue-500 text-xl shrink-0"></i>
               <span>{text}</span>
@@ -329,14 +364,14 @@
         );
 
         const StatBadge = ({ value, label }) => (
-          <div className="bg-slate-100 p-4 rounded-2xl border border-slate-200 text-center flex flex-col justify-center shadow-md hover:bg-white hover:border-blue-600 transition-all group">
+          <div className="bg-slate-100 p-4 rounded-2xl border border-slate-200 text-center flex flex-col justify-center shadow-md hover:bg-white hover:border-blue-600 transition-all group h-full">
             <div className="font-black text-slate-900 text-2xl leading-none mb-1 group-hover:text-blue-600">{value}</div>
             <div className="text-[10px] text-slate-500 uppercase font-black tracking-widest leading-tight">{label}</div>
           </div>
         );
 
         const ExecutiveSummaryCard = ({ title, desc, icon, colorClass }) => (
-          <div className={`border-l-8 ${colorClass} bg-white p-4 rounded-r-2xl shadow-md flex gap-4 items-center hover:scale-[1.02] transition-transform cursor-default`}>
+          <div className={`border-l-8 ${colorClass} bg-white p-4 rounded-r-2xl shadow-md flex gap-4 items-center hover:scale-[1.02] transition-transform cursor-default h-full`}>
             <span className="text-3xl drop-shadow-sm">{icon}</span>
             <div>
               <h4 className="font-black text-slate-900 text-sm uppercase tracking-tight leading-none mb-1">{title}</h4>
@@ -345,14 +380,20 @@
           </div>
         );
 
-        const InteractiveMap = ({ selectedId, onSelect }) => {
+        const InteractiveMap = ({ selectedId, onSelect, mapData, mapType = 'global' }) => {
           const [hovered, setHovered] = useState(null);
+          
+          const bgImage = mapType === 'global' 
+            ? 'https://i.postimg.cc/Bbm1W0xq/mapa-mundi.jpg' 
+            : 'https://i.postimg.cc/hGLkN593/mapa-brasil.avif'; // Novo mapa do Brasil
+
+          const mapTitle = mapType === 'global' ? 'Geopolítica Global' : 'Ecossistema Nacional';
 
           return (
-            <div className="relative w-full aspect-[2/1] md:aspect-[3.2/1] bg-slate-100 rounded-[32px] overflow-hidden shadow-inner border-4 border-white mb-6 group select-none">
-              <img src="https://i.postimg.cc/Bbm1W0xq/mapa-mundi.jpg" alt="Mapa Mundi" className="w-full h-full object-cover opacity-60 saturate-50 group-hover:saturate-100 transition-all duration-1000" />
+            <div className="relative w-full aspect-[2/1] md:aspect-[3.2/1] bg-slate-900 rounded-[32px] overflow-hidden shadow-inner border-4 border-white mb-8 group select-none">
+              <img src={bgImage} alt="Mapa" className={`w-full h-full object-cover transition-all duration-1000 opacity-60 saturate-50 group-hover:saturate-100`} />
               <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-4 py-2 rounded-xl shadow-lg border border-slate-200 pointer-events-none z-10">
-                <h3 className="font-black text-slate-900 flex items-center gap-2 text-sm uppercase tracking-tighter"><i className="fa-solid fa-earth-americas text-xl text-blue-600"></i> Geopolítica em Saúde</h3>
+                <h3 className="font-black text-slate-900 flex items-center gap-2 text-sm uppercase tracking-tighter"><i className="fa-solid fa-map-location-dot text-xl text-blue-600"></i> {mapTitle}</h3>
               </div>
               {mapData.map((pt) => (
                 <div
@@ -369,7 +410,7 @@
                       ${pt.color} ${selectedId === pt.id ? 'scale-125 ring-4 ring-blue-300 ring-opacity-50 z-30' : 'opacity-90 hover:opacity-100 hover:scale-110'}`}
                     style={{ width: pt.size, height: pt.size }}
                   >
-                    <span style={{ fontSize: pt.size > 30 ? '12px' : '9px' }}>{pt.rankingNumber}</span>
+                    <span style={{ fontSize: pt.size > 30 ? '12px' : '9px' }}>{pt.rankingNumber || pt.id.toUpperCase()}</span>
                   </div>
                   {(hovered?.id === pt.id || selectedId === pt.id) && (
                     <span className="absolute top-full mt-2 bg-slate-900 text-white text-[10px] uppercase font-black px-3 py-1 rounded-full shadow-lg z-30 border border-white/20 whitespace-nowrap">{pt.name}</span>
@@ -380,9 +421,166 @@
           );
         };
 
+        const RadarTab = () => {
+          const [selectedCountry, setSelectedCountry] = useState('Todos');
+          const [selectedAxis, setSelectedAxis] = useState('Todos');
+          const [selectedTrl, setSelectedTrl] = useState('Todos');
+          const [hoveredDot, setHoveredDot] = useState(null);
+
+          const filteredData = innovationsData.filter(item => {
+            if (selectedCountry !== 'Todos' && item.country !== selectedCountry) return false;
+            if (selectedAxis !== 'Todos' && item.axis !== selectedAxis) return false;
+            if (selectedTrl === 'Ideação & Pesquisa (TRL 1-3)' && (item.trl > 3)) return false;
+            if (selectedTrl === 'Validação & Piloto (TRL 4-6)' && (item.trl < 4 || item.trl > 6)) return false;
+            if (selectedTrl === 'Operacional & Mercado (TRL 7-9)' && (item.trl < 7)) return false;
+            return true;
+          });
+
+          const countries = ['Todos', ...new Set(innovationsData.map(d => d.country))];
+          const trlFilters = ['Todos', 'Ideação & Pesquisa (TRL 1-3)', 'Validação & Piloto (TRL 4-6)', 'Operacional & Mercado (TRL 7-9)'];
+
+          const getLabelPos = (angleDeg, radius) => {
+            const angleRad = angleDeg * (Math.PI / 180);
+            return {
+              x: Math.cos(angleRad) * radius,
+              y: Math.sin(angleRad) * radius
+            };
+          };
+
+          return (
+            <div className="flex flex-col h-full gap-4 pb-12 w-full">
+              <SectionHeader title="Matriz de Inovação TRL" subtitle="Tecnologias Deep-Tech validadas em Saúde." icon="fa-solid fa-bullseye" />
+              <DidacticIntro text="Este radar projeta as inovações com base no Nível de Maturidade Tecnológica (TRL). Soluções no centro estão em fase embrionária (Pesquisa), enquanto nas bordas estão aplicadas no mercado. Utilize os filtros abaixo para cruzar dados geopolíticos com a fronteira tecnológica." />
+
+              {/* Filtros Inteligentes */}
+              <div className="flex flex-wrap lg:flex-nowrap gap-4 bg-slate-50 p-5 rounded-[24px] border-2 border-slate-100 shadow-sm shrink-0 mb-4 items-center">
+                 <div className="flex items-center gap-3 shrink-0 mr-2"><i className="fa-solid fa-filter text-xl text-blue-600"></i><label className="font-black text-slate-800 text-sm uppercase tracking-tighter hidden md:block">Filtros:</label></div>
+                 <select value={selectedCountry} onChange={e => setSelectedCountry(e.target.value)} className="flex-1 bg-white border border-slate-200 text-slate-900 text-sm font-black uppercase tracking-tight rounded-xl py-3 px-4 cursor-pointer outline-none focus:border-blue-600 shadow-md">
+                   {countries.map(c => <option key={c} value={c}>{c === 'Todos' ? '🌐 Todos os Países' : c}</option>)}
+                 </select>
+                 <select value={selectedAxis} onChange={e => setSelectedAxis(e.target.value)} className="flex-1 bg-white border border-slate-200 text-slate-900 text-sm font-black uppercase tracking-tight rounded-xl py-3 px-4 cursor-pointer outline-none focus:border-blue-600 shadow-md">
+                   <option value="Todos">🎯 Todos os Eixos</option>
+                   {RADAR_AXES.map(a => <option key={a} value={a}>{a}</option>)}
+                 </select>
+                 <select value={selectedTrl} onChange={e => setSelectedTrl(e.target.value)} className="flex-1 bg-white border border-slate-200 text-slate-900 text-sm font-black uppercase tracking-tight rounded-xl py-3 px-4 cursor-pointer outline-none focus:border-blue-600 shadow-md">
+                   {trlFilters.map(t => <option key={t} value={t}>{t === 'Todos' ? '📈 Toda a Escala TRL' : t}</option>)}
+                 </select>
+              </div>
+
+              <div className="flex flex-col lg:flex-row gap-8 flex-1 min-h-[500px]">
+                {/* Visualização de Gráfico SVG Radar */}
+                <div className="lg:w-1/2 bg-slate-900 rounded-[40px] shadow-2xl p-6 relative flex flex-col items-center justify-center overflow-hidden border-[6px] border-slate-800">
+                   <svg viewBox="-300 -300 600 600" className="w-full h-full max-h-[500px] drop-shadow-2xl">
+                      {/* Círculos Concêntricos - TRL 3, 6, 9 */}
+                      <circle r="80" fill="#1e293b" stroke="#334155" strokeWidth="1" strokeDasharray="4 4" />
+                      <circle r="160" fill="none" stroke="#334155" strokeWidth="1" strokeDasharray="4 4" />
+                      <circle r="240" fill="none" stroke="#475569" strokeWidth="2" />
+                      
+                      {/* Marcadores de Maturidade */}
+                      <text x="5" y="-85" fill="#64748b" fontSize="10" fontWeight="bold">TRL 3</text>
+                      <text x="5" y="-165" fill="#64748b" fontSize="10" fontWeight="bold">TRL 6</text>
+                      <text x="5" y="-245" fill="#94a3b8" fontSize="10" fontWeight="bold">TRL 9 (Mercado)</text>
+
+                      {/* Eixos Fatiados */}
+                      {RADAR_AXES.map((axis, i) => {
+                         const angleDeg = i * 60;
+                         const lineEnd = getLabelPos(angleDeg, 240);
+                         const textPos = getLabelPos(angleDeg + 30, 265); 
+                         
+                         let textAnchor = "middle";
+                         if (textPos.x > 50) textAnchor = "start";
+                         else if (textPos.x < -50) textAnchor = "end";
+
+                         return (
+                           <g key={`axis-${i}`}>
+                             <line x1="0" y1="0" x2={lineEnd.x} y2={lineEnd.y} stroke="#334155" strokeWidth="1.5" />
+                             <text x={textPos.x} y={textPos.y} fill={axisColors[axis]} fontSize="9" fontWeight="900" textAnchor={textAnchor} className="uppercase tracking-[0.2em]">{axis}</text>
+                           </g>
+                         )
+                      })}
+
+                      {/* Pontos de Inovação */}
+                      {innovationsData.map((item, i) => {
+                         const isVisible = filteredData.includes(item);
+                         const axisIndex = RADAR_AXES.indexOf(item.axis);
+                         const trlRatio = item.trl / 9;
+                         
+                         // Offset determinístico para separar inovações de mesmo nível e eixo
+                         const angleOffset = (i % 5 - 2) * 8; 
+                         const angleDeg = (axisIndex * 60) + 30 + angleOffset;
+                         
+                         const radius = Math.max(20, trlRatio * 240); 
+                         const pos = getLabelPos(angleDeg, radius);
+
+                         return (
+                           <g key={`dot-${item.id}`} 
+                              className={`transition-all duration-700 cursor-pointer ${isVisible ? 'opacity-100 scale-100' : 'opacity-10 scale-50 pointer-events-none'}`}
+                              onMouseEnter={() => setHoveredDot(item)}
+                              onMouseLeave={() => setHoveredDot(null)}
+                           >
+                              <circle cx={pos.x} cy={pos.y} r={hoveredDot?.id === item.id ? "14" : "9"} fill={axisColors[item.axis]} stroke="#0f172a" strokeWidth="3" className="drop-shadow-lg" />
+                              {isVisible && <text x={pos.x} y={pos.y + 3} textAnchor="middle" fill="#fff" fontSize="9" fontWeight="900" className="pointer-events-none select-none">{item.trl}</text>}
+                           </g>
+                         );
+                      })}
+                   </svg>
+
+                   {/* Resumo Suspenso ao passar o mouse */}
+                   {hoveredDot && (
+                     <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur text-slate-900 p-5 rounded-2xl shadow-2xl w-10/12 border border-slate-200 pointer-events-none z-30 transition-all">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: axisColors[hoveredDot.axis] }}>{hoveredDot.axis}</span>
+                          <span className="text-[10px] font-black px-3 py-1 rounded bg-slate-900 text-white">TRL {hoveredDot.trl}</span>
+                        </div>
+                        <h4 className="font-black text-base leading-tight mb-1">{hoveredDot.title}</h4>
+                        <p className="text-xs font-bold text-slate-500">{hoveredDot.country} • {hoveredDot.institution}</p>
+                     </div>
+                   )}
+                </div>
+
+                {/* Lista de Cards Refinada */}
+                <div className="lg:w-1/2 overflow-y-auto no-scrollbar flex flex-col gap-4 pb-12" style={{ maxHeight: '600px' }}>
+                   {filteredData.map((item, idx) => (
+                     <div key={item.id} 
+                          className={`bg-white border-2 rounded-3xl p-4 shadow-sm flex flex-col sm:flex-row gap-5 transition-all duration-300
+                                     ${hoveredDot?.id === item.id ? 'border-blue-500 shadow-xl scale-[1.02]' : 'border-slate-100 hover:border-slate-300'}`}
+                          onMouseEnter={() => setHoveredDot(item)}
+                          onMouseLeave={() => setHoveredDot(null)}
+                     >
+                        <div className="w-full sm:w-32 h-40 sm:h-auto rounded-2xl overflow-hidden shrink-0 bg-slate-100 relative shadow-inner">
+                          <img src={item.image} className="w-full h-full object-cover" />
+                          <div className="absolute top-2 left-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-slate-900 flex items-center justify-center text-[10px] font-black shadow-md border border-slate-200"><i className="fa-solid fa-chart-line mr-1"></i>TRL {item.trl}</div>
+                        </div>
+                        <div className="flex flex-col flex-1 py-1">
+                           <div className="flex justify-between items-start mb-2">
+                             <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 bg-slate-100 px-2 py-1 rounded" style={{ color: axisColors[item.axis] }}>{item.axis}</span>
+                           </div>
+                           <h4 className="font-black text-slate-900 text-lg leading-tight mb-2">{item.title}</h4>
+                           <p className="text-xs text-slate-600 leading-relaxed mb-3 flex-1 font-medium">{item.desc}</p>
+                           <div className="flex justify-between items-end mt-auto pt-3 border-t border-slate-50">
+                              <span className="text-[10px] font-bold text-slate-500"><i className="fa-solid fa-building mr-1"></i>{item.institution}</span>
+                              <span className="text-[10px] font-black uppercase tracking-widest text-slate-800">{item.country}</span>
+                           </div>
+                        </div>
+                     </div>
+                   ))}
+                   {filteredData.length === 0 && (
+                     <div className="p-12 text-center text-slate-500 font-medium bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center">
+                       <i className="fa-solid fa-filter-circle-xmark text-4xl mb-4 text-slate-300"></i>
+                       <span className="text-base">Nenhuma inovação atende aos critérios selecionados.</span>
+                       <span className="text-xs mt-2 opacity-60">Tente ajustar a abrangência dos níveis TRL ou países.</span>
+                     </div>
+                   )}
+                </div>
+              </div>
+            </div>
+          );
+        };
+
         function App() {
           const [activeTab, setActiveTab] = useState(TABS[0].id);
-          const [activeCountryId, setActiveCountryId] = useState('us'); // EUA agora é o default (Top 1)
+          const [activeCountryId, setActiveCountryId] = useState('us'); 
+          const [activeStateId, setActiveStateId] = useState('sp');
 
           const activeIndex = TABS.findIndex(t => t.id === activeTab);
           
@@ -415,21 +613,22 @@
                     </p>
                   </div>
                   <div className="md:w-2/5 flex flex-col items-end gap-6 w-full">
-                    <div className="bg-white px-6 py-3 rounded-2xl shadow-xl border-2 border-slate-100">
-                      <img src="https://i.postimg.cc/L6vCnk9g/gtidet.png" alt="Logo GTIDET" className="h-8 md:h-12 object-contain" />
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-3 w-full">
-                      {globalStats.map((stat, i) => (
-                        <div key={i} className="bg-white/10 p-4 rounded-2xl border border-white/20 backdrop-blur-sm shadow-lg">
-                          <div className="text-2xl font-black text-white leading-none mb-1">{stat.value}</div>
-                          <div className="text-[9px] text-blue-200 font-black uppercase tracking-widest">{stat.label}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+            <div className="bg-white px-6 py-3 rounded-2xl shadow-xl border-2 border-slate-100">
+              <img src="https://i.postimg.cc/c49ZCVqm/gtidet.png" alt="Logo GTIDET" className="h-8 md:h-12 object-contain" />
+            </div>
+            
+            <div className="grid grid-cols-2 gap-3 w-full">
+              {globalStats.map((stat, i) => (
+                <div key={i} className="bg-white/10 p-3 rounded-2xl border border-white/20 backdrop-blur-md shadow-lg text-center flex flex-col justify-center min-h-[85px]">
+                  <div className="text-xl font-black text-white leading-none mb-1">{String(stat.value)}</div>
+                  <div className="text-[9px] text-blue-200 font-black uppercase tracking-tight leading-tight mb-2">{String(stat.label)}</div>
+                  <div className="text-[7px] text-slate-400 font-bold uppercase tracking-widest mt-auto border-t border-white/10 pt-1">Fonte: {String(stat.source)}</div>
                 </div>
-              </header>
+              ))}
+            </div>
+          </div>
+        </div>
+      </header>
 
               {/* Main Content Area */}
               <main className="max-w-6xl mx-auto px-6 py-8 w-full flex-1 flex flex-col bg-white">
@@ -502,7 +701,7 @@
                       </div>
                     </div>
 
-                    {/* SLIDE 2: Top 10 Mundial (Novo Ranking com Matriz Explicada) */}
+                    {/* SLIDE 2: Top 10 Mundial */}
                     <div className={`w-full shrink-0 px-2 transition-opacity duration-500 ${activeIndex === 1 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
                       <SectionHeader title="Liderança Avançada em Saúde" icon="fa-solid fa-ranking-star" />
                       
@@ -513,13 +712,16 @@
                         </h3>
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                           {matrixPillars.map((p, i) => (
-                            <div key={i} className="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center group hover:border-blue-300 transition-colors">
-                              <div className={`w-10 h-10 rounded-full ${p.color} text-white flex items-center justify-center text-lg mb-2 shadow-md group-hover:scale-110 transition-transform`}>
+                            <div key={i} className="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center group hover:border-blue-300 transition-colors h-full">
+                              <div className={`w-10 h-10 rounded-full ${p.color} text-white flex items-center justify-center text-lg mb-2 shadow-md group-hover:scale-110 transition-transform shrink-0`}>
                                 <i className={p.icon}></i>
                               </div>
                               <span className="text-xl font-black text-slate-900 leading-none mb-1">{p.weight}</span>
                               <strong className="text-[10px] text-slate-700 uppercase tracking-tight leading-tight mb-1">{p.name}</strong>
-                              <span className="text-[9px] text-slate-500 leading-tight">{p.desc}</span>
+                              <span className="text-[9px] text-slate-500 leading-tight mb-2">{p.desc}</span>
+                              <div className="mt-auto pt-2 border-t border-slate-100 w-full">
+                                <p className="text-[8px] text-slate-500 leading-tight italic"><strong className="text-slate-700 uppercase tracking-widest text-[7px] mr-1">Por quê?</strong>{p.justification}</p>
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -535,25 +737,25 @@
                         <div className="flex items-center gap-3 px-2"><i className="fa-solid fa-list-ol text-2xl text-blue-600"></i><label className="font-black text-slate-800 text-sm uppercase tracking-tighter">Posição no Ranking:</label></div>
                         <div className="relative w-full md:w-[400px]">
                           <select value={activeCountryId} onChange={(e) => setActiveCountryId(e.target.value)} className="appearance-none w-full bg-white border-2 border-slate-200 text-slate-900 font-black text-base rounded-xl py-3 px-6 cursor-pointer outline-none focus:border-blue-600 shadow-md">
-                            {allMapCards.map((card) => (<option key={card.id} value={card.id}>{card.rank}º - {card.country}</option>))}
+                            {top10.map((card) => (<option key={card.id} value={card.id}>{card.rank}º - {card.country}</option>))}
                           </select>
                           <i className="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-xl text-slate-400 pointer-events-none"></i>
                         </div>
                       </div>
 
-                      <InteractiveMap selectedId={activeCountryId} onSelect={setActiveCountryId} />
+                      <InteractiveMap selectedId={activeCountryId} onSelect={setActiveCountryId} mapData={mapDataGlobal} mapType="global" />
 
                       <div className="mt-8">
-                        {allMapCards.filter(item => item.id === activeCountryId).map((selectedData) => (
-                          <div key={selectedData.id} className="flex flex-col lg:flex-row bg-white border-2 border-slate-100 rounded-[32px] overflow-hidden shadow-xl group">
+                        {top10.filter(item => item.id === activeCountryId).map((selectedData) => (
+                          <div key={selectedData.id} className="flex flex-col lg:flex-row bg-white border-2 border-slate-100 rounded-[32px] overflow-hidden shadow-xl group min-h-[380px]">
                             <div className="bg-slate-900 text-white w-full lg:w-48 p-8 flex flex-col justify-center items-center shrink-0">
                               <span className="text-7xl font-black leading-none drop-shadow-lg">{selectedData.rank}</span>
-                              <span className="text-xs font-black uppercase tracking-[0.2em] text-blue-400 mt-4">{selectedData.country.split(' ')[0]}</span>
+                              <span className="text-xs font-black uppercase tracking-[0.2em] text-blue-400 mt-4 text-center">{selectedData.country.split(' ')[0]}</span>
                             </div>
-                            <div className="w-full lg:w-[350px] shrink-0 relative bg-slate-200 border-r-2 border-slate-50">
+                            <div className="w-full lg:w-[320px] shrink-0 relative bg-slate-200 border-r-2 border-slate-50">
                               <img src={selectedData.image} alt={selectedData.imageAlt} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
                               <div className="absolute bottom-4 left-4 right-4 bg-blue-600/95 backdrop-blur text-white text-[10px] font-black p-3 rounded-xl shadow-lg uppercase tracking-widest text-center">
-                                VANTAGEM: {selectedData.specialty}
+                                {selectedData.specialty}
                               </div>
                             </div>
                             <div className="p-8 flex-1 flex flex-col justify-center">
@@ -561,16 +763,27 @@
                                 <i className="fa-solid fa-ranking-star text-3xl text-yellow-500"></i> 
                                 <h4 className="text-2xl font-black text-slate-900 uppercase tracking-tighter leading-none">{selectedData.country}</h4>
                               </div>
-                              <strong className="block text-sm text-blue-600 mb-2 uppercase tracking-tighter font-black">{selectedData.axis}</strong>
-                              <p className="text-slate-700 text-sm leading-relaxed mb-6 font-medium">{selectedData.detail}</p>
+                              <strong className="block text-[11px] text-slate-400 mb-4 uppercase tracking-widest font-black"><i className="fa-solid fa-crosshairs text-blue-500 mr-1"></i> Perfil: <span className="text-slate-700">{selectedData.axis}</span></strong>
                               
-                              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-xl mb-6 shadow-sm">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                                <div>
+                                  <strong className="block text-[10px] text-blue-600 uppercase tracking-widest mb-1.5"><i className="fa-solid fa-rocket mr-1"></i> Avanços Fortes</strong>
+                                  <p className="text-[11px] text-slate-700 leading-snug font-medium">{selectedData.strongAdvances}</p>
+                                </div>
+                                <div>
+                                  <strong className="block text-[10px] text-indigo-600 uppercase tracking-widest mb-1.5"><i className="fa-solid fa-building mr-1"></i> Instituições-Chave</strong>
+                                  <p className="text-[11px] text-slate-700 leading-snug font-medium">{selectedData.keyInstitutions}</p>
+                                </div>
+                              </div>
+
+                              <div className="bg-slate-50 border-l-4 border-blue-500 p-3 rounded-r-xl mb-6 shadow-sm">
+                                <strong className="block text-[9px] text-slate-500 uppercase tracking-widest mb-1">Resumo Direto</strong>
                                 <p className="text-xs text-slate-800 leading-relaxed font-bold italic">"{selectedData.note}"</p>
                               </div>
 
-                              <div className="flex flex-wrap gap-2 mt-auto">
+                              <div className="flex flex-wrap gap-2 mt-auto pt-2 border-t border-slate-100">
                                 {selectedData.stats.map((stat, i) => (
-                                  <div key={i} className="bg-slate-50 border border-slate-200 rounded-md px-3 py-1.5 text-[10px] font-black text-slate-800 uppercase tracking-tighter shadow-sm">{stat}</div>
+                                  <div key={i} className="bg-white border border-slate-200 rounded-md px-3 py-1.5 text-[9px] font-black text-slate-800 uppercase tracking-tighter shadow-sm">{stat}</div>
                                 ))}
                               </div>
                             </div>
@@ -579,184 +792,167 @@
                       </div>
                     </div>
 
-                    {/* SLIDE 3: Brasil */}
+                    {/* SLIDE 3: Recorte Brasil (Ecossistema Nacional) */}
                     <div className={`w-full shrink-0 px-2 transition-opacity duration-500 ${activeIndex === 2 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-                      <SectionHeader title="Recorte Brasil" subtitle="Desafios e Potenciais no Cenário Global." icon="fa-solid fa-map-location-dot" />
+                      <SectionHeader title="Ecossistema Nacional de Saúde" subtitle="Os 5 estados líderes e a ascensão de Goiás." icon="fa-solid fa-map-location-dot" />
 
-                      <DidacticIntro text="O Brasil possui ativos raros: cobertura universal via SUS, bases genômicas diversas e institutos históricos. O desafio atual é a capacidade de investimento per capita para reverter a ciência básica em soluções escaláveis de mercado." />
-
-                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-                        <StatBadge value="43" label="Score Composto" />
-                        <StatBadge value="US$ 2k" label="Gasto Saúde (PPP)" />
-                        <StatBadge value="52º" label="GII 2025 (Inovação)" />
-                        <StatBadge value="SUS" label="Maior Escala Universal" />
-                      </div>
-
-                      <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-4">
-                          <h3 className="text-xl font-black mb-3 text-slate-900 border-b-2 pb-2 flex items-center gap-2"><i className="fa-solid fa-building text-2xl text-blue-600"></i> Bases Acadêmicas e Indústria</h3>
-                          <div className="grid grid-cols-1 gap-3">
-                            {brazilInstitutions.map((inst, i) => (
-                              <div key={i} className="flex flex-col sm:flex-row gap-4 p-4 border-2 border-slate-50 rounded-2xl bg-white shadow-md group hover:border-emerald-500 transition-all">
-                                <div className="w-full sm:w-24 h-24 shrink-0 rounded-xl overflow-hidden shadow-sm border-2 border-white">
-                                  <img src={inst.image} alt={inst.imageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                </div>
-                                <div className="flex-1 flex flex-col justify-center">
-                                  <h4 className="font-black text-sm text-slate-900 mb-1 uppercase tracking-tight leading-none">{inst.name}</h4>
-                                  <p className="text-slate-600 text-[11px] leading-tight mb-2 font-medium">{inst.desc}</p>
-                                  <div className="bg-blue-50/70 border-l-[3px] border-blue-400 p-2 rounded-r-lg mt-auto">
-                                    <p className="text-[10px] text-slate-700 leading-tight italic"><strong className="text-blue-800 uppercase tracking-widest text-[9px] mr-1.5"><i className="fa-solid fa-lightbulb text-yellow-500 mr-1"></i>Nota Explicativa:</strong>{inst.note}</p>
-                                  </div>
-                                </div>
+                      {/* Metodologia Visual Brasil */}
+                      <div className="mb-6 bg-slate-50 border-2 border-slate-100 rounded-3xl p-5 shadow-sm">
+                        <h3 className="text-xs sm:text-sm font-black text-slate-800 uppercase tracking-widest mb-4 flex items-center gap-2">
+                          <i className="fa-solid fa-microscope text-emerald-600"></i> Critérios do Recorte Nacional
+                        </h3>
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                          {brazilPillars.map((p, i) => (
+                            <div key={i} className="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center group hover:border-emerald-300 transition-colors h-full">
+                              <div className={`w-10 h-10 rounded-full ${p.color} text-white flex items-center justify-center text-lg mb-2 shadow-md group-hover:scale-110 transition-transform shrink-0`}>
+                                <i className={p.icon}></i>
                               </div>
-                            ))}
-                          </div>
-                        </div>
-                        
-                        <div className="bg-slate-900 text-white p-8 rounded-3xl border-t-8 border-emerald-500 shadow-xl flex flex-col justify-center">
-                          <h3 className="text-xl font-black mb-6 flex items-center gap-3 border-b border-slate-700 pb-3 uppercase tracking-tighter"><i className="fa-solid fa-rocket text-2xl text-emerald-400"></i> Frentes de Inovação SENAI/SUS</h3>
-                          <ul className="space-y-6">
-                            <li className="flex gap-4 items-start">
-                              <div className="w-12 h-12 bg-blue-600/30 rounded-xl flex items-center justify-center shrink-0 border border-blue-500/50 text-2xl shadow-sm">💻</div>
-                              <div>
-                                <strong className="block text-sm text-blue-300 font-black mb-1 uppercase tracking-tight">Saúde Digital & Interoperabilidade</strong>
-                                <p className="text-slate-300 text-xs leading-relaxed font-light">Evolução da RNDS (Rede Nacional de Dados em Saúde), adoção de padrões HL7/FHIR (Padrões Internacionais de Interoperabilidade), segurança de dados em saúde e integração de sistemas hospitalares.</p>
-                              </div>
-                            </li>
-                            <li className="flex gap-4 items-start">
-                              <div className="w-12 h-12 bg-emerald-600/30 rounded-xl flex items-center justify-center shrink-0 border border-emerald-500/50 text-2xl shadow-sm">💊</div>
-                              <div>
-                                <strong className="block text-sm text-emerald-300 font-black mb-1 uppercase tracking-tight">Biofabricação & Complexo Industrial</strong>
-                                <p className="text-slate-300 text-xs leading-relaxed font-light">Fortalecimento do CEIS (Complexo Econômico-Industrial da Saúde), desenvolvimento de biofármacos nacionais, vacinas e redução da dependência tecnológica externa.</p>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* SLIDE 4: Goiás */}
-                    <div className={`w-full shrink-0 px-2 transition-opacity duration-500 ${activeIndex === 3 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-                      <SectionHeader title="Recorte Goiás" subtitle="Ciência translacional do Cerrado." icon="fa-solid fa-map-pin" />
-
-                      <DidacticIntro text="Goiás desponta estrategicamente na ciência utilizando a robustez de suas universidades, como a UFG (Universidade Federal de Goiás), para exportar tecnologias médicas. Foco em doenças regionais e soluções tecnológicas para o SUS (Sistema Único de Saúde)." />
-
-                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                        <StatBadge value="R$ 21M" label="Invest. Ceti-Saúde" />
-                        <StatBadge value="6.000+" label="Pacientes Chagas" />
-                        <StatBadge value="R$ 10M" label="Inv. HC-UFG 2024" />
-                        <StatBadge value="30+" label="Fábricas em Anápolis" />
-                      </div>
-
-                      <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="flex flex-col gap-6">
-                          <div className="bg-slate-900 p-6 rounded-3xl text-white shadow-lg relative overflow-hidden group border-b-4 border-indigo-600">
-                            <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=800&q=80" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay group-hover:scale-105 transition-transform duration-1000" alt="" />
-                            <div className="relative z-10 flex flex-col gap-3">
-                              <i className="fa-solid fa-award text-4xl text-yellow-400 drop-shadow-md"></i>
-                              <div>
-                                <h3 className="text-xl font-black mb-1 uppercase tracking-tighter">Ceti-Saúde (2025)</h3>
-                                <p className="text-blue-100 text-xs leading-relaxed mb-2 font-light">Maior investimento histórico em P&D (Pesquisa e Desenvolvimento) focado na rede pública, viabilizado pela Fapeg (Fundação de Amparo à Pesquisa do Estado de Goiás) e UFG.</p>
+                              <strong className="text-[10px] text-slate-900 uppercase tracking-tight leading-tight mb-1">{p.name}</strong>
+                              <span className="text-[9px] text-slate-500 leading-tight mb-2">{p.desc}</span>
+                              <div className="mt-auto pt-2 border-t border-slate-100 w-full">
+                                <p className="text-[8px] text-slate-500 leading-tight italic"><strong className="text-slate-700 uppercase tracking-widest text-[7px] mr-1">Por quê?</strong>{p.justification}</p>
                               </div>
                             </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-3">
-                            {goiasInstitutions.map((inst, i) => (
-                              <div key={i} className="p-4 border-2 border-slate-50 bg-white rounded-2xl shadow-sm hover:border-blue-400 transition-colors flex flex-col">
-                                <div className="w-full h-20 mb-2 rounded-lg overflow-hidden bg-slate-100 shrink-0">
-                                    <img src={inst.image} className="w-full h-full object-cover" alt="" />
-                                </div>
-                                <strong className="block text-[11px] text-slate-900 mb-1 font-black uppercase tracking-tight leading-tight">{inst.name}</strong>
-                                <span className="text-[10px] text-slate-600 leading-tight font-medium mb-3 flex-1">{inst.desc}</span>
-                                <div className="bg-indigo-50/70 border-l-[3px] border-indigo-400 p-2 rounded-r-lg mt-auto">
-                                    <p className="text-[9px] text-slate-700 leading-tight italic"><strong className="text-indigo-800 uppercase tracking-widest text-[8px] mr-1.5"><i className="fa-solid fa-lightbulb text-yellow-500 mr-1"></i>Nota:</strong>{inst.note}</p>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className="space-y-4">
-                          <h3 className="text-xl font-black mb-3 text-slate-900 border-b-2 pb-2 uppercase tracking-tighter">Pesquisas de Impacto Regional</h3>
-                          <div className="grid grid-cols-1 gap-3">
-                            {goiasResearches.map((item, i) => (
-                              <div key={i} className="flex flex-col sm:flex-row gap-4 p-4 border-2 border-slate-50 rounded-2xl bg-white shadow-md group items-center">
-                                <div className="w-full sm:w-24 h-24 shrink-0 rounded-xl overflow-hidden shadow-sm">
-                                  <img src={item.image} alt={item.imageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                </div>
-                                <div className="flex-1 w-full flex flex-col justify-center">
-                                  <strong className="text-sm font-black text-slate-900 mb-1 uppercase tracking-tighter leading-none block">{item.title}</strong>
-                                  <p className="text-slate-600 text-[11px] font-medium leading-snug mb-2">{item.desc}</p>
-                                  <div className="bg-emerald-50/70 border-l-[3px] border-emerald-400 p-2 rounded-r-lg mt-auto">
-                                    <p className="text-[10px] text-slate-700 leading-tight italic"><strong className="text-emerald-800 uppercase tracking-widest text-[9px] mr-1.5"><i className="fa-solid fa-lightbulb text-yellow-500 mr-1"></i>Nota Explicativa:</strong>{item.note}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
+                          ))}
                         </div>
                       </div>
-                    </div>
+                      
+                      <div className="grid md:grid-cols-3 gap-4 mb-6">
+                        <ExecutiveSummaryCard title="1. Fronteira e Hospitais" desc="São Paulo concentra a inovação privada, terapias CAR-T e os maiores hospitais." icon="🏢" colorClass="border-blue-600" />
+                        <ExecutiveSummaryCard title="2. Base Pública e Vacinas" desc="Rio de Janeiro e Minas Gerais sustentam o SUS com Fiocruz, Butantan e Funed." icon="💉" colorClass="border-emerald-500" />
+                        <ExecutiveSummaryCard title="3. Precisão e Futuro" desc="O Sul foca em pesquisa clínica, enquanto Goiás desponta na saúde digital." icon="📡" colorClass="border-indigo-500" />
+                      </div>
 
-                    {/* SLIDE 5: Radar de Inovação */}
-                    <div className={`w-full shrink-0 px-2 transition-opacity duration-500 ${activeIndex === 4 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-                      <SectionHeader title="Radar de Inovação" subtitle="Deep-Tech Global" icon="fa-solid fa-bullseye" />
-                      <DidacticIntro text="Catalogação de tecnologias disruptivas validadas por ciência de alto impacto que estão redefinindo protocolos clínicos, diagnósticos e engenharias biomédicas em tempo real." />
+                      <div className="mb-6 flex flex-col md:flex-row items-center justify-between bg-slate-50 p-4 rounded-2xl border-2 border-slate-100 shadow-sm gap-4">
+                        <div className="flex items-center gap-3 px-2"><i className="fa-solid fa-map text-2xl text-emerald-600"></i><label className="font-black text-slate-800 text-sm uppercase tracking-tighter">Analisar Estado:</label></div>
+                        <div className="relative w-full md:w-[400px]">
+                          <select value={activeStateId} onChange={(e) => setActiveStateId(e.target.value)} className="appearance-none w-full bg-white border-2 border-slate-200 text-slate-900 font-black text-base rounded-xl py-3 px-6 cursor-pointer outline-none focus:border-emerald-600 shadow-md">
+                            {brazilStates.map((card) => (<option key={card.id} value={card.id}>{card.rank}º - {card.country}</option>))}
+                          </select>
+                          <i className="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-xl text-slate-400 pointer-events-none"></i>
+                        </div>
+                      </div>
 
-                      <div className="grid grid-cols-1 gap-8 overflow-y-auto no-scrollbar pb-24" style={{ maxHeight: 'calc(100vh - 350px)' }}>
-                        {featuredInnovations.map((innovation) => (
-                          <div key={innovation.id} className="bg-white border-2 border-slate-100 rounded-3xl overflow-hidden shadow-xl flex flex-col md:flex-row group min-h-[350px]">
-                            <div className="md:w-[350px] relative bg-slate-900 overflow-hidden shrink-0">
-                              <img src={innovation.image} alt={innovation.imageAlt} className="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-[2000ms]" />
-                              <div className="absolute top-6 left-6 bg-white text-slate-900 text-[10px] font-black px-3 py-1.5 rounded-full shadow-lg uppercase tracking-widest border border-slate-100">
-                                {innovation.country}
-                              </div>
-                              <div className="absolute bottom-6 left-6 right-6 bg-blue-600/90 backdrop-blur-md text-white text-[11px] font-black px-5 py-4 rounded-2xl shadow-xl border border-white/20">
-                                <div className="flex items-center gap-2 mb-1 uppercase opacity-80 tracking-widest text-[9px]"><i className="fa-solid fa-building"></i> INSTITUIÇÃO</div>
-                                <span className="text-sm tracking-tight">{innovation.institution}</span>
+                      <InteractiveMap selectedId={activeStateId} onSelect={setActiveStateId} mapData={mapDataBrazil} mapType="brazil" />
+
+                      <div className="mt-8">
+                        {brazilStates.filter(item => item.id === activeStateId).map((selectedData) => (
+                          <div key={selectedData.id} className="flex flex-col lg:flex-row bg-white border-2 border-slate-100 rounded-[32px] overflow-hidden shadow-xl group min-h-[380px]">
+                            <div className="bg-slate-900 text-white w-full lg:w-48 p-8 flex flex-col justify-center items-center shrink-0">
+                              <span className="text-7xl font-black leading-none drop-shadow-lg">{selectedData.rank}</span>
+                              <span className="text-xs font-black uppercase tracking-[0.2em] text-emerald-400 mt-4 text-center">{selectedData.country}</span>
+                            </div>
+                            <div className="w-full lg:w-[320px] shrink-0 relative bg-slate-200 border-r-2 border-slate-50">
+                              <img src={selectedData.image} alt={selectedData.country} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
+                              <div className="absolute bottom-4 left-4 right-4 bg-emerald-600/95 backdrop-blur text-white text-[10px] font-black p-3 rounded-xl shadow-lg uppercase tracking-widest text-center">
+                                {selectedData.specialty}
                               </div>
                             </div>
-                            
-                            <div className="p-8 md:w-3/5 flex flex-col">
-                              <div className="flex items-center gap-4 mb-4">
-                                <span className="text-5xl drop-shadow-md text-slate-800"><i className={innovation.icon}></i></span>
-                                <div>
-                                  <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-1">{innovation.title}</h3>
-                                  <strong className="block text-sm text-blue-600 uppercase tracking-widest font-black italic">{innovation.subtitle}</strong>
-                                </div>
+                            <div className="p-8 flex-1 flex flex-col justify-center">
+                              <div className="flex items-center gap-3 border-b-2 border-slate-100 pb-3 mb-4">
+                                <i className="fa-solid fa-map-pin text-3xl text-emerald-500"></i> 
+                                <h4 className="text-2xl font-black text-slate-900 uppercase tracking-tighter leading-none">{selectedData.country}</h4>
                               </div>
+                              <strong className="block text-[11px] text-slate-400 mb-4 uppercase tracking-widest font-black"><i className="fa-solid fa-crosshairs text-emerald-500 mr-1"></i> Eixo Principal: <span className="text-slate-700">{selectedData.axis}</span></strong>
                               
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-6 flex-1">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                                 <div>
-                                  <h5 className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">
-                                    <i className="fa-solid fa-microscope text-sm"></i> Mecanismo
-                                  </h5>
-                                  <p className="text-sm text-slate-700 leading-relaxed font-medium">
-                                    {innovation.solution}
-                                  </p>
+                                  <strong className="block text-[10px] text-emerald-600 uppercase tracking-widest mb-1.5"><i className="fa-solid fa-rocket mr-1"></i> Avanços Fortes</strong>
+                                  <p className="text-[11px] text-slate-700 leading-snug font-medium">{selectedData.strongAdvances}</p>
                                 </div>
-                                <div className="bg-slate-50 p-6 rounded-2xl shadow-inner border border-slate-100 flex flex-col justify-center relative">
-                                  <h5 className="flex items-center gap-2 text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mb-3">
-                                    <i className="fa-solid fa-stethoscope text-sm"></i> Impacto Clínico
-                                  </h5>
-                                  <p className="text-sm text-slate-800 leading-relaxed font-bold italic mb-6">
-                                    "{innovation.details}"
-                                  </p>
-                                  <div className="bg-blue-100/60 border-l-[4px] border-blue-500 p-3 rounded-r-xl mt-auto">
-                                    <p className="text-[11px] text-slate-700 leading-snug font-medium italic">
-                                      <strong className="text-blue-900 uppercase tracking-widest text-[9px] mr-2"><i className="fa-solid fa-lightbulb text-yellow-500 mr-1"></i>Nota Estratégica:</strong>
-                                      {innovation.note}
-                                    </p>
-                                  </div>
+                                <div>
+                                  <strong className="block text-[10px] text-blue-600 uppercase tracking-widest mb-1.5"><i className="fa-solid fa-building mr-1"></i> Instituições-Chave</strong>
+                                  <p className="text-[11px] text-slate-700 leading-snug font-medium">{selectedData.keyInstitutions}</p>
                                 </div>
                               </div>
-                              <div className="mt-auto">
-                                <SourceTag source={innovation.source} />
+
+                              <div className="bg-slate-50 border-l-4 border-emerald-500 p-3 rounded-r-xl mb-6 shadow-sm">
+                                <strong className="block text-[9px] text-slate-500 uppercase tracking-widest mb-1">Resumo Direto</strong>
+                                <p className="text-xs text-slate-800 leading-relaxed font-bold italic">"{selectedData.note}"</p>
+                              </div>
+
+                              <div className="flex flex-wrap gap-2 mt-auto pt-2 border-t border-slate-100">
+                                {selectedData.stats.map((stat, i) => (
+                                  <div key={i} className="bg-white border border-slate-200 rounded-md px-3 py-1.5 text-[9px] font-black text-slate-800 uppercase tracking-tighter shadow-sm">{stat}</div>
+                                ))}
                               </div>
                             </div>
                           </div>
                         ))}
                       </div>
+                    </div>
+
+                    {/* SLIDE 4: Goiás (Deep Dive) */}
+                    <div className={`w-full shrink-0 px-2 transition-opacity duration-500 ${activeIndex === 3 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                      <SectionHeader title="Destaque Goiás" subtitle="Ecossistema emergente em IA, saúde digital e inovação para o SUS." icon="fa-solid fa-bullseye" />
+
+                      <DidacticIntro text="Goiás consolida-se como o 9º maior ecossistema de saúde avançada do Brasil, impulsionado pela ascensão da UFG no Nature Index (Health Sciences). A meta é ocupar um nicho estratégico: validar soluções digitais robustas diretamente na rede SUS." />
+
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                        <StatBadge value="9º BR" label="Ecossistema Nacional" />
+                        <StatBadge value="R$ 14.6M" label="Invest. Ceti-Saúde" />
+                        <StatBadge value="IA" label="Política Estadual" />
+                        <StatBadge value="SUS" label="Foco de Validação" />
+                      </div>
+
+                      <div className="grid lg:grid-cols-2 gap-8">
+                        <div className="flex flex-col gap-6">
+                          <div className="bg-slate-900 p-6 rounded-3xl text-white shadow-lg relative overflow-hidden group border-b-4 border-yellow-500">
+                            <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=800&q=80" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay group-hover:scale-105 transition-transform duration-1000" alt="" />
+                            <div className="relative z-10 flex flex-col gap-3">
+                              <i className="fa-solid fa-network-wired text-4xl text-yellow-400 drop-shadow-md"></i>
+                              <div>
+                                <h3 className="text-xl font-black mb-1 uppercase tracking-tighter">O Eixo Vencedor</h3>
+                                <p className="text-blue-100 text-xs leading-relaxed mb-2 font-medium">Saúde Digital + IA Aplicada + Formação Técnica + Validação no SUS + UFG/FAPEG.</p>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-md">
+                            <h4 className="font-black text-slate-900 text-sm uppercase tracking-widest mb-4 border-b border-slate-100 pb-2"><i className="fa-solid fa-building text-blue-600 mr-2"></i>Instituições-Chave (GO)</h4>
+                            <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                              <strong>UFG:</strong> Faculdade de Medicina, IPTSP (Prospecção do Cerrado) e PRPI.<br/>
+                              <strong>Governo:</strong> SES-GO, FAPEG (Editais de IA) e Secti-GO.<br/>
+                              <strong>Assistência:</strong> HC-UFG/Ebserh, HGG, Hugol, CRER.<br/>
+                              <strong>Inovação:</strong> Ceti-Saúde UFG, Pq. Tec. Samambaia.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="space-y-4">
+                          <h3 className="text-xl font-black mb-3 text-slate-900 border-b-2 pb-2 uppercase tracking-tighter">O que Goiás Pode Liderar</h3>
+                          <div className="grid grid-cols-1 gap-3">
+                            <div className="flex flex-col sm:flex-row gap-4 p-4 border-2 border-slate-50 rounded-2xl bg-white shadow-md group items-center">
+                              <div className="w-16 h-16 shrink-0 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl"><i className="fa-solid fa-laptop-medical"></i></div>
+                              <div className="flex-1 w-full">
+                                <strong className="text-sm font-black text-slate-900 mb-1 uppercase tracking-tighter leading-none block">Saúde Digital para o SUS</strong>
+                                <p className="text-slate-600 text-[11px] font-medium leading-snug">Telemonitoramento, regulação inteligente, gestão de fila cirúrgica e vigilância de dados (Editais FAPEG).</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex flex-col sm:flex-row gap-4 p-4 border-2 border-slate-50 rounded-2xl bg-white shadow-md group items-center">
+                              <div className="w-16 h-16 shrink-0 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl"><i className="fa-solid fa-robot"></i></div>
+                              <div className="flex-1 w-full">
+                                <strong className="text-sm font-black text-slate-900 mb-1 uppercase tracking-tighter leading-none block">IA Aplicada à Gestão</strong>
+                                <p className="text-slate-600 text-[11px] font-medium leading-snug">Predição de risco clínico, apoio à decisão, logística hospitalar e gestão de leitos integrados.</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex flex-col sm:flex-row gap-4 p-4 border-2 border-slate-50 rounded-2xl bg-white shadow-md group items-center">
+                              <div className="w-16 h-16 shrink-0 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-2xl"><i className="fa-solid fa-user-gear"></i></div>
+                              <div className="flex-1 w-full">
+                                <strong className="text-sm font-black text-slate-900 mb-1 uppercase tracking-tighter leading-none block">Formação Técnica 4.0 (SENAI)</strong>
+                                <p className="text-slate-600 text-[11px] font-medium leading-snug">Oportunidade de formar técnicos em engenharia clínica, dados em saúde, IoT médica e cibersegurança.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* SLIDE 5: Radar de Inovação (Novo Componente) */}
+                    <div className={`w-full shrink-0 px-2 transition-opacity duration-500 ${activeIndex === 4 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                       <RadarTab />
                     </div>
 
                   </div>
@@ -767,7 +963,7 @@
                 <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                   <div className="text-center md:text-left">
                     <h5 className="font-black text-white text-sm uppercase tracking-tighter mb-1">Painel Estratégico de Inovação em Saúde</h5>
-                    <p className="text-[11px] font-medium opacity-60">Dados: WIHI 2024 da FREOPP (Fundação para Pesquisa sobre Oportunidades Iguais), GII 2025 da WIPO (Org. Mundial da Propriedade Intelectual), OCDE (Org. para Cooperação e Desenv. Econômico), OMS, Banco Mundial.</p>
+                    <p className="text-[11px] font-medium opacity-60">Dados: Nature Index 2025, Newsweek/Statista Hospitais, INPI, WIHI, GII.</p>
                   </div>
                   <div className="flex flex-col items-center md:items-end">
                     <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Atualização</div>
