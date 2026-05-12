@@ -412,10 +412,65 @@
             padding: 2px 6px;
             border-radius: 4px;
         }
+        
+        .timeline-layout {
+            align-items: stretch;
+            display: flex;
+            height: stretch;
+            justify-content: space-between;
+            position: relative;
+            width: 100%;
+            margin-top: 40px;
+        }
+        .timeline-layout .timeline-line {
+            background-color: rgba(255, 255, 255, 0.1);
+            height: 4px;
+            left: 0;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-2px);
+            width: 100%;
+            z-index: 0;
+        }
+        .timeline-item {
+            position: relative;
+            text-align: center;
+            width: 23%;
+            display: flex;
+            flex-direction: column;
+        }
+        .timeline-item::after {
+            background-color: #0a0a0a;
+            border-radius: 50%;
+            border: 4px solid #00f2fe;
+            content: '';
+            height: 24px;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            z-index: 1;
+        }
+        .timeline-item .content-wrapper {
+            left: 0;
+            position: absolute;
+            width: 100%;
+            padding: 0 15px;
+        }
+        .timeline-item:nth-child(odd) .content-wrapper { bottom: 50%; margin-bottom: 35px; }
+        .timeline-item:nth-child(even) .content-wrapper { margin-top: 35px; top: 50%; }
+
     </style>
 </head>
 <body>
 
+    <!-- LOGO FIXA NO CABEÇALHO -->
+    <div class="fixed top-6 right-6 md:top-8 md:right-10 z-50 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-lg">
+        <img src="https://i.postimg.cc/K84kD2sp/Det.png" alt="GTI DET Logo" class="h-6 md:h-8 w-auto opacity-90">
+    </div>
+
+    <!-- NAVEGAÇÃO -->
     <div class="nav-hint">
         <button id="btn-prev" class="nav-btn" title="Anterior"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
         <button id="btn-next" class="nav-btn" title="Próximo"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>
@@ -617,7 +672,9 @@
                     <!-- 2. China -->
                     <div class="map-pin pin-china" data-country="chn" style="top: 40%; left: 78%;">
                         <div class="map-tooltip tooltip-left lg:tooltip-right scrollbar-thin">
-                            <div class="tooltip-img"><span class="text-[9px] text-gray-500 italic px-2 text-center"></span></div>
+                            <div class="tooltip-img border-gray-100 p-0 relative overflow-hidden">
+                                <img src="https://i.postimg.cc/d3WLPHSz/China-farma.jpg" alt="Laboratório Autónomo na China" class="absolute inset-0 w-full h-full object-cover">
+                            </div>
                             <div class="flex items-center gap-2 mb-1">
                                 <span class="text-3xl">🇨🇳</span>
                                 <h4 class="font-bold text-xl text-brand-dark">China</h4>
@@ -649,7 +706,9 @@
                     <!-- 3. Alemanha -->
                     <div class="map-pin" data-country="deu" style="top: 29%; left: 51%;">
                         <div class="map-tooltip tooltip-left scrollbar-thin">
-                            <div class="tooltip-img"><span class="text-[9px] text-gray-500 italic px-2 text-center"></span></div>
+                            <div class="tooltip-img border-gray-100 p-0 relative overflow-hidden">
+                                <img src="https://i.postimg.cc/VNTg1g2d/bayer.webp" alt="Indústria Farmacêutica na Alemanha" class="absolute inset-0 w-full h-full object-cover">
+                            </div>
                             <div class="flex items-center gap-2 mb-1">
                                 <span class="text-3xl">🇩🇪</span>
                                 <h4 class="font-bold text-xl text-brand-dark">Alemanha</h4>
@@ -666,7 +725,9 @@
                     <!-- Japão -->
                     <div class="map-pin" data-country="jpn" style="top: 36%; left: 86%;">
                         <div class="map-tooltip tooltip-left lg:tooltip-right scrollbar-thin">
-                            <div class="tooltip-img"><span class="text-[9px] text-gray-500 italic px-2 text-center"></span></div>
+                            <div class="tooltip-img border-gray-100 p-0 relative overflow-hidden">
+                                <img src="https://i.postimg.cc/2yC2X6sr/japao.webp" alt="Sensores e Longevidade no Japão" class="absolute inset-0 w-full h-full object-cover">
+                            </div>
                             <div class="flex items-center gap-2 mb-1">
                                 <span class="text-3xl">🇯🇵</span>
                                 <h4 class="font-bold text-xl text-brand-dark">Japão</h4>
@@ -683,7 +744,9 @@
                     <!-- Coreia do Sul -->
                     <div class="map-pin" data-country="kor" style="top: 38%; left: 81%;">
                         <div class="map-tooltip tooltip-left lg:tooltip-right scrollbar-thin">
-                            <div class="tooltip-img"><span class="text-[9px] text-gray-500 italic px-2 text-center"></span></div>
+                            <div class="tooltip-img border-gray-100 p-0 relative overflow-hidden">
+                                <img src="https://i.postimg.cc/CKFTkhKG/korea.jpg" alt="Megafábricas CDMO e Saúde Conectada na Coreia do Sul" class="absolute inset-0 w-full h-full object-cover">
+                            </div>
                             <div class="flex items-center gap-2 mb-1">
                                 <span class="text-3xl">🇰🇷</span>
                                 <h4 class="font-bold text-xl text-brand-dark">Coreia do Sul</h4>
@@ -772,7 +835,9 @@
                     <!-- India (Hub Estratégico) -->
                     <div class="map-pin bg-orange-500 border-orange-200" data-country="ind" style="top: 45%; left: 70%;">
                         <div class="map-tooltip tooltip-left border-orange-500/20 scrollbar-thin">
-                            <div class="tooltip-img"><span class="text-[9px] text-gray-500 italic px-2 text-center"></span></div>
+                            <div class="tooltip-img border-gray-100 p-0 relative overflow-hidden">
+                                <img src="https://i.postimg.cc/hGKMphTz/India.jpg" alt="A Farmácia do Mundo - Logística na Índia" class="absolute inset-0 w-full h-full object-cover">
+                            </div>
                             <div class="flex items-center gap-2 mb-1">
                                 <span class="text-3xl">🇮🇳</span>
                                 <h4 class="font-bold text-xl text-orange-600">Índia</h4>
@@ -872,6 +937,135 @@
             <div class="footer-source"><i data-lucide="cpu" class="w-3 h-3"></i> Fontes: ScienceDirect AI Drug Discovery; Frontiers in Robotics & AI; MarketsandMarkets Wearables Pharma.</div>
         </section>
 
+        <!-- SLIDE 5: WEARABLES E DADOS / A CLÍNICA DE PULSO -->
+        <section class="slide bg-brand-dark">
+            <div class="absolute inset-y-0 right-0 w-full lg:w-1/2 z-0 opacity-30 mix-blend-screen overflow-hidden">
+                <img src="https://i.postimg.cc/jdc3JzGC/smart-pills.png" class="w-full h-full object-cover" alt="Monitorização de doentes em rede">
+                <div class="absolute inset-0 bg-gradient-to-l from-transparent to-[#0a0a0a]"></div>
+            </div>
+            
+            <div class="slide-content relative z-10">
+                <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="text-4xl md:text-6xl font-black highlight-title mb-6 text-white">A Clínica <br>de Pulso.</h2>
+                        <p class="text-lg text-zinc-400 font-light mb-8">
+                            A pílula virou serviço. O mercado de Smart Pills baterá <strong class="text-white">US$ 3.64 Bi até 2030</strong>.
+                        </p>
+                        
+                        <div class="space-y-4 mb-10">
+                            <!-- Flow item 1 -->
+                            <div class="bg-zinc-900/80 backdrop-blur-md p-4 rounded-xl border border-white/5 flex items-center gap-4">
+                                <div class="w-10 h-10 bg-brand-accent/20 rounded-full flex items-center justify-center text-brand-neon shrink-0"><i data-lucide="pill" class="w-5 h-5"></i></div>
+                                <div class="flex-grow">
+                                    <h4 class="font-bold text-white text-sm">Pílula Digital (Abilify MyCite)</h4>
+                                    <p class="text-xs text-zinc-400">Sensor ingerível alerta a app de que o medicamento foi tomado (Adesão Absoluta).</p>
+                                </div>
+                            </div>
+                            <!-- Arrow -->
+                            <div class="ml-8 w-px h-6 bg-brand-accent/30"></div>
+                            <!-- Flow item 2 -->
+                            <div class="bg-zinc-900/80 backdrop-blur-md p-4 rounded-xl border border-white/5 flex items-center gap-4">
+                                <div class="w-10 h-10 bg-brand-purple/20 rounded-full flex items-center justify-center text-brand-purple shrink-0"><i data-lucide="activity" class="w-5 h-5"></i></div>
+                                <div class="flex-grow">
+                                    <h4 class="font-bold text-white text-sm">Monitoramento 24/7 (CGM/Patches)</h4>
+                                    <p class="text-xs text-zinc-400">Captura contínua de glicose, Eletrocardiograma (ECG) e progressão neurológica.</p>
+                                </div>
+                            </div>
+                            <!-- Arrow -->
+                            <div class="ml-8 w-px h-6 bg-brand-purple/30"></div>
+                            <!-- Flow item 3 -->
+                            <div class="bg-brand-accent/10 backdrop-blur-md p-4 rounded-xl border border-brand-accent/30 flex items-center gap-4 shadow-[0_0_20px_rgba(0,102,204,0.1)]">
+                                <div class="w-10 h-10 bg-brand-accent/20 rounded-full flex items-center justify-center text-white shrink-0"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
+                                <div class="flex-grow">
+                                    <h4 class="font-bold text-brand-neon text-sm">Evidência e Ajuste via IA</h4>
+                                    <p class="text-xs text-zinc-300">A FDA e os sistemas de saúde passam a exigir este fluxo de dados reais (RWE) para libertar o reembolso financeiro da terapia milagrosa.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-6">
+                            <div>
+                                <h3 class="text-4xl font-black text-brand-neon mb-1">1.021</h3>
+                                <p class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Ensaios Clínicos c/ Wearables</p>
+                            </div>
+                            <div class="w-px h-12 bg-white/10"></div>
+                            <div>
+                                <h3 class="text-4xl font-black text-brand-purple mb-1">US$ 9.9B</h3>
+                                <p class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Mercado Wearables Pharma (2031)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-source"><i data-lucide="watch" class="w-3 h-3"></i> Fontes: Grand View Research (Smart Pills); Nature Reviews Drug Discovery; StartUs Insights.</div>
+        </section>
+
+        <!-- SLIDE 6: O BRASIL NO MAPA -->
+        <section class="slide bg-white text-brand-dark">
+            <div class="slide-content">
+                <div class="max-w-7xl w-full mx-auto">
+                    <div class="flex flex-col md:flex-row justify-between md:items-end mb-8">
+                        <div>
+                            <h2 class="text-4xl md:text-5xl font-bold mb-2 text-brand-dark highlight-title">Brasil: A Plataforma Estratégica.</h2>
+                            <p class="text-lg text-brand-gray font-light max-w-4xl">
+                                Com um mercado interno de ~$40 Bilhões (6º da América Latina), a janela de oportunidade para o Brasil é utilizar o seu gigantesco volume demográfico para saltar da cópia para o desenvolvimento de biológicos originais e inteligência aplicada.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                        <!-- Polos e Indicadores -->
+                        <div class="flex flex-col space-y-4">
+                            <div class="bg-brand-card p-6 rounded-2xl border border-gray-100 flex items-start gap-4">
+                                <h3 class="text-5xl font-bold text-brand-accent shrink-0">150 Mi</h3>
+                                <div class="flex-grow">
+                                    <h4 class="font-bold text-brand-dark text-lg mb-1">O Maior Laboratório RWE do Mundo</h4>
+                                    <p class="text-sm text-brand-gray leading-relaxed">A base do SUS é o maior 'big data' genómico miscigenado do planeta. Integrar estes dados para Ensaios Clínicos Descentralizados atrairá o P&D pesado das BigPharmas.</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-brand-card p-6 rounded-2xl border border-gray-100 flex items-start gap-4">
+                                <h3 class="text-5xl font-bold text-emerald-500 shrink-0">PDPs</h3>
+                                <div class="flex-grow">
+                                    <h4 class="font-bold text-brand-dark text-lg mb-1">Parcerias para o SUS</h4>
+                                    <p class="text-sm text-brand-gray leading-relaxed">Fiocruz, Butantan e players como EMS, Eurofarma, Cristália e Aché estão a absorver biotecnologia (Biossimilares, Vacinas mRNA) via transferência tecnológica forçada pelo governo.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-brand-card p-6 rounded-2xl border border-gray-100 flex items-start gap-4">
+                                <h3 class="text-5xl font-bold text-brand-purple shrink-0">Lei</h3>
+                                <div class="flex-grow">
+                                    <h4 class="font-bold text-brand-dark text-lg mb-1">Biodiversidade & IA</h4>
+                                    <p class="text-sm text-brand-gray leading-relaxed">A Lei da Biodiversidade permite prospetar espécies da Amazónia. Com a Inteligência Artificial molecular em Campinas (CNPEM/LNBIO), o Brasil pode caçar ativos de forma algorítmica.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Campeões -->
+                        <div class="bg-brand-dark text-white p-8 rounded-3xl relative overflow-hidden flex flex-col justify-center border border-white/5">
+                            <div class="absolute inset-0 bg-emerald-900/10 mix-blend-overlay"></div>
+                            <div class="relative z-10">
+                                <span class="bg-emerald-500/20 text-emerald-400 px-3 py-1 text-[10px] uppercase tracking-widest rounded-full font-bold mb-4 inline-block">Quem Inova no Brasil?</span>
+                                <h3 class="font-bold text-2xl mb-6 text-white">Os Atores Centrais</h3>
+                                
+                                <div class="space-y-4">
+                                    <div class="border-l-2 border-emerald-500 pl-4">
+                                        <h4 class="text-sm font-bold text-white">Ecossistema Privado</h4>
+                                        <p class="text-xs text-gray-400 mt-1"><strong>EMS, Eurofarma, Hypera, Aché, Cristália, União Química.</strong> Dominam as prateleiras de genéricos e iniciam a migração intensa para oncologia avançada, biossimilares e produção massiva de IFAs autónomos.</p>
+                                    </div>
+                                    <div class="border-l-2 border-brand-accent pl-4">
+                                        <h4 class="text-sm font-bold text-white">Ecossistema Público e P&D</h4>
+                                        <p class="text-xs text-gray-400 mt-1"><strong>Fiocruz (Farmanguinhos), Instituto Butantan.</strong> A espinha dorsal para epidemias globais e imunobiológicos. Universidades e centros vitais como CNPEM (Synchrotron Sirius) para descoberta de drogas estruturais via IA avançada.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-source"><i data-lucide="map-pin" class="w-3 h-3"></i> Fontes: Ministério da Saúde (CEIS, PDPs); IQVIA Brasil; Interfarma; CNPEM; Lei da Biodiversidade.</div>
+        </section>
+
         <!-- SLIDE 7: O MANUAL DO INOVADOR (ESTRATÉGIAS) -->
         <section class="slide bg-brand-card text-brand-dark">
             <div class="slide-content">
@@ -882,89 +1076,89 @@
                     </p>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        <div class="card group cursor-pointer flex flex-col bg-white">
-                            <div class="h-32 w-full bg-slate-100 flex items-center justify-center border-b border-black/5 overflow-hidden relative shrink-0">
-                                <img src="https://i.postimg.cc/4xQ0N4yL/Patent-Ticket.jpg" alt="Matagal de Patentes" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 z-0">
-                                <div class="absolute inset-0 bg-gradient-to-t from-white to-transparent z-0"></div>
-                                <div class="absolute inset-0 bg-brand-dark/10 group-hover:bg-transparent transition-colors z-10"></div>
+                        <div class="card group cursor-pointer flex flex-col bg-zinc-900 border border-white/5">
+                            <div class="h-32 w-full bg-black flex items-center justify-center border-b border-white/5 overflow-hidden relative shrink-0">
+                                <img src="https://i.postimg.cc/TwkhDNqj/Matagal-de-patentes.webp" alt="Matagal de Patentes" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 z-0">
+                                <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent z-10"></div>
                             </div>
-                            <div class="p-5 flex-grow z-10">
-                                <h4 class="font-bold text-lg mb-2">1. Matagal de Patentes</h4>
-                                <p class="text-sm text-brand-gray leading-relaxed">Sufocar. O caso Humira gerou mais de 250 patentes extras pós-lançamento, ganhando +7 anos de exclusividade.</p>
+                            <div class="p-5 flex-grow z-20">
+                                <h4 class="font-bold text-lg mb-2 text-white">1. Matagal de Patentes</h4>
+                                <p class="text-sm text-zinc-400 leading-relaxed">Sufocar. O caso Humira gerou mais de 250 patentes extras pós-lançamento, ganhando +7 anos de exclusividade.</p>
                             </div>
                             <div class="insight-overlay !p-5 scrollbar-thin">
-                                <span class="insight-badge text-white">Patent Thicket</span>
-                                <p class="text-xs font-light">A tática é tornar o custo e o tempo da litigação tão absurdos que a fabricante de genéricos implora por um acordo com entrada atrasada.</p>
+                                <span class="insight-badge text-brand-neon">Patent Thicket</span>
+                                <p class="text-xs font-light text-white">A tática é tornar o custo e o tempo da litigação tão absurdos que a fabricante de genéricos implora por um acordo com entrada atrasada.</p>
                             </div>
                         </div>
 
-                        <div class="card group cursor-pointer flex flex-col bg-white">
-                            <div class="h-24 w-full bg-slate-100 flex items-center justify-center border-b border-black/5 overflow-hidden relative shrink-0">
-                                <div class="absolute inset-0 bg-brand-dark/5 group-hover:bg-brand-dark/0 transition-colors"></div>
+                        <div class="card group cursor-pointer flex flex-col bg-zinc-900 border border-white/5">
+                            <div class="h-32 w-full bg-black flex items-center justify-center border-b border-white/5 overflow-hidden relative shrink-0">
+                                <img src="https://i.postimg.cc/8cFjGBQL/Generico-autorizado.webp" alt="Genérico Autorizado" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 z-0">
+                                <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent z-10"></div>
                             </div>
-                            <div class="p-5 flex-grow z-10">
-                                <h4 class="font-bold text-lg mb-2">2. Genérico Autorizado</h4>
-                                <p class="text-sm text-brand-gray leading-relaxed">A própria marca lança secretamente a sua versão "genérica" no dia 1, roubando de volta 70% dos lucros do concorrente.</p>
+                            <div class="p-5 flex-grow z-20">
+                                <h4 class="font-bold text-lg mb-2 text-white">2. Genérico Autorizado</h4>
+                                <p class="text-sm text-zinc-400 leading-relaxed">A própria marca lança secretamente a sua versão "genérica" no dia 1, roubando de volta 70% dos lucros do concorrente.</p>
                             </div>
                             <div class="insight-overlay !p-5 scrollbar-thin">
-                                <span class="insight-badge text-white">Authorized Generic (AG)</span>
-                                <p class="text-xs font-light">Aniquila instantaneamente a premiação de "exclusividade de 180 dias" que o rival obteve na justiça ao derrubar a patente central.</p>
+                                <span class="insight-badge text-brand-neon">Authorized Generic (AG)</span>
+                                <p class="text-xs font-light text-white">Aniquila instantaneamente a premiação de "exclusividade de 180 dias" que o rival obteve na justiça ao derrubar a patente central.</p>
                             </div>
                         </div>
 
-                        <div class="card group cursor-pointer flex flex-col bg-white">
-                            <div class="h-24 w-full bg-slate-100 flex items-center justify-center border-b border-black/5 overflow-hidden relative shrink-0">
-                                <div class="absolute inset-0 bg-brand-dark/5 group-hover:bg-brand-dark/0 transition-colors"></div>
+                        <div class="card group cursor-pointer flex flex-col bg-zinc-900 border border-white/5">
+                            <div class="h-32 w-full bg-black flex items-center justify-center border-b border-white/5 overflow-hidden relative shrink-0">
+                                <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent z-10"></div>
                             </div>
-                            <div class="p-5 flex-grow z-10">
-                                <h4 class="font-bold text-lg mb-2">3. Product Hopping</h4>
-                                <p class="text-sm text-brand-gray leading-relaxed">Lançar e transferir o marketing para uma versão "levemente alterada" antes do genérico antigo chegar às prateleiras.</p>
+                            <div class="p-5 flex-grow z-20">
+                                <h4 class="font-bold text-lg mb-2 text-white">3. Product Hopping</h4>
+                                <p class="text-sm text-zinc-400 leading-relaxed">Lançar e transferir o marketing para uma versão "levemente alterada" antes do genérico antigo chegar às prateleiras.</p>
                             </div>
                             <div class="insight-overlay !p-5 scrollbar-thin">
-                                <span class="insight-badge text-white">A Tática de Substituição</span>
-                                <p class="text-xs font-light">O genérico finalmente aprova a cópia antiga e descobre que os médicos e o mercado já abandonaram o produto. Ele não pode ser substituído automaticamente na farmácia.</p>
+                                <span class="insight-badge text-brand-neon">A Tática de Substituição</span>
+                                <p class="text-xs font-light text-white">O genérico finalmente aprova a cópia antiga e descobre que os médicos e o mercado já abandonaram o produto. Ele não pode ser substituído automaticamente na farmácia.</p>
                             </div>
                         </div>
 
-                        <div class="card group cursor-pointer flex flex-col bg-white">
-                            <div class="h-24 w-full bg-slate-100 flex items-center justify-center border-b border-black/5 overflow-hidden relative shrink-0">
-                                <div class="absolute inset-0 bg-brand-dark/5 group-hover:bg-brand-dark/0 transition-colors"></div>
+                        <div class="card group cursor-pointer flex flex-col bg-zinc-900 border border-white/5">
+                            <div class="h-32 w-full bg-black flex items-center justify-center border-b border-white/5 overflow-hidden relative shrink-0">
+                                <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent z-10"></div>
                             </div>
-                            <div class="p-5 flex-grow z-10">
-                                <h4 class="font-bold text-lg mb-2">4. Fuga para o Varejo (OTC)</h4>
-                                <p class="text-sm text-brand-gray leading-relaxed">Mudar o status para "Isento de Prescrição". A força histórica da marca esmaga os competidores direto na gôndola.</p>
+                            <div class="p-5 flex-grow z-20">
+                                <h4 class="font-bold text-lg mb-2 text-white">4. Fuga para o Varejo (OTC)</h4>
+                                <p class="text-sm text-zinc-400 leading-relaxed">Mudar o status para "Isento de Prescrição". A força histórica da marca esmaga os competidores direto na gôndola.</p>
                             </div>
                             <div class="insight-overlay !p-5 scrollbar-thin">
-                                <span class="insight-badge text-white">Rx-to-OTC Switch</span>
-                                <p class="text-xs font-light">Claritin e Allegra sobreviveram assim. Eles converteram o lobby médico bilionário acumulado em pura fidelidade do consumidor comum contra os genéricos.</p>
+                                <span class="insight-badge text-brand-neon">Rx-to-OTC Switch</span>
+                                <p class="text-xs font-light text-white">Claritin e Allegra sobreviveram assim. Eles converteram o lobby médico bilionário acumulado em pura fidelidade do consumidor comum contra os genéricos.</p>
                             </div>
                         </div>
 
-                        <div class="card group cursor-pointer flex flex-col bg-white">
-                            <div class="h-24 w-full bg-slate-100 flex items-center justify-center border-b border-black/5 overflow-hidden relative shrink-0">
-                                <div class="absolute inset-0 bg-brand-dark/5 group-hover:bg-brand-dark/0 transition-colors"></div>
+                        <div class="card group cursor-pointer flex flex-col bg-zinc-900 border border-white/5">
+                            <div class="h-32 w-full bg-black flex items-center justify-center border-b border-white/5 overflow-hidden relative shrink-0">
+                                <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent z-10"></div>
                             </div>
-                            <div class="p-5 flex-grow z-10">
-                                <h4 class="font-bold text-lg mb-2">5. Pay-for-Delay Moderno</h4>
-                                <p class="text-sm text-brand-gray leading-relaxed">Como o suborno em dinheiro foi proibido, criaram "acordos complexos de suprimento cruzado" para congelar a competição.</p>
+                            <div class="p-5 flex-grow z-20">
+                                <h4 class="font-bold text-lg mb-2 text-white">5. Pay-for-Delay Moderno</h4>
+                                <p class="text-sm text-zinc-400 leading-relaxed">Como o suborno em dinheiro foi proibido, criaram "acordos complexos de suprimento cruzado" para congelar a competição.</p>
                             </div>
                             <div class="insight-overlay !p-5 scrollbar-thin">
-                                <span class="insight-badge text-white">Reverse Payments</span>
-                                <p class="text-xs font-light">Paga-se em licenciamentos cruzados ou fornecimento. A FTC fiscaliza severamente o método, pois ele corrompe os alicerces do livre mercado de saúde.</p>
+                                <span class="insight-badge text-brand-neon">Reverse Payments</span>
+                                <p class="text-xs font-light text-white">Paga-se em licenciamentos cruzados ou fornecimento. A FTC fiscaliza severamente o método, pois ele corrompe os alicerces do livre mercado de saúde.</p>
                             </div>
                         </div>
 
-                        <div class="card group cursor-pointer flex flex-col bg-white">
-                            <div class="h-24 w-full bg-slate-100 flex items-center justify-center border-b border-black/5 overflow-hidden relative shrink-0">
-                                <div class="absolute inset-0 bg-brand-dark/5 group-hover:bg-brand-dark/0 transition-colors"></div>
+                        <div class="card group cursor-pointer flex flex-col bg-zinc-900 border border-white/5">
+                            <div class="h-32 w-full bg-black flex items-center justify-center border-b border-white/5 overflow-hidden relative shrink-0">
+                                <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent z-10"></div>
                             </div>
-                            <div class="p-5 flex-grow z-10">
-                                <h4 class="font-bold text-lg mb-2">6. Burocracia Armada</h4>
-                                <p class="text-sm text-brand-gray leading-relaxed">Disparo de "Petições Cidadãs" na FDA com alegações falsas de segurança no último minuto antes da liberação do rival.</p>
+                            <div class="p-5 flex-grow z-20">
+                                <h4 class="font-bold text-lg mb-2 text-white">6. Burocracia Armada</h4>
+                                <p class="text-sm text-zinc-400 leading-relaxed">Disparo de "Petições Cidadãs" na FDA com alegações falsas de segurança no último minuto antes da liberação do rival.</p>
                             </div>
                             <div class="insight-overlay !p-5 scrollbar-thin">
-                                <span class="insight-badge text-white">Citizen Petitions</span>
-                                <p class="text-xs font-light">A agência é obrigada a checar e descartar. O atraso de 6 meses na liberação paga o ano inteiro de lucros da marca originadora. Um abuso regulatório brilhante.</p>
+                                <span class="insight-badge text-brand-neon">Citizen Petitions</span>
+                                <p class="text-xs font-light text-white">A agência é obrigada a checar e descartar. O atraso de 6 meses na liberação paga o ano inteiro de lucros da marca originadora. Um abuso regulatório brilhante.</p>
                             </div>
                         </div>
                     </div>
@@ -1152,11 +1346,14 @@
 
                         <!-- Card de Detalhes (Direita) -->
                         <div class="lg:col-span-2 h-full flex flex-col max-h-[500px]">
-                            <div id="radar-details-card" class="card h-full flex flex-col bg-zinc-900/50 border border-white/10 opacity-50 overflow-hidden">
+                            <div id="radar-details-card" class="card h-full flex flex-col bg-zinc-900 border border-white/10 opacity-50 overflow-hidden">
                                 
+                                <!-- Título Visual Sobreposto ao Fundo Escuro -->
                                 <div id="radar-card-img" class="h-32 min-h-[128px] w-full bg-black shrink-0 relative flex items-center justify-center border-b border-white/5 overflow-hidden">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent z-10"></div>
-                                    <span id="radar-card-img-text" class="text-[10px] text-zinc-500 italic px-6 text-center z-0 break-words w-full">[Selecione uma inovação no radar para visualizar]</span>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-[#18181b] to-zinc-900/40 z-0"></div>
+                                    <span id="radar-card-img-text" class="text-lg md:text-xl text-brand-neon font-black px-6 text-center z-20 relative break-words w-full drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] tracking-wide uppercase leading-tight">
+                                        Selecione uma inovação no radar para visualizar
+                                    </span>
                                 </div>
                                 
                                 <div class="p-6 flex flex-col flex-grow overflow-y-auto scrollbar-thin">
@@ -1165,19 +1362,19 @@
                                     </div>
                                     
                                     <h3 id="radar-card-title" class="text-2xl font-bold text-white mb-1 shrink-0 break-words">A aguardar seleção...</h3>
-                                    <p id="radar-card-maker" class="text-xs text-brand-neon font-bold uppercase tracking-widest mb-4 shrink-0 break-words">---</p>
+                                    <p id="radar-card-maker" class="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-4 shrink-0 break-words">---</p>
                                     
-                                    <p id="radar-card-desc" class="text-sm text-zinc-400 font-light leading-relaxed mb-4 break-words">
+                                    <p id="radar-card-desc" class="text-sm text-zinc-300 font-light leading-relaxed mb-4 break-words">
                                         Explore as tecnologias que estão a redefinir o futuro da saúde, distribuídas por nível de maturidade (TRL) e eixo terapêutico.
                                     </p>
                                     
                                     <div id="radar-card-metrics" class="grid grid-cols-2 gap-3 mt-auto pt-4 border-t border-white/10 hidden shrink-0">
                                         <div>
-                                            <span class="block text-[9px] text-zinc-500 uppercase tracking-widest mb-1">Impacto & Valor</span>
+                                            <span class="block text-[9px] text-brand-neon uppercase tracking-widest mb-1">Impacto & Valor</span>
                                             <strong id="radar-card-impact" class="text-white text-sm break-words">---</strong>
                                         </div>
                                         <div>
-                                            <span class="block text-[9px] text-zinc-500 uppercase tracking-widest mb-1">Status Patentário</span>
+                                            <span class="block text-[9px] text-brand-purple uppercase tracking-widest mb-1">Status Patentário</span>
                                             <strong id="radar-card-loe" class="text-white text-sm break-words">---</strong>
                                         </div>
                                     </div>
@@ -1323,36 +1520,36 @@
             /* --- RADAR ENVISIONING LOGIC --- */
             // Extracting the exact 30 items from the provided Matriz TRL
             const radarData = [
-                { id: 1, name: "Discovery Accelerator", country: "EUA", axis: "IA", maker: "Cleveland Clinic + IBM", trl: 6, impact: "Alto", loe: "Computação Quântica e Nuvem Híbrida", desc: "Centro conjunto de 10 anos para acelerar pesquisa biomédica, combinando IA e computação quântica focada na descoberta acelerada de moléculas.", img: "" },
-                { id: 2, name: "IA co-pilot em UTI EEG", country: "EUA", axis: "IA", maker: "Cleveland Clinic + Piramidal", trl: 6, impact: "Alto", loe: "Modelo Fundacional de IA", desc: "Modelo de IA treinado para interpretar EEG contínuo em UTIs, automatizando a deteção de convulsões no neurocritical care.", img: "" },
-                { id: 3, name: "Vacina Dengue (Atenuada)", country: "Brasil", axis: "Infectologia", maker: "Instituto Butantan", trl: 9, impact: "Alto - Epidemias Globais", loe: "Plataforma de Vírus Atenuado", desc: "Vacina tetravalente atenuada de dose única com forte eficácia para reduzir hospitalizações. Aprovada pela ANVISA (2024).", img: "" },
-                { id: 4, name: "CAR-T Nacional", country: "Brasil", axis: "Oncologia", maker: "USP / Butantan / Hemocentro", trl: 7, impact: "Alto - Democratização", loe: "Terapia Gênica Ex Vivo", desc: "Desenvolvimento local de tecnologia CAR-T para tumores onco-hematológicos, visando reduzir drasticamente o custo para o SUS.", img: "" },
-                { id: 5, name: "Plataforma RNAm", country: "Brasil", axis: "Infectologia", maker: "Fiocruz", trl: 6, impact: "Muito Alto", loe: "Soberania Tecnológica", desc: "Plataforma nacional de vacinas e terapias RNA mensageiro. Essencial para autonomia em epidemias e desenvolvimento futuro em oncologia.", img: "" },
-                { id: 6, name: "NAPI Genômica", country: "Brasil", axis: "Genética", maker: "Paraná / Fundação Araucária", trl: 5, impact: "Alto", loe: "Medicina de Precisão", desc: "Projeto de sequenciamento genómico da população do Sul do Brasil, vital para construir bases genéticas locais para medicina de precisão.", img: "" },
-                { id: 7, name: "CETI-Saúde", country: "Brasil", axis: "Infra", maker: "Goiás / UFG", trl: 4, impact: "Alto - Regional", loe: "Ecossistema P&D", desc: "Centro de tecnologia em saúde (R$ 146 milhões) para conectar universidades à indústria, promovendo inovação no polo de Anápolis (DAIA).", img: "" },
-                { id: 8, name: "Tele-UTI Pediátrica", country: "Brasil", axis: "Digital", maker: "PROADI-SUS", trl: 9, impact: "Alto - Sistema", loe: "Modelo Escalável", desc: "Projeto do PROADI-SUS utilizando telemedicina para levar especialidade e decisão clínica a UTIs neonatais e pediátricas distantes.", img: "" },
-                { id: 9, name: "IA Predição Câncer Ovariano", country: "Reino Unido", axis: "Oncologia", maker: "Imperial College London", trl: 6, impact: "Alto", loe: "Algoritmo de Triagem", desc: "Algoritmo (TEXO) que prevê a sobrevida de pacientes com base na análise de biópsias, indicando que tipo de tecido afeta o prognóstico.", img: "" },
-                { id: 10, name: "Fucaso (CAR-T BCMA)", country: "China", axis: "Oncologia", maker: "IASO Bio", trl: 9, impact: "Alto - Competição Global", loe: "Terapia Gênica", desc: "Terapia CAR-T aprovada na China (2023) com taxa impressionante de reposta em Mieloma Múltiplo. Exemplo da velocidade biotech chinesa.", img: "" },
-                { id: 11, name: "AlphaFold 3 / IsoDDE", country: "Reino Unido", axis: "IA", maker: "Isomorphic Labs / DeepMind", trl: 6, impact: "Muito Alto", loe: "IA Estrutural", desc: "Prevê interações de proteínas com DNA/RNA. Acordos de US$ 3 bilhões com a Novartis e Eli Lilly para desenhar novos fármacos.", img: "" },
-                { id: 12, name: "Vacinas Câncer mRNA (NHS)", country: "Reino Unido", axis: "Oncologia", maker: "BioNTech / NHS", trl: 7, impact: "Muito Alto", loe: "Terapia Personalizada", desc: "O NHS Cancer Vaccine Launch Pad é a primeira parceria mundial para acelerar o recrutamento de pacientes para ensaios clínicos de vacinas mRNA.", img: "" },
-                { id: 13, name: "Casgevy", country: "EUA", axis: "Genética", maker: "Vertex / CRISPR Therapeutics", trl: 8, impact: "Dose Única", loe: "Terapia CRISPR", desc: "A primeira terapia com edição genética CRISPR/Cas9 aprovada globalmente. Tratamento ex vivo para doença falciforme.", img: "" },
-                { id: 14, name: "Enhertu (ADC)", country: "Japão", axis: "Oncologia", maker: "Daiichi Sankyo / AstraZeneca", trl: 9, impact: "Revolução Clínica", loe: "Conjugado Anticorpo-Droga", desc: "O Cavalo de Troia oncológico. Redefiniu o tratamento do cancro da mama e forçou fusões e aquisições maciças focadas na plataforma ADC.", img: "" },
-                { id: 15, name: "Pluvicto", country: "Suíça", axis: "Oncologia", maker: "Novartis", trl: 9, impact: "Alto", loe: "Radioligantes", desc: "Radiofármaco de precisão (teranóstico) que liga um isótopo emissor de radiação a um alvo tumoral. Exige uma complexa cadeia de abastecimento logístico de horas.", img: "" },
-                { id: 16, name: "Leqembi", country: "Japão", axis: "Genética", maker: "Eisai / Biogen", trl: 9, impact: "Muito Alto", loe: "Anticorpo Monoclonal", desc: "Avanço decisivo em neurociência ao abrandar a progressão do Alzheimer, focado na remoção de placas amilóides, abrindo o mercado do envelhecimento.", img: "" },
-                { id: 17, name: "Zepbound / Mounjaro", country: "EUA", axis: "Metabólico", maker: "Eli Lilly", trl: 9, impact: "US$ 50+ bi", loe: "Agonista Dual GIP/GLP-1", desc: "O mercado mais explosivo da década, transcendeu a diabetes e reescreveu a abordagem da obesidade, doenças cardiovasculares e apneia.", img: "" },
-                { id: 18, name: "Wegovy / Ozempic", country: "Dinamarca", axis: "Metabólico", maker: "Novo Nordisk", trl: 9, impact: "Mega Blockbuster", loe: "GLP-1 Injetável", desc: "Impulsionou o PIB da Dinamarca inteira. Revolucionou a classe GLP-1 e iniciou a transição da terapêutica focada apenas em doença para medicina de estilo de vida.", img: "" },
-                { id: 19, name: "Dupixent", country: "França", axis: "Infectologia", maker: "Sanofi / Regeneron", trl: 9, impact: "Alto", loe: "Imunobiológico", desc: "Super blockbuster da imunologia com eficácia extrema em doenças inflamatórias, sustentando as receitas globais da Sanofi.", img: "" },
-                { id: 20, name: "Neuralink N1", country: "EUA", axis: "Digital", maker: "Neuralink", trl: 6, impact: "Fronteira Neural", loe: "BCI / Implante Neural", desc: "Interface cérebro-computador (BCI) em humanos. Um sinal forte de que o hardware e o sistema nervoso se fundirão para tratar a paralisia.", img: "" },
-                { id: 21, name: "Abilify MyCite", country: "Japão", axis: "Digital", maker: "Otsuka", trl: 9, impact: "Adesão RWE", loe: "Smart Pill", desc: "A primeira 'pílula inteligente' aprovada pelo FDA. Inclui um sensor que sinaliza a adesão do doente aos tratamentos neuropsiquiátricos num patch de pele.", img: "" },
-                { id: 22, name: "Nanorrobôs magnéticos", country: "Suíça", axis: "Infra", maker: "ETH Zurich", trl: 5, impact: "Entrega Dirigida", loe: "Nanorobótica", desc: "Microveículos magnéticos que navegam pelos fluidos oculares e pelo cérebro, transportando medicamentos para as zonas exatas sem cirurgia aberta.", img: "" },
-                { id: 23, name: "Vacinas Inaláveis", country: "Canadá", axis: "Infectologia", maker: "Universidade McMaster", trl: 6, impact: "Alto", loe: "Estratégia de Entrega", desc: "Plataformas de inalação que criam imunidade nas mucosas pulmonares. Mais fáceis de armazenar, administrar e com grande potencial pós-COVID.", img: "" },
-                { id: 24, name: "Impressão 3D de Medicamentos", country: "EUA", axis: "Infra", maker: "Aprecia Pharmaceuticals", trl: 9, impact: "Dose Personalizada", loe: "Tecnologia ZipDose", desc: "Spritam foi o primeiro medicamento 3D aprovado. A tecnologia permite polipílulas personalizadas com desintegração ultrarrápida.", img: "" },
-                { id: 25, name: "Biossensores de suor", country: "EUA", axis: "Digital", maker: "Eccrine Systems (e startups)", trl: 4, impact: "Monitorização", loe: "Wearable Não Invasivo", desc: "Ultrapassando os sensores de glicose. Captação de cortisol, lactato e eletrólitos de forma contínua pelo suor num simples adesivo.", img: "" },
-                { id: 26, name: "Theranostics", country: "Global", axis: "Oncologia", maker: "Startups Radiopharma", trl: 6, impact: "Oncologia Precisa", loe: "Ecossistema", desc: "Uma mudança de paradigma: um mesmo agente biológico é utilizado para localizar (diagnóstico) e eliminar (tratamento) o cancro com radioisótopos (ex: Lutécio).", img: "" },
-                { id: 27, name: "Bacteriófagos", country: "Europa", axis: "Infectologia", maker: "PhagoMed / Startups AMR", trl: 4, impact: "Crítico", loe: "Terapia Biológica Alternativa", desc: "A resposta inovadora e vital para a crise da resistência antimicrobiana (superbactérias), usando vírus naturais para aniquilar bactérias invencíveis.", img: "" },
-                { id: 28, name: "Útero Artificial", country: "EUA", axis: "Infra", maker: "CHOP (Children's Hospital Phila.)", trl: 4, impact: "Alto", loe: "Biobag", desc: "O sistema Biobag avança em animais, permitindo o suporte extra-uterino de fetos ultra-prematuros e redefinindo a neonatologia crítica.", img: "" },
-                { id: 29, name: "Mayo Clinic Platform", country: "EUA", axis: "IA", maker: "Mayo Clinic", trl: 8, impact: "Ecossistema Dados", loe: "Rede IA", desc: "Base de dados clínica gigantesca que liga dados desidentificados a criadores de IA para validar algoritmos globais de medicina de precisão.", img: "" },
-                { id: 30, name: "FoundationOne Liquid CDx", country: "Suíça", axis: "Oncologia", maker: "Roche + Foundation Medicine", trl: 9, impact: "Companion Dx", loe: "Biópsia Líquida", desc: "Teste pan-tumoral com aprovação FDA, rastreando ADN circulante no sangue para selecionar e autorizar a terapia-alvo perfeita sem biópsia sólida.", img: "" }
+                { id: 1, name: "Discovery Accelerator", country: "EUA", axis: "IA", maker: "Cleveland Clinic + IBM", trl: 6, impact: "Alto", loe: "Computação Quântica e Nuvem Híbrida", desc: "Centro conjunto de 10 anos para acelerar pesquisa biomédica, combinando IA e computação quântica focada na descoberta acelerada de moléculas.", img: "Computador Quântico em Laboratório" },
+                { id: 2, name: "IA co-pilot em UTI EEG", country: "EUA", axis: "IA", maker: "Cleveland Clinic + Piramidal", trl: 6, impact: "Alto", loe: "Modelo Fundacional de IA", desc: "Modelo de IA treinado para interpretar EEG contínuo em UTIs, automatizando a deteção de convulsões no neurocritical care.", img: "Ecrãs de EEG lidos por Visão Computacional" },
+                { id: 3, name: "Vacina Dengue (Atenuada)", country: "Brasil", axis: "Infectologia", maker: "Instituto Butantan", trl: 9, impact: "Alto - Epidemias Globais", loe: "Plataforma de Vírus Atenuado", desc: "Vacina tetravalente atenuada de dose única com forte eficácia para reduzir hospitalizações. Aprovada pela ANVISA (2024).", img: "Frasco de Vacina do Instituto Butantan" },
+                { id: 4, name: "CAR-T Nacional", country: "Brasil", axis: "Oncologia", maker: "USP / Butantan / Hemocentro", trl: 7, impact: "Alto - Democratização", loe: "Terapia Gênica Ex Vivo", desc: "Desenvolvimento local de tecnologia CAR-T para tumores onco-hematológicos, visando reduzir drasticamente o custo para o SUS.", img: "Células T desenvolvidas no SUS" },
+                { id: 5, name: "Plataforma RNAm", country: "Brasil", axis: "Infectologia", maker: "Fiocruz", trl: 6, impact: "Muito Alto", loe: "Soberania Tecnológica", desc: "Plataforma nacional de vacinas e terapias RNA mensageiro. Essencial para autonomia em epidemias e desenvolvimento futuro em oncologia.", img: "Fita de RNA Mensageiro Codificada" },
+                { id: 6, name: "NAPI Genômica", country: "Brasil", axis: "Genética", maker: "Paraná / Fundação Araucária", trl: 5, impact: "Alto", loe: "Medicina de Precisão", desc: "Projeto de sequenciamento genómico da população do Sul do Brasil, vital para construir bases genéticas locais para medicina de precisão.", img: "Bases de Dados de ADN Sul-Americano" },
+                { id: 7, name: "CETI-Saúde", country: "Brasil", axis: "Infra", maker: "Goiás / UFG", trl: 4, impact: "Alto - Regional", loe: "Ecossistema P&D", desc: "Centro de tecnologia em saúde (R$ 146 milhões) para conectar universidades à indústria, promovendo inovação no polo de Anápolis (DAIA).", img: "Parque Tecnológico e Laboratórios Noturnos" },
+                { id: 8, name: "Tele-UTI Pediátrica", country: "Brasil", axis: "Digital", maker: "PROADI-SUS", trl: 9, impact: "Alto - Sistema", loe: "Modelo Escalável", desc: "Projeto do PROADI-SUS utilizando telemedicina para levar especialidade e decisão clínica a UTIs neonatais e pediátricas distantes.", img: "Monitor Clínico a Transmitir Dados Remotos" },
+                { id: 9, name: "IA Predição Câncer Ovariano", country: "Reino Unido", axis: "Oncologia", maker: "Imperial College London", trl: 6, impact: "Alto", loe: "Algoritmo de Triagem", desc: "Algoritmo (TEXO) que prevê a sobrevida de pacientes com base na análise de biópsias, indicando que tipo de tecido afeta o prognóstico.", img: "Análise de Tecido Tumoral por Malha IA" },
+                { id: 10, name: "Fucaso (CAR-T BCMA)", country: "China", axis: "Oncologia", maker: "IASO Bio", trl: 9, impact: "Alto - Competição Global", loe: "Terapia Gênica", desc: "Terapia CAR-T aprovada na China (2023) com taxa impressionante de reposta em Mieloma Múltiplo. Exemplo da velocidade biotech chinesa.", img: "Linha de Produção de Células T em Xangai" },
+                { id: 11, name: "AlphaFold 3 / IsoDDE", country: "Reino Unido", axis: "IA", maker: "Isomorphic Labs / DeepMind", trl: 6, impact: "Muito Alto", loe: "IA Estrutural", desc: "Prevê interações de proteínas com DNA/RNA. Acordos de US$ 3 bilhões com a Novartis e Eli Lilly para desenhar novos fármacos.", img: "IA a Dobrar Proteínas Complexas em 3D" },
+                { id: 12, name: "Vacinas Câncer mRNA (NHS)", country: "Reino Unido", axis: "Oncologia", maker: "BioNTech / NHS", trl: 7, impact: "Muito Alto", loe: "Terapia Personalizada", desc: "O NHS Cancer Vaccine Launch Pad é a primeira parceria mundial para acelerar o recrutamento de pacientes para ensaios clínicos de vacinas mRNA.", img: "Anticorpos a Neutralizar Tumores" },
+                { id: 13, name: "Casgevy", country: "EUA", axis: "Genética", maker: "Vertex / CRISPR Therapeutics", trl: 8, impact: "Dose Única", loe: "Terapia CRISPR", desc: "A primeira terapia com edição genética CRISPR/Cas9 aprovada globalmente. Tratamento ex vivo para doença falciforme.", img: "Glóbulo Vermelho Restaurado por Código Genético" },
+                { id: 14, name: "Enhertu (ADC)", country: "Japão", axis: "Oncologia", maker: "Daiichi Sankyo / AstraZeneca", trl: 9, impact: "Revolução Clínica", loe: "Conjugado Anticorpo-Droga", desc: "O Cavalo de Troia oncológico. Redefiniu o tratamento do cancro da mama e forçou fusões e aquisições maciças focadas na plataforma ADC.", img: "Nanorrobô Terapêutico a Libertar Carga Citotóxica" },
+                { id: 15, name: "Pluvicto", country: "Suíça", axis: "Oncologia", maker: "Novartis", trl: 9, impact: "Alto", loe: "Radioligantes", desc: "Radiofármaco de precisão (teranóstico) que liga um isótopo emissor de radiação a um alvo tumoral. Exige uma complexa cadeia de abastecimento logístico de horas.", img: "Isótopos Radioativos a Iluminar Alvos em Tecidos" },
+                { id: 16, name: "Leqembi", country: "Japão", axis: "Genética", maker: "Eisai / Biogen", trl: 9, impact: "Muito Alto", loe: "Anticorpo Monoclonal", desc: "Avanço decisivo em neurociência ao abrandar a progressão do Alzheimer, focado na remoção de placas amilóides, abrindo o mercado do envelhecimento.", img: "Tomografia 3D a Processar Regressão de Placas" },
+                { id: 17, name: "Zepbound / Mounjaro", country: "EUA", axis: "Metabólico", maker: "Eli Lilly", trl: 9, impact: "US$ 50+ bi", loe: "Agonista Dual GIP/GLP-1", desc: "O mercado mais explosivo da década, transcendeu a diabetes e reescreveu a abordagem da obesidade, doenças cardiovasculares e apneia.", img: "Dispositivo de Injeção para Controlo Metabólico" },
+                { id: 18, name: "Wegovy / Ozempic", country: "Dinamarca", axis: "Metabólico", maker: "Novo Nordisk", trl: 9, impact: "Mega Blockbuster", loe: "GLP-1 Injetável", desc: "Impulsionou o PIB da Dinamarca inteira. Revolucionou a classe GLP-1 e iniciou a transição da terapêutica focada apenas em doença para medicina de estilo de vida.", img: "Caneta Injetável em Laboratório Estéril" },
+                { id: 19, name: "Dupixent", country: "França", axis: "Infectologia", maker: "Sanofi / Regeneron", trl: 9, impact: "Alto", loe: "Imunobiológico", desc: "Super blockbuster da imunologia com eficácia extrema em doenças inflamatórias, sustentando as receitas globais da Sanofi.", img: "Pele e Barreiras Imunológicas Restauradas" },
+                { id: 20, name: "Neuralink N1", country: "EUA", axis: "Digital", maker: "Neuralink", trl: 6, impact: "Fronteira Neural", loe: "BCI / Implante Neural", desc: "Interface cérebro-computador (BCI) em humanos. Um sinal forte de que o hardware e o sistema nervoso se fundirão para tratar a paralisia.", img: "Chip Neural Conectado ao Tecido Biológico" },
+                { id: 21, name: "Abilify MyCite", country: "Japão", axis: "Digital", maker: "Otsuka", trl: 9, impact: "Adesão RWE", loe: "Smart Pill", desc: "A primeira 'pílula inteligente' aprovada pelo FDA. Inclui um sensor que sinaliza a adesão do doente aos tratamentos neuropsiquiátricos num patch de pele.", img: "Pílula a Emitir Ondas de Rádio no Estômago" },
+                { id: 22, name: "Nanorrobôs magnéticos", country: "Suíça", axis: "Infra", maker: "ETH Zurich", trl: 5, impact: "Entrega Dirigida", loe: "Nanorobótica", desc: "Microveículos magnéticos que navegam pelos fluidos oculares e pelo cérebro, transportando medicamentos para as zonas exatas sem cirurgia aberta.", img: "Micro-submarinos Numa Corrente Sanguínea" },
+                { id: 23, name: "Vacinas Inaláveis", country: "Canadá", axis: "Infectologia", maker: "Universidade McMaster", trl: 6, impact: "Alto", loe: "Estratégia de Entrega", desc: "Plataformas de inalação que criam imunidade nas mucosas pulmonares. Mais fáceis de armazenar, administrar e com grande potencial pós-COVID.", img: "Dispositivo de Inalação em Aerossol" },
+                { id: 24, name: "Impressão 3D de Medicamentos", country: "EUA", axis: "Infra", maker: "Aprecia Pharmaceuticals", trl: 9, impact: "Dose Personalizada", loe: "Tecnologia ZipDose", desc: "Spritam foi o primeiro medicamento 3D aprovado. A tecnologia permite polipílulas personalizadas com desintegração ultrarrápida.", img: "Impressora 3D a Desenhar um Comprimido" },
+                { id: 25, name: "Biossensores de suor", country: "EUA", axis: "Digital", maker: "Eccrine Systems (e startups)", trl: 4, impact: "Monitorização", loe: "Wearable Não Invasivo", desc: "Ultrapassando os sensores de glicose. Captação de cortisol, lactato e eletrólitos de forma contínua pelo suor num simples adesivo.", img: "Adesivo Transparente Detetando Fluidos" },
+                { id: 26, name: "Theranostics", country: "Global", axis: "Oncologia", maker: "Startups Radiopharma", trl: 6, impact: "Oncologia Precisa", loe: "Ecossistema", desc: "Uma mudança de paradigma: um mesmo agente biológico é utilizado para localizar (diagnóstico) e eliminar (tratamento) o cancro com radioisótopos (ex: Lutécio).", img: "Rastreio do Corpo Inteiro a Reagir ao Radiofármaco" },
+                { id: 27, name: "Bacteriófagos", country: "Europa", axis: "Infectologia", maker: "PhagoMed / Startups AMR", trl: 4, impact: "Crítico", loe: "Terapia Biológica Alternativa", desc: "A resposta inovadora e vital para a crise da resistência antimicrobiana (superbactérias), usando vírus naturais para aniquilar bactérias invencíveis.", img: "Vírus Bacteriófago a Injetar ADN Numa Bactéria" },
+                { id: 28, name: "Útero Artificial", country: "EUA", axis: "Infra", maker: "CHOP (Children's Hospital Phila.)", trl: 4, impact: "Alto", loe: "Biobag", desc: "O sistema Biobag avança em animais, permitindo o suporte extra-uterino de fetos ultra-prematuros e redefinindo a neonatologia crítica.", img: "Bolsa Biomecânica Preenchida com Fluido Sintético" },
+                { id: 29, name: "Mayo Clinic Platform", country: "EUA", axis: "IA", maker: "Mayo Clinic", trl: 8, impact: "Ecossistema Dados", loe: "Rede IA", desc: "Base de dados clínica gigantesca que liga dados desidentificados a criadores de IA para validar algoritmos globais de medicina de precisão.", img: "Rede Global de Servidores Interligados a Dados de Saúde" },
+                { id: 30, name: "FoundationOne Liquid CDx", country: "Suíça", axis: "Oncologia", maker: "Roche + Foundation Medicine", trl: 9, impact: "Companion Dx", loe: "Biópsia Líquida", desc: "Teste pan-tumoral com aprovação FDA, rastreando ADN circulante no sangue para selecionar e autorizar a terapia-alvo perfeita sem biópsia sólida.", img: "Tubo de Ensaio Atravessado por Scanner a Laser" }
             ];
 
             const radarContainer = document.getElementById("radar-plot");
@@ -1437,7 +1634,9 @@
                 activePoint = pointElement;
 
                 radarDetailsCard.style.opacity = "1";
-                cardImgText.innerText = item.img;
+                
+                // Texto injetado diretamente (Regex Removido)
+                cardImgText.innerText = item.img || "Inovação Selecionada";
                 
                 let trlColorClass = item.trl >= 8 ? "bg-emerald-500/20 text-emerald-400" : (item.trl >= 5 ? "bg-blue-500/20 text-blue-400" : "bg-purple-500/20 text-purple-400");
                 
